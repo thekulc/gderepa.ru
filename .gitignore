@@ -3,6 +3,7 @@ rs21-05-15.zip
 agregatordb-21.05.15.sql
 robots.txt
 config.php
+.htaccess
 .idea/
 applications/calendar/controllers/calendar.php~
 applications/calendar/layouts/calendar.html~

@@ -1,9 +1,11 @@
 .gitignore
-rs21-05-15.zip
-agregatordb-21.05.15.sql
+.idea/
+uploads/*
+logs/
+source/
+/applications/vkzip/
 robots.txt
 config.php
-.idea/
 applications/calendar/controllers/calendar.php~
 applications/calendar/layouts/calendar.html~
 applications/calendar/layouts/event.html~
@@ -13,9 +15,7 @@ applications/calendar/source/css/calendar.css~
 applications/calendar/source/js/air-datepicker/js/datepicker.js~
 applications/calendar/source/js/calendar.js~
 applications/calendar/source~/
-logs/
-source/
 templates/Default/css/calendar.css~
 templates/Default/navbar.html~
-uploads/
 google1c6e4582701c8041.html
+!/core/config.php

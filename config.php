@@ -6,7 +6,7 @@ $config['caching']			= 0;
 $config['dev_mode']			= 0;
 $config['alias']			= 1;
 $config['admin_mail']		= 'thekulc@gmail.com';
-$config['excluded_folders']	= 'source,uploads,templates';
+$config['excluded_folders']	= 'uploads,templates';
 $config['layout']			= 'Default';
 
 $config['socialAuth']['client_id']		= "4901558";

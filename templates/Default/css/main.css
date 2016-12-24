@@ -1,0 +1,73 @@
+body{
+	overflow-y: scroll;
+}
+
+.menu-panel{
+	
+}
+
+.menu-panel .uk-button{
+	padding: 10px 20px;
+}
+
+.menu-panel .uk-button > img{
+	max-height:2em;
+}
+
+.studio-panel .uk-nav-header{
+	padding-left: 0px;
+}
+
+#mobile-menu .studio-panel .uk-panel-title a
+, #mobile-userMenu .user-panel .uk-panel-title a
+{
+	color: #ccc !important;
+	font-size: inherit;
+}
+#mobile-menu .studio-panel .uk-panel-title
+, #mobile-userMenu .user-panel .uk-panel-title
+{
+	font-size: inherit;
+}
+
+.uk-navbar .uk-navbar-brand{
+	color: inherit;
+}
+
+.uk-navbar .uk-navbar-brand:hover{
+	text-decoration: none;
+}
+
+.uk-navbar .uk-breadcrumb{
+	margin-top:0;
+	font-size: 16px;
+	min-height: 40px;
+	line-height: 38px;
+}
+
+.uk-navbar .uk-breadcrumb a
+, .uk-navbar .uk-breadcrumb span{
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+#studios-table .uk-list{
+	margin-bottom: 0;
+}
+
+ymaps input {
+    background-color: transparent!important;
+    border-left: 22px solid transparent!important;
+    border-right: 2px solid transparent!important;
+    padding-left: 0!important;
+    padding-right: 0!important;
+    margin-left: 0;
+	line-height: 28px;
+	border: 0;
+	height: 26px;
+}
+
+.uk-panel-title .photo_50{
+    display: inline-block;
+    width: 50px;
+}

@@ -1,0 +1,121 @@
+/* ic = ion.calendar prefix */
+.ic__container,
+.ic__week-head,
+.ic__week-head td,
+.ic__days,
+.ic__days td,
+.ic__header,
+.ic__datepicker {
+    margin: 0; padding: 0;
+    cursor: default;
+    text-shadow: none !important;
+}
+
+
+.ic__container {
+    position: relative;
+}
+    .ic__container table {
+        width: 100%;
+        border: 0;
+        border-collapse: collapse !important;
+        border-spacing: 0 !important;
+    }
+
+
+.ic__header {
+    position: relative;
+    height: 40px;
+}
+    .ic__prev, .ic__next {
+        position: absolute;
+        top: 0;
+    }
+
+    .ic__prev {
+        left: 0;
+    }
+    .ic__next {
+        right: 0;
+    }
+
+
+    .ic__month {
+        position: absolute;
+        left: 56px;
+        width: 50%;
+    }
+    .ic__year {
+        position: absolute;
+        right: 56px;
+        width: 30%;
+    }
+    .ic__header select {
+        width: 100%;
+    }
+    .ic__header select:focus {
+        outline: none;
+    }
+
+
+
+.ic__week-head td {
+    width: 14%;
+    vertical-align: top;
+    text-align: center;
+    padding: 10px 0 8px;
+
+    border: 1px solid #ebebeb;
+    color: #b5b5b5;
+    font-size: 9px; line-height: 1.333;
+    text-transform: uppercase;
+}
+
+
+.ic__days {
+    margin-top: -1px;
+}
+    .ic__days td {
+        width: 14%;
+        vertical-align: top;
+        text-align: center;
+        padding: 10px 0 8px;
+
+        border: 1px solid #ebebeb;
+        color: #757575;
+        font-size: 9px; line-height: 1.333;
+        text-transform: uppercase;
+    }
+    .ic__days .ic__day {
+        background: #fff;
+        cursor: pointer;
+    }
+    .ic__days .ic__day:hover {
+        background: #d35746;
+        color: #fff;
+    }
+    .ic__days .ic__day-empty {
+        background: #fff url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAMAAAC6sdbXAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAZQTFRF7u7u////KNOqmgAAABlJREFUeNpiYGRkZABCCGIA8UAEI4QACDAAAUoAFV5+ydgAAAAASUVORK5CYII=');
+    }
+    .ic__days .ic__day_state_current {
+        /*background: #f4f4f4;
+        color: #000;*/
+        background: #88CAE2;
+        color: #fff;
+    }
+    .ic__days .ic__day_state_selected {
+        /*background: #f4f4f4;
+        color: #000;*/
+        background: #2CC6FF;
+        color: #fff;
+    }
+
+
+.ic__datepicker {
+    position: absolute;
+    top: -9999px; left: -9999px;
+    width: 250px; padding: 10px;
+    border-radius: 10px;
+    background: #333;
+    z-index: 9999;
+}

@@ -1,0 +1,53 @@
+{% extends app.layout~"main.html" %}
+
+{% block title %}{{page.title|striptags}}{% endblock %}
+{% block headerTitle %}{{page.title|striptags}}{% endblock %}
+
+{% block css %}{{block_css}}{% endblock %}
+{% block js %}{{block_js}}{% endblock %}
+
+{% block content %}
+
+{% if studios %}
+	<p><a class="uk-button uk-button-large" href="/studios/add"><i class="uk-icon-plus"></i> Добавить</a></p>
+	<h2>Ваши студии</h2>
+	<table id="studios-table" class="uk-table">
+		<thead>
+			<tr>
+				<th></th>
+				<th>Ответственные</th>
+				<th>Адрес</th>
+				<th>Управление</th>
+			</tr>
+		</thead>
+		{% for studio in studios %}
+			<tr class="uk-table-middle">
+				<td>
+					<a href="/studios/{{studio.domain}}">{{studio.name}}</a>
+				</td>
+
+				<td>
+					<ul class="uk-list">
+					{% for vakil in studio.vakils %}
+						<li><a href="/users/id{{vakil.id}}">{{vakil.FIO}}</a></li>
+					{% endfor %}
+					</ul>
+				</td>
+				<td>{{studio.address}}</td>
+				<td>
+				<div class="uk-button-group">
+					<a class="uk-button" href="/studios/manage/id{{studio.id}}/timetables">Расписания</a>
+					<a class="uk-button" href="/studios/manage/id{{studio.id}}/pages/">О студии</a>
+					<a class="uk-button" href="/studios/manage/id{{studio.id}}/vakils">Ответственные</a>
+					<a class="uk-button uk-button-primary" href="/studios/manage/id{{studio.id}}">Настройки</a>
+				</div>
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+{% else %}
+	<p>Вы еще не добавили ни одной студии. </p>
+	<p><a class="uk-button uk-button-large" href="/studios/add"><i class="uk-icon-plus"></i> Добавить</a></p>
+{% endif %}
+
+{% endblock %}

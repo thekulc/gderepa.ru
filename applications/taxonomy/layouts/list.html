@@ -1,0 +1,10 @@
+{% if terms %}
+<ul class="taxonomy-list">
+{% for lTerm in terms %}
+    
+        {% include '/applications/taxonomy/layouts/list-item.html' %}
+   
+{% endfor %}
+</ul>
+
+{% endif %}

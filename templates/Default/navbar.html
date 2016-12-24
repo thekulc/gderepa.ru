@@ -1,0 +1,58 @@
+<div class="uk-grid menu-panel">
+{% if device.isTablet() or device.isMobile() %}
+	<div class="uk-width-1-2">
+	<a class="uk-button uk-button-link uk-button-large" data-uk-offcanvas="{mode:'none', target:'#mobile-menu'}" href="/calendar">
+	<img class="uk-border-rounded uk-margin-small-right" src="https://pp.vk.me/c628321/v628321934/cfbf/-u1Ex22dYIA.jpg"> Абориген <i class="uk-icon-navicon"></i></a>
+	</div>
+{% else %}
+	<div class="uk-width-7-10">
+		<a class="uk-button uk-button-link uk-button-large uk-navbar-brand" href="/">Где репа</a>
+		
+		<ul class="uk-breadcrumb">
+			
+			{% for item in page.breadcrumb %}
+				<li><a href="{{item.href}}">{{item.title}}</a></li>
+			{% endfor %}
+			<li class="uk-active"><span>{{page.title}}</span></li>
+		</ul>
+	</div>
+{% endif %}
+
+	
+	{% if app.session.vk_user.domain %}
+		{% if device.isTablet() or device.isMobile() %}
+		<div class="uk-width-1-2">
+			<div class="uk-float-right">
+				<a class="uk-button uk-button-link uk-button-large" data-uk-offcanvas="{mode:'none', target:'#mobile-userMenu'}" href="/user/{{app.session.vk_user.user_id}}"><img class="uk-border-rounded uk-margin-small-right" src="{{app.session.vk_user.photo_50}}">  {{app.session.vk_user.first_name}} {{app.session.vk_user.last_name}} <i class="uk-icon-navicon"></i></a>
+			</div>
+		</div>
+		{% else %}
+		<div class="uk-width-3-10">
+			<div class="uk-position-relative uk-navbar-flip" data-uk-dropdown="{mode:'click',pos:'bottom-right'}" >
+				<a class="uk-button uk-button-link uk-button-large"><img class="uk-border-rounded uk-margin-small-right" style="max-height:2em" src="{{app.session.vk_user.photo_50}}"> {{app.session.vk_user.first_name}} {{app.session.vk_user.last_name}} <i class="uk-icon-caret-down"></i></a>
+				<div class="uk-dropdown">
+					<ul class="uk-nav uk-nav-navbar">
+						{% include app.layout~"users/user_menu.html" %}
+					</ul>
+				</div>
+			</div>
+		</div>
+		{% endif %}
+	{% else %}
+		{% if device.isTablet() or device.isMobile() %}
+		<div class="uk-width-1-2">
+			<div class="uk-float-right">
+				<a class="uk-button uk-button-link uk-button-large" id="btnLogin" href="/calendar/auth">Вход</a>
+			</div>
+		</div>
+		{% else %}
+		<div class="uk-width-3-10">
+			<div class="uk-float-right">
+				<a class="uk-button uk-button-link uk-button-large" id="btnLogin" href="/calendar/auth">Вход</a>
+			</div>
+		</div>
+		{% endif %}
+	{% endif %}
+	
+</div>
+	

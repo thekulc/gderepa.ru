@@ -1,0 +1,23 @@
+<ul class="uk-list timeGrid">
+{% for event in day.events %}
+	{% if not(event.free) %}
+		<li class='occupied {% if event.owner_id == user.id %}myTime{% endif %}' title="{{event.start.date|date('H:i')}}-{{event.end.date|date('H:i')}} {{event.owner}}" data-time="{{event.date|date('Y-m-d H:i:s')}}" data-owner_id="{{event.owner_id}}" data-event_id="{{event.id}}">
+		{% if event.owner_id == user.id %}
+				<a class="uk-button uk-button-link uk-text-danger" data-start_time="{{event.start|date('Y-m-d H:i:s')}}>
+				<span title="{{event.owner}}">{{event.start.date|date('H:i')}}-{{event.end.date|date('H:i')}}</span>
+				</a>
+		{% else %}
+				<a class="uk-button uk-button-link uk-text-warning" data-start_time="{{event.start|date('Y-m-d H:i:s')}}">
+				<i class="uk-icon-lock"></i> {{event.start.date|date('H:i')}}-{{event.end.date|date('H:i')}}
+				</a>
+		{% endif %}
+		</li>
+	{% else %}
+		<li class="free">
+			<a class="uk-button uk-button-link uk-text-success" data-start_time="{{event.start|date('Y-m-d H:i:s')}}">
+			<i class="uk-icon-clock-o"></i> {{event.start|date('H:i')}}-{{event.end|date('H:i')}}
+			</a>
+		</li>
+	{% endif %}
+{% endfor %}
+</ul>

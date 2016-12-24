@@ -1,0 +1,10 @@
+<script>
+	var redirect_uri = "{{ page.redirect_uri }}";
+	if(window.opener) {
+		if (redirect_uri != "")
+			window.opener.location = redirect_uri;
+		else
+			window.opener.location.reload();
+	}
+	window.close();
+</script>

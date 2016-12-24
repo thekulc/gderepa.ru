@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html style="height:100%;">
+<head>
+	<meta charset="utf-8" />
+	<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<title>{{page.title|striptags}}</title>
+	<meta name="title" content="{{page.title|striptags}}" />
+	<meta name="keywords" content="{{page.keywords|striptags}}" />
+	<meta name="description" content="{{page.description|striptags}}" />		
+	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link type="text/css" rel="stylesheet" href="/libraries/materialize/css/materialize.min.css"  media="screen,projection"/>
+	<link href='/applications/calendar/source/css/calendar.css?v2' rel="stylesheet">
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="/libraries/materialize/js/materialize.min.js"></script>
+	<script type="text/javascript" src="/source/js/functions.js"></script>
+	<script src="/applications/calendar/source/js/common.js?v1"></script>
+	<script type="text/javascript" src="http://vk.com/js/api/share.js?90" charset="windows-1251"></script>
+	
+	<style>
+		 
+	</style>
+	<script>
+	
+	</script>
+</head>
+
+<body style='height: 100%;background-image: url("http://pattern4site.ru/images/opacity/_rebig/150-fon-dlya-sayta.png");
+    background-attachment: fixed;
+    background-position: left top;
+    background-repeat: repeat;'>
+<!-- Yandex.Metrika counter --> <script type="text/javascript"> (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter38261265 = new Ya.Metrika({ id:38261265, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true, trackHash:true }); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = "https://mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks"); </script> <noscript><div><img src="https://mc.yandex.ru/watch/38261265" style="position:absolute; left:-9999px;" alt="" /></div></noscript> <!-- /Yandex.Metrika counter -->
+
+{% include "/applications/calendar/layouts/modals.html" %}
+
+<div class="row">
+	<div class="col s12">
+		<div style="width:988px;margin:0 auto;position:relative;z-index:10;">
+			{% include "/applications/calendar/layouts/top_panel.html" %}
+			{% if errs %}
+			{% for err in errs %}
+				<p class="errs">{{err}}</p>
+			{% endfor %}
+			{% endif %}
+			
+			{{content}}
+			
+			{% include "/applications/calendar/layouts/calendar.html" %}
+			{% include "/applications/calendar/layouts/event.html" %}
+			{% include "/applications/calendar/layouts/publication.html" %}
+			
+		</div>
+	</div>
+</div>
+<style>
+	.last-footer{
+		
+	}
+</style>
+</body>
+</html>

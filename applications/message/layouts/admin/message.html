@@ -1,0 +1,18 @@
+{% if message[0] %}
+{% set message = message[0] %}
+
+<b style="color: grey;">От кого: </b>{{message.FIO}}<br>
+<b style="color: grey;">E-mail: </b>{{message.email}}<br>
+<b style="color: grey;">Сообщение: </b><br>
+{{message.message}}
+{% else %}
+<div class="message">
+    Сообщение не найдено
+</div>
+{% endif %}
+<hr>
+<form enctype="multipart/form-data" action="/admin/message/answer/id{{message.id}}" method="POST">
+    <b style="color: grey;">Введите ответ: </b><br>
+    <textarea style="height: 300px;" name="answer"></textarea>
+    <input type="submit" value="Отправить"><a href="/admin/message/">К списку сообщений</a>
+</form>

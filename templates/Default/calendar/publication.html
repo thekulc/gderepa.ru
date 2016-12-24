@@ -1,0 +1,38 @@
+<!-- block publications -->
+{% if pub %}
+	<!--<div class="col s12 m12 l4">
+		<ul class="collection with-header">
+			<li class="collection-header"><h4>Меню</h4></li>
+			<li class="collection-item active"><a class="white-text" href="/calendar/publications">Обновления 01.07.2016</a></li>
+		</ul>
+	</div>-->
+<div class="container">
+	<div class="card">
+		<div class="card-content">
+			<div class="card-title">{{pub.header}} </div>
+			<p>{{pub.date|date('d.m.Y')}}</p>
+			<!--<h5><i class="material-icons left">schedule</i> {{pub.date|date('d.m.Y')}}</h5>-->
+			{{pub.body}}
+		</div>
+		<div class="card-action">
+			<a id="vk_share_btn" class="btn teal lighten-4 grey-text text-darken-4 waves-effect waves-purple" href="//vk.com/share.php">Поделиться</a> 
+			<a class="btn-flat lime lighten-3 grey-text text-darken-3 waves-effect waves-green" href="javascript:history.go(-1);">Назад</a>
+		</div>
+		
+	</div>
+</div>
+<script>
+	var url_params = {url: location.href};
+	var btn_params = {type: 'custom', text: 'Поделиться'}
+	//btn_params = {type: 'custom', text: '<img src="//vk.com/images/vk32.png" title="Поделиться в VK" />'};
+	$btn = $(VK.Share.button(url_params, btn_params));
+	$btn.css({"padding-right": "10px", "line-height": "100%"}).addClass("btn teal lighten-4 grey-text text-darken-4 waves-effect waves-purple").html("Поделиться").attr("style", "");
+	$("#vk_share_btn").replaceWith($btn);
+</script>
+<style>
+	.container p{
+		text-align: justify;
+	}
+</style>
+{% endif %}
+<!-- end block publications -->

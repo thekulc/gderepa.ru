@@ -1,0 +1,45 @@
+.chooseObjects{
+    text-decoration: none;
+    color: #808080;
+    cursor: default;
+}
+
+.chooseObjects.active{
+    color: #CF000B;
+    cursor: pointer;
+    border-bottom: 1px dashed;
+}
+
+.chooseObjects.active:hover{
+    border-bottom: 1px solid;
+}
+
+.chooseObjectsList{
+    overflow-y: auto;
+    max-height: 180px;
+    background-color: lightblue;
+    display: none;
+    
+}
+
+.chooseObjectsList ul{
+    margin: 0;
+    padding: 0;
+}
+
+.chooseObjectsList li{
+    list-style: none;
+    margin: 0px 0px 3px 0px;
+}
+
+.chooseObjectsList li label{
+    display: block;
+}
+
+.chooseObjectsList li:hover{
+    background: lightgreen;
+}
+
+.chooseObjectsList{
+    font-size: 90%;
+}

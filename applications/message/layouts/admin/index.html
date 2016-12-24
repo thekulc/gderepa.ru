@@ -1,0 +1,20 @@
+{% extends "/source/admin.html" %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{app.message.css}}message.css">
+{% endblock %}
+{% block js %}
+    <script type="text/javascript" src="{{app.message.js}}message.js"></script>
+{% endblock %}
+
+{% block pageTitle %}
+{% if count > 0 %}
+    <h1 style="color: red">Сообщения</h1> Не прочитано: <b>{{count}}</b>. 
+{% else %}
+    <h1 style="color: green">Сообщения</h1>
+    Новых сообщений нет 
+{% endif %}
+{% endblock %}
+
+{% block body %}
+    {{object}}
+{% endblock %}

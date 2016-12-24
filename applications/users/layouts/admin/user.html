@@ -1,0 +1,20 @@
+{% extends "/source/admin.html" %}
+{% block body %}
+{% if user %}
+<form action="/admin/users/edit/id{{user.id}}" class="back_form" onsubmit="validForm();" method="POST">
+    <label>ФИО: <input name="FIO" onblur="valid(this,0,255);" type="text" value="{{user.FIO}}"><span> * </span> </label>
+    <label>Login: <input readonly="readonly" type="text" value="{{user.login}}"><span> * </span></label>
+    <label>Пароль <input onblur="valid(this,0,255);" placeholder="******" name="password" type="password"><span> * </span></label>        
+    <label>Повторите пароль <input onblur="onPassWright(this);" placeholder="******" id="pass" type="password"><span> * </span></label>
+    <label>Email: <input onblur="mailValid(this)" type="email" name="email" value="{{user.email}}"><span> * </span></label>
+    <label>Получать почту от пользователей? <input name="get_message" type="checkbox"
+                        {% if user.get_message == 1 %} checked="checked" {% endif %}>
+    </label>
+    <label>Роли: {% include "/applications/users/layouts/admin/roles_select.html" %}
+    </label>
+    <input type="submit" value="Сохранить">&nbsp;<a href="/admin/users/">Назад</a>
+    </form>
+{% else %}
+Пользователь не найден
+{% endif %}
+{% endblock %}

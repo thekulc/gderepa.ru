@@ -1,0 +1,31 @@
+{% extends "/source/index.html" %}
+{% block css %}
+    
+{% endblock %}
+{% block js %}
+    
+{% endblock %}
+
+{% block inhead %}
+ {{page.inhead}}
+{% endblock %} 
+
+
+{% block title %}
+    {{page.title}}
+{% endblock %}
+{% block body %}
+<h1>Отчет о доставке</h1>
+<div>
+    
+    {% if object != '1' %}
+    {{object}}
+    {% else %}
+    <p><b>Ваше сообщение успешно отправлено</b></p>
+    {% endif %}
+    <p>
+    <a class="button" href="/">На главную</a>&nbsp;<a onclick="history.back(); return false;">Вернуться к форме</a>
+    </p>
+</div>
+    
+{% endblock %}

@@ -1,0 +1,8 @@
+{% for role in roles %}
+<label>
+    <input type="checkbox" name="roles[]" value="{{role.id}}" {% if role.id in user.roles|keys %} checked="checked" {% endif %}>
+    {{role.name}}
+</label>
+{% else %}
+roles not found
+{% endfor %}

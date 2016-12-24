@@ -1,0 +1,20 @@
+{% extends "/source/index_sp.html" %}
+{% if user %}
+{% block js %}
+<script type="text/javascript">
+    setTimeout('location.replace("/users/id{{user.id_user}}")', 3000);
+</script> 
+{% endblock %}
+{% endif %}
+{% block body %}
+<div>
+    {% if user %}
+    <h1>Поздравляем, {{ user.FIO }}</h1><br/>
+        Регистрация прошла успешно<br/>
+        Вас перенаправят на Вашу личну страницу через три секунды
+    {% else %}
+        Пользователь не найден
+    {% endif %}
+</div>
+{% endblock %}
+

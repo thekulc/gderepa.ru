@@ -1,0 +1,220 @@
+﻿.clear{
+    clear: both !important;
+    display: block !important;
+    float: none !important;
+    border: none !important;
+    margin-top: -1px;
+}
+
+.calendar-container{
+    margin: 20px auto;
+    width: 980px;
+    cursor: default;
+	position: relative;
+	/*background: white;*/
+}
+
+.calendar-container > div{
+    width: 140px;
+    /*height: 130px;*/
+    float: left;
+    /* display: inline-block; */
+    /* border-left: 1px solid gray; */
+    /* border-bottom: 1px solid gray; */
+    margin-bottom: 1em;
+    /* border-radius: 100%; */
+}
+
+.calendar-container > div > ul{
+	padding: 0px;
+	/*height: 107px;*/
+	margin: 3px 0px;
+	/* text-align: center; */
+}
+
+.calendar-container > div:hover{
+    background-color: rgba(227, 242, 253,.7);
+}
+
+.calendar-container > div ul > li{
+    list-style-type: none;
+    /* padding: .2em 2px; */
+    height: 1.5em;
+    overflow: hidden;
+    font-size: 12px;
+    position: relative;
+    /* margin-bottom: .2em; */
+    width: 84px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.calendar-container > div ul > li > .material-icons{
+	position: absolute;
+	top: 3px;
+}
+
+.calendar-container > div ul > li > span{
+	padding-left: 1.5em;
+}
+
+.calendar-container > div > em{
+    padding-right: 5px;
+    display: block;
+    text-align: center;
+    font-style: normal;
+}
+
+.calendar-container > .calendar-header{
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid gray;
+	border-left: 1px solid gray;
+    display: block;
+}
+
+.occupied em{
+    background-color: lightcoral !important;
+}
+
+.calendar-container > div.occupied > ul{
+	padding: 0;
+	margin: 0;
+}
+
+.calendar-container > div.occupied > ul > li{
+	height: 16px;
+	overflow: hidden;
+	background-color: #81C784;
+	margin-bottom: 1px;
+	font-size: 12px;
+}
+
+.calendar-container > div > ul > li.occupied{
+	
+}
+
+.today{
+    background-color: rgb(190, 210, 255);
+}
+
+.userPanel{
+    float: right;
+}
+
+.userPanel > a{
+	text-decoration: none;
+	border-bottom: 1px dashed;
+}
+
+
+.userPanel > a:hover{
+	text-decoration: none;
+	border-bottom: 1px solid;
+	cursor: default;
+}
+
+.modal .timeGrid a.secondary-content{
+	margin-top: 5px;
+}
+
+.modal .timeGrid li .collapsible-header > i
+, .calendar-container .timeGrid li > i
+{
+	color: #14B514;
+}
+
+.modal .timeGrid .occupied .collapsible-header
+, .modal .timeGrid .occupied .collapsible-header > i
+, .calendar-container .timeGrid li.occupied
+, .calendar-container .timeGrid li.occupied > i
+{
+	color: #E21B1B;
+}
+
+.modal .timeGrid .occupied.myTime .collapsible-header 
+, .modal .timeGrid .occupied.myTime .collapsible-header > i
+{
+	color: #f9a825;
+}
+
+.calendar-container .timeGrid li.occupied.myTime
+{
+	background-color: #fff59d;
+}
+
+.reservationBtn {
+	padding: 0 6px;
+	width: 130px;
+}
+
+.cancelRepBtn{
+	padding: 0 23px;
+	width: 130px;
+}
+
+
+.month_name_big{
+	font-size: 28px;
+	margin: 0px 10px;
+}
+
+.invisible{
+	display: none !important;
+}
+
+.clickable{
+	text-decoration: none;
+	display: block;
+	border-bottom: 1px dashed;
+	text-align: center;
+	margin-top: 3px;
+	font-size: 1.1em;
+}
+
+.clickable:hover{
+	text-decoration: none;
+	border-bottom: 1px solid;
+}
+
+.arendator{
+	background: whitesmoke;
+	border: 1px solid;
+	padding: 15px;
+	box-shadow: 0px 13px 5px -5px gray;
+	z-index: 10;
+}
+
+.day-header{
+	display: block;
+	margin-top: 3px;
+	text-align: center;
+}
+
+.calendar-nav a.btn{
+	padding: 0 1rem;
+}
+.calendar-nav a.btn > i{
+	line-height: 36px;
+}
+.calendar-nav a.btn > i.left{
+	margin-right: 7px;
+}
+.calendar-nav a.btn > i.right{
+	margin-left: 7px;
+}
+.calendar-nav a.btn.disabled{
+	margin-right: -18px;
+	margin-left: -18px;
+}
+.calendar-user-nav a.btn > i{
+	line-height: 36px;
+}
+.calendar-user-nav a.btn{
+	padding: 0 1rem;
+}
+
+.vkBtn img.btn{
+	border-radius: 2px;
+	padding: 0
+}

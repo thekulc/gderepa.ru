@@ -1,0 +1,37 @@
+{% extends "/source/admin.html" %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{app.taxonomy.css}}taxonomy.css">
+{% endblock %}
+{% block js %}
+    <script type="text/javascript" src="{{app.taxonomy.js}}taxonomy.js"></script>
+{% endblock %}
+
+{% block pageTitle %}
+<h1>Таксономия</h1>
+<a href="/admin/taxonomy/add">Добавить</a>
+{% endblock %}
+
+{% block body %}
+
+{% if term %}
+
+    {% set term = term[0]%}
+    {% set object = { 'type_id' : term.type_id } %}
+    <form enctype="multipart/form-data" action="/admin/taxonomy/edit/id{{term.id}}" method="POST">
+{% else %}
+    <form enctype="multipart/form-data" action="/admin/taxonomy/add" method="POST">
+    {% set object = { 'type_id' : options.default_type } %}
+    
+{% endif %}
+
+    <label>Название: <input name="name" type="text" required="required" value="{{term.name}}"></label>
+    <label>Тип:        
+        {% include "/applications/mObject/layouts/admin/types_select.html" %}
+    </label>
+    <label>Родитель: {% include "/applications/taxonomy/layouts/admin/terms_select.html" %} </label>
+    <label>Порядок сортировки: <input name="sort_order" type="text" value="{{term.sort_order}}"></label>
+    <label>Синоним: <input name="alias" type="text" value="{{term.alias}}"></label>
+    <label style="text-align: left;">description (<a id='toggleeditor' href='#'>htmleditor</a>):<textarea name='description'>{{term.description}}</textarea></label>
+    <input type="submit" value="Сохранить"><a href="/admin/taxonomy/">Назад</a>
+</form>
+{% endblock %}

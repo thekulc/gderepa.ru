@@ -1,0 +1,12 @@
+{% extends "/source/index.html" %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{app.attachment.css}}attachment.css">
+{% endblock %}
+{% block js %}
+    <script type="text/javascript" src={{app.attachment.js}}attachment.js"></script>
+{% endblock %}
+
+{% block body %}
+attachment
+{% endblock %}
+

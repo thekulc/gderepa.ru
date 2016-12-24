@@ -1,0 +1,34 @@
+<table id="table">
+    <thead>
+        <tr>
+            <th>
+		displayed
+            </th>
+            <th>
+                name
+            </th>
+            <th>settings</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for block in blocks %}
+        <tr>
+            <td>
+                {% if block.isPub == 1 %}Да{% else %}Нет{% endif %}
+            </td>
+            <td>
+                {{ block.name }}
+            </td>
+            <td>
+                <a href="/admin/blocks/id{{block.id}}/">edit</a>&nbsp;<a href="/admin/blocks/delete/id{{block.id}}">delete</a>
+            </td>
+        </tr>
+        {% else %}
+        <tfoot>
+            <tr>
+                <td colspan="5">Блоки не найдены</td>
+            </tr>
+        </tfoot>
+        {% endfor %}
+    </tbody>
+</table>

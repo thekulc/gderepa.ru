@@ -1,0 +1,21 @@
+<div class="message">
+    {{message.text}}<br/>
+    Вы будете перенаправлены на страницу со спиксом материалов через <span id="picks">3</span> сек. <a href="{{message.href}}">Сейчас</a>
+</div>
+<script type="text/javascript">
+    var cnt = 3;
+    $('#picks').html(cnt);
+    function time_pick(){
+        
+        if (cnt==0){
+            location.replace("{{message.href}}");
+        }
+        else{
+            $('#picks').html(cnt);
+            cnt--;
+            setTimeout(time_pick, 1000);
+        }
+        
+    }
+    time_pick();
+</script>

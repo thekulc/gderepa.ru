@@ -1,0 +1,17 @@
+<div class="menu">
+    <span>Меню</span>
+    <ul class="taxonomy-list" id="nav">
+        {% for k, v in globals.menu %}
+            {% if v.active == true %}
+                {% set aClass = 'class="active current"' %}
+            {% else %}
+                {% set aClass = '' %}
+            {% endif %}
+            <li>
+                <a {{ aClass }} href="{{v.alias}}">{{v.title}}<span></span></a>
+            </li>
+        {% endfor %}
+        
+    </ul>
+    
+</div>

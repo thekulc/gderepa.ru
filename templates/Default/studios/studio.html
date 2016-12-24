@@ -1,0 +1,12 @@
+{% if studio %}
+<div class="uk-grid">
+	<div class="uk-width-6-10">
+		
+		<p>{{studio.description}}</p>
+	</div>
+	<div class="uk-width-4-10" style="min-height:200px">
+		<p>{{studio.address}}</p>
+		<!--<div id="studio-ymap" data-coords="{{studio.mapCoords}}" data-studio-name="{{studio.name}}" style="height: 200px;"></div>-->
+	</div>
+</div>
+{% endif %}

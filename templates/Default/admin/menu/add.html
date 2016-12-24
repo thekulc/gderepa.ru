@@ -1,0 +1,11 @@
+{% if menuItem %}
+<form enctype="multipart/form-data" action="/admin/menu/edit/id{{menuItem.id}}" method="POST">
+{% else %}
+<form enctype="multipart/form-data" action="/admin/menu/add" method="POST">
+{% endif %}
+    <label>Заголовок: <input name="title" type="text" required="required" value="{{menuItem.title}}"></label>
+    <label>Адрес: <input name="address" type="text" required="required" value="{{menuItem.address}}"></label>
+    <label>Позиция: <input name="position" type="text" value="{{menuItem.position}}"></label>
+    <label>Синоним: <input name="alias" type="text" value="{{menuItem.alias}}"></label>
+    <input type="submit" value="Сохранить"><a href="/admin/menu/">Назад</a>
+</form>

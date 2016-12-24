@@ -1,0 +1,270 @@
+<?
+namespace calendar;
+
+class calendar extends \Controller {  
+    
+    var $_date;
+    const separator = '-';
+    
+    function default_method()
+    {
+        if (!isset($_SESSION['user']))
+            $errs = $this->checkAuth();
+        
+        $date = filter_input(INPUT_GET, "date");
+        
+        if (!is_string(filter_input(INPUT_GET, "date")) || filter_input(INPUT_GET, "date") == "")
+            $date = date('Y-m');
+        else
+			$date = filter_input(INPUT_GET, "date");
+		
+        $data = array();
+        $data = $this->chooseAction($date);
+		//pr($data);
+        $data['user'] = $_SESSION['user'];
+		$data['arendators'] = $this->getArendators();
+		//pr($data['arendators']);
+        $data['errs'] = $errs;
+        $data['page']['title'] = 'Расписание репетиционной студии на <u>' . date('F Y', strtotime($data['localdate']['choosed'])) . '</u>';
+        return $this->layout_show('index.html', $data);
+    }
+    
+	function getArendators(){
+		$res = array();
+		$res = $this->selectQuery("SELECT *, (select contacts from users_description where users_description.user_id = users.id) as contacts FROM `users` 
+inner join user_role on (users.id = user_role.user_id) where user_role.role_id in (1,3)", true);
+		return $res;
+	}
+	
+    function checkAuth(){
+        $auto_auth = filter_input(INPUT_POST, 'auto_auth') === 'on' ? true : false;
+        if (is_string(filter_input(INPUT_POST, 'login'))){
+            $login = filter_input(INPUT_POST, 'login');
+            $pass = filter_input(INPUT_POST, 'password');
+            
+//            $auto_auth = false;
+            $errs = $this->get_controller("users", "login", true)->login($login, $pass, $auto_auth);
+        }
+        elseif (filter_input(INPUT_COOKIE, 'usr') && filter_input(INPUT_COOKIE, 'key')){
+            $login = filter_input(INPUT_COOKIE, 'usr');
+            $pass = filter_input(INPUT_COOKIE, 'key');
+            
+            $errs = $this->get_controller("users", "login", true)->login($login, $pass, $auto_auth, true);
+        }
+        
+        
+        return $errs;
+    }
+    
+    function chooseAction($aDate) {
+        $res = array();
+        
+        $lDate = $this->getDateObjByStr($aDate);
+        if (isset($lDate['year']) AND isset($lDate['month'])){
+            $res['calendar'] = $this->getMonth($aDate);
+			$res['localdate']['today'] = date('d-m-Y');
+            $res['localdate']['choosed'] = $aDate;
+            
+            if ($lDate['month'] == 1){
+                $res['localdate']['prevDate'] = (string)($lDate['year'] - 1) . '-12';
+                $res['localdate']['nextDate'] = ($lDate['year']) . '-' . str_pad($lDate['month'] + 1, 2, '0', STR_PAD_LEFT);
+            }
+            elseif ($lDate['month'] == 12){
+                $res['localdate']['prevDate'] = (string)($lDate['year']) . '-' . str_pad($lDate['month'] - 1, 2, '0', STR_PAD_LEFT);
+                $res['localdate']['nextDate'] = (string)($lDate['year'] + 1) . '-02';
+            }
+            else {
+                $res['localdate']['prevDate'] = (string)($lDate['year']) . '-' . str_pad($lDate['month'] - 1, 2, '0', STR_PAD_LEFT);
+                $res['localdate']['nextDate'] = (string)($lDate['year']) . '-' . str_pad($lDate['month'] + 1, 2, '0', STR_PAD_LEFT);
+            }
+            
+        }
+        return $res;
+    }
+    
+    function getMonth($date, $events = true) {
+        $resArr = array();
+        
+        $day = new \DateTime($date);
+        $i = 0;
+        $week = 0;
+        $weekDay = 0;
+        $format = "d-m-Y";
+        $days = array();
+        $interval = \DateInterval::createFromDateString('1 day');
+        if (($weekDay = $day->format('N')) > 1) {
+            $day = $day->sub(\DateInterval::createFromDateString($weekDay - 1 . ' days'));
+            for ($i = 0; $i < $weekDay; $i++) {
+                $days[$week][$i] = $day->format($format);
+                $day->add($interval);
+            }
+        }
+        do {
+            if ($i++ > 0 && ($weekDay = $day->format('N')) == 1) {
+                $week++;
+            }
+            $days[$week][$weekDay - 1] = $day->format($format);
+            $day = $day->add($interval);
+        } while ($week < 4);
+
+        if (($lastWeek = count($days) - 1) > 1 && ($lastWeekDaysCount = count($days[$lastWeek])) < 7) {
+            
+            for ($i = $lastWeekDaysCount; $i < 7; $i++) {
+                $days[$lastWeek][$i] = $day->format($format);
+                $day->add($interval);
+            }
+        }
+        
+        if ($events)
+            $events = $this->getMonthEvents($date);
+        else
+            $events = false;
+        
+        for ($i = 0; $i < count($days); $i++) {
+            foreach ($days[$i] as $day) {
+                $resArr[$i][$day]['date'] = $day;
+                if ($events)
+                    $resArr[$i][$day]['events'] = $this->getEventByDate($events, $day);
+            }
+        }
+        
+        return $resArr;
+    }
+    
+    function getEventByDate($events, $day) {
+        $res = array();
+        $format = 'd-m-Y';
+        
+        foreach ($events as $event) {
+            if (date($format, strtotime($event->date)) === date($format, strtotime($day))){
+                $res[] = $event;
+            }
+        }
+        return $res;
+    }
+    
+    function getMonthEvents($date){
+        $dtStart = $date . '-01 00:00:00';
+        $res = $this->select("events", "`date` BETWEEN date_add('{$dtStart}', interval -1 month) AND date_add('{$dtStart}', interval +2 month)", "id, date, title, description, type_id, owner_id, (SELECT FIO FROM users WHERE id = owner_id LIMIT 1) as owner", "date DESC");
+        return $res;
+    }
+    
+    function getDateObjByStr($dateStr) {
+        $lDate = explode(self::separator, $dateStr);
+        $temp = $this->validYear($lDate[0]);
+        if ($temp){
+            $res['year'] = $temp;
+            $temp = $this->validMonth($lDate[1]);
+            if ($temp){
+                $res['month'] = $temp;
+                $temp = isset($lDate[2]) ? $this->validDay($lDate[2]) : null;
+                if ($temp){
+                    $res['day'] = $temp;
+                }
+                
+            }
+        }
+        
+        return $res;
+    }
+    
+    private function validDay($day) {
+        $res = null;
+        if (strlen($day) > 0){
+            $day = intval($day);
+            if ($day > 0 && $day < 32){
+                $res = $day;
+            }
+        }
+        return $res;
+    }
+    
+    private function validMonth($month) {
+        $res = null;
+        if (strlen($month) > 0){
+            $month = intval($month);
+            if ($month > 0 && $month < 13){
+                $res = $month;
+            }
+        }
+        return $res;
+    }
+    
+    private function validYear($year) {
+        $res = null;
+        if (strlen($year) > 0){
+            $year = intval($year);
+            if ($year > 2000 && $year < 3000){
+                $res = $year;
+            }
+        }
+        return $res;
+    }
+    
+    function getFormattedDate(){
+        $year = $this->_date['year'];
+        $month = $this->_date['month'];
+        $day = $this->_date['day'];
+        if (isset ($year) && isset($month) && isset($day) && $year != "" && $month != "" && $day != "")
+            return str_pad($day, 2, "0", STR_PAD_LEFT) . self::separator . str_pad($month, 2, "0", STR_PAD_LEFT) . self::separator . $year;
+    }
+	
+	function selectQuery($query, $idKey){
+		$res = array();
+		if ($query){
+			//$query = mysql_real_escape_string($query);
+			
+			$res = $this->getFetchedArray($query, $idKey, $err);
+        }
+		else $err = "Имя таблицы не задано";
+        return $res;
+	}
+    
+    function select($tblName = null, $where = null, $what = NULL, $order = null, &$err = NULL){
+		$res = array();
+		if ($tblName){
+			if ($what)
+				$sql = "SELECT ".$what." FROM " . $tblName;
+			else 
+				$sql = "SELECT * FROM " . $tblName;
+			if ($where)
+				$sql .= " WHERE ".$where;
+			
+			if($order)
+				$sql .= " ORDER BY " . $order;
+			$res = $this->getFetchedArray($sql, false, $err);
+        }
+		else $err = "Имя таблицы не задано";
+        return $res;
+    }
+    
+    private function getFetchedArray($sql, $idKey, &$err){
+        $res = array();
+        if (strlen($sql) > 0){
+            $result = mysql_query($sql);
+            $res = $this->doFetch($result, $idKey, $err);
+        }
+        else{
+            $err = "Запрос к базе пуст!";
+        }
+        return $res;
+    }
+    
+    private function doFetch($sqlRes, $idKey, &$err) {
+        $res = array();
+        if (mysql_num_rows($sqlRes) > 0){
+            while ($obj = mysql_fetch_object($sqlRes)) {
+				if ($idKey)
+					$res[$obj->id] = $obj;
+				else
+					$res[] = $obj;
+            }
+        }
+        else {
+            $err = mysql_error();
+        }
+        return $res;
+    } 
+    
+}
+?>

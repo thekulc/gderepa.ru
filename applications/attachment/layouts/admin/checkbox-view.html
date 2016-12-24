@@ -1,0 +1,7 @@
+{% if attachments %}
+    {% for attachment in attachments %}
+    <label><input type="checkbox" name='attachments[]' checked="checked" value="{{attachment.id}}">{{attachment.title}}</label>
+    {% endfor %}
+{% else %}
+
+{% endif %}

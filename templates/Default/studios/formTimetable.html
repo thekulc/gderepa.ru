@@ -1,0 +1,115 @@
+{% if studio.id %}
+<link rel="stylesheet" media="screen" type="text/css" href="{{app.css}}ion.calendar.css" />
+<script type="text/javascript" src="/libraries/ion.calendar-master/js/moment.min.js"></script>
+<script type="text/javascript" src="/libraries/ion.calendar-master/js/moment.ru.js"></script>
+<script type="text/javascript" src="/libraries/ion.calendar-master/js/ion.calendar.js"></script>
+
+<script>
+	var days = [];
+	var templatePeriods = [];
+	$(document).ready(function(){
+		$("#datepickerCalendar").ionCalendar({
+			lang: "ru",
+		    sundayFirst: false,
+		    years: "2",
+		    format: "DD.MM.YYYY",
+		    onClick: function(date){
+		    	setDate(date);
+		    },
+		    onReady: function(date){
+		    	setDate(date);
+		    }
+		});
+		templatePeriods = getTemplatePeriods();
+	});
+	
+	function setDate(lDate){
+		$('#setDateDatepicker').val(lDate);
+		$('#dateSpan').html(lDate);
+	}
+
+	function getTemplatePeriods(){
+		tPeriod = [];
+		$('.templatePeriod').each(function(idx, elem){
+			daysName = $(this).parent().parent().attr('data-daysName');
+			if (daysName.length>0)
+				tPeriod[daysName] = elem;
+		});
+		return tPeriod;
+	}
+
+</script>
+<form class="uk-form" method="POST" action="/studios/id{{studio.id}}/timetableEdit">
+	<ul class="uk-tab" data-uk-switcher="{connect:'#date-switcher'}">
+	    <li class="uk-active"><a href="">Расписание на каждый день</a></li>
+	    <li><a href="">Расписание по дням недели</a></li>
+	    <li><a href="">Расписание на день</a></li>
+	</ul>
+	<ul id="date-switcher" class="uk-switcher uk-margin-top">
+		<li>
+			<p>Расписание на каждый день будет представлено пользователю для возможности бронирования репетиций. Если необходимо представить другое расписание (или&nbsp;стоимость) на выходные или конкретную дату, перейдите на соответствующую вкладку.</p>
+			{% set days="forEveryday" %}
+			{% include app.layout~"studios/timeEditTable.html" %}
+		</li>
+		<li>
+			<p>Расписание на день недели может быть полезно, если на выходные вам нужно изменить цену или время брони.</p>
+			<ul class="uk-tab" data-uk-switcher="{connect:'#weekDay-switcher'}">
+			{% for key, value in weekDays %} 
+			<li><a href="">{{value}}</a></li>
+			{% endfor %}
+			</ul>
+			<ul id="weekDay-switcher" class="uk-switcher">
+				{% for key, value in weekDays %} 
+				<li>
+					{% set days=value %}
+					{% include app.layout~"studios/timeEditTable.html" %}
+				</li>
+				{% endfor %}
+			</ul>
+		</li>
+		<li>
+			<p>Расписание на день будет иметь приоритет по отношению к расписанию на день недели и к расписанию на каждый день.</p>
+			<!--<input id="setDateDatepicker" autocomplete='off' type="text" name="date[]">-->
+			{% set days="forDate" %}
+			<div id="datepickerCalendar"></div>
+			<input id="setDateDatepicker" class="uk-hidden" autocomplete='off' type="text" name="date">
+			<h2>Изменить расписание на <b id='dateSpan'></b></h2>
+				
+				{% include app.layout~"studios/timeEditTable.html" %}
+		</li>
+	</ul>
+	<div class="uk-form-row"><button class="uk-button uk-button-primary uk-button-large" type="submit">Сохранить <i class="uk-icon-spin uk-icon-circle-o-notch uk-hidden"></i></button></div>
+<script>
+$('.addPeriodButton').on('click', function(){
+	$table = $(this).parent().parent().parent().parent();
+	days = $($table).attr('data-daysName');
+	if ($('tbody tr', $table).length > 0){
+		$tr = $('tbody tr', $table).last().clone();
+		$startTime = $('[name="'+days+'[start_time][]"]', $tr);
+		$duration = $('[name="'+days+'[duration][]"]', $tr);
+		newTime = getNewTime($startTime.val(), $duration.val());
+		$startTime.val(newTime);
+	}
+	else{
+		$tr = templatePeriods[days];
+	}
+	$('tbody', $table).append($tr);
+});
+function removePeriod(aButton){
+	if(confirm('Вы действительно хотите удалить период?')){
+		$(aButton).parent().parent().remove();
+		return false;
+	}
+}
+function getNewTime(lTime, lDuration){
+	var format = 'HH:mm';
+	var mSTime = moment(lTime,format);
+	var mDur = moment(lDuration, format);
+	mSTime.add(mDur);
+	return mSTime.format(format);
+}
+</script>
+</form>
+{% else %}
+<div class="uk-alert uk-alert-danger"><p>Студия не выбрана. Создание расписания невозможно</p></div>
+{% endif %}

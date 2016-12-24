@@ -1,0 +1,7 @@
+{% extends app.layout~"main.html" %}
+
+{% block title %} {{page.title|striptags}} {% endblock %}
+{% block headerTitle %}{{page.title|striptags}}{% endblock %}
+{% block content %} 
+	{% include app.layout~"studios/manageList.html" %}
+{% endblock %}

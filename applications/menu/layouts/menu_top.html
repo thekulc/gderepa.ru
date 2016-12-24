@@ -1,0 +1,12 @@
+<h1>Меню</h1>
+<ol class='menu'>
+    {% for k, v in globals.menu_top %}
+    <li>
+        {% if globals.active == v.address %}
+            <a class="active" href="{{v.alias}}">{{v.title}}</a>
+        {% else %}
+            <a href="{{v.alias}}">{{v.title}}</a>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ol>

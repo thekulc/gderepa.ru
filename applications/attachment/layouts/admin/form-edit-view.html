@@ -1,0 +1,15 @@
+{% extends "/applications/attachment/layouts/admin/index.html" %}
+{% block body %}
+{% if attachment %}
+    <form action="/admin/attachment/edit/id{{attachment.id}}" method="post" enctype="multipart/form-data">
+        <label>ID: <input type='text' name='id' readonly="readonly" value='{{attachment.id}}'></label>
+        <p><span style="width: 29%; display: inline-block; text-align: right;">image:</span> <a class="showFullImage" href="{{attachment.uri}}"><img alt="" width="100" src="{{attachment.uri}}"></a> or <input name="filename" type="file"> </p>
+        <label>type: <input name="type" value="{{attachment.type}}"></label>
+        <label>title: <input type="text" name="title" value="{{attachment.title}}"></label>
+        <label style="text-align: left;">description (<a id='toggleeditor' href='#'>htmleditor</a>):<textarea name='description'>{{attachment.description}}</textarea></label>
+        <p><input type='submit' value="Сохранить"> или <a href='/admin/attachment/'>вернуться к списку</a></p>
+    </form>
+{% else %}
+<p>файл не найден</p>
+{% endif %}
+{% endblock %}

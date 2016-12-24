@@ -1,0 +1,27 @@
+{% if studio %}
+<form class="uk-form" action="/studios/manage/id{{studio.id}}/edit" method="post">
+{% else %}
+<form class="uk-form" action="/studios/add" method="post">
+{% endif %}
+
+<div class="uk-grid">
+	{% if message %}
+		<div class="uk-alert uk-alert-large">{{message}}</div>
+	{% endif %}
+	<div class="uk-width-1-2">
+		<div class="uk-form-row"><label>Название <input class="uk-width-1-1 uk-form-large" required="required" placeholder="" type="text" name="name"></label></div>
+		<div class="uk-form-row"><label>Описание <textarea rows="4" class="uk-width-1-1 uk-form-large" placeholder="" name="description"></textarea></label></div>
+		<div class="uk-form-row"><label>Ответственное лицо <input readonly class="uk-width-1-1 uk-form-large uk-form-blank" value="Я, {{app.session.user.FIO}}" required="required" ><input hidden type="text" name="vakil_id" readonly required value="{{app.session.user.id}}">
+		</label></div>
+		<div class="uk-form-row"><button class="uk-width-1-1 uk-button uk-button-primary uk-button-large" type="submit">Добавить <i class="uk-icon-spin uk-icon-circle-o-notch uk-hidden"></i></button></div>
+	</div>
+	<div class="uk-width-1-2">
+		<div class="uk-form-row"><label>Адрес <input class="uk-width-1-1 uk-form-large" required="required" placeholder="" type="text" name="address"></label></div>
+		<div class="uk-form-row"><label><input class="uk-width-1-1 uk-form-large uk-hidden" placeholder="" type="text" name="mapCoords"></label>
+			<div id="yaMap" style="height: 400px;"></div>
+		</div>
+	</div>
+	<!--<div class="uk-form-row"><label>Часовой пояс <input readonly class="uk-width-1-1 uk-form-large" required="required" placeholder="" type="text" name="timezone"></label></div>-->
+</div>	
+</form>
+

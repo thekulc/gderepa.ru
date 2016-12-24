@@ -1,0 +1,10 @@
+{% if object %}
+    <div class="object term" id="mo_{{object.id}}">
+        {% if object.uri %}
+            <img src="{{object.uri}}" alt="{{object.title}}" title="{{object.title}}">
+        {% else %}
+            {% include "/source/noimage.html" %}
+        {% endif %}
+        <div><a href="/mObject/id{{object.id}}">{{object.title}}</a> &mdash; {{object.description}}</div>
+    </div>
+{% endif %}

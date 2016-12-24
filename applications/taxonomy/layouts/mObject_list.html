@@ -1,0 +1,15 @@
+{% if mObjects %}
+    <div class="mObject-list">
+        {% for object in mObjects %}
+            {% if object %}
+                {% if object.type_id == 1 %}
+                    {% include "/applications/taxonomy/layouts/print_objects/p-image.html" %}
+                {% elseif object.type_id == 2 %}
+                    {% include "/applications/taxonomy/layouts/print_objects/dictionary-term.html" %}
+                {% endif %}
+            {% endif %}    
+        {% endfor %}
+        {% include "/applications/users/layouts/bag/panel.html" %}
+        <div class="clear"></div>
+    </div>
+{% endif %}

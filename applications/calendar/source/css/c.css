@@ -1,0 +1,145 @@
+.calendar-container{
+    margin: 20px auto;
+    width: 987px;
+    cursor: default;
+	position: relative;
+}
+
+.calendar-container > div{
+    width: 140px;
+    min-height: 130px;
+    float: left;
+    display: inline-block;
+    border-left: 1px solid gray;
+    border-bottom: 1px solid gray;
+}
+
+.calendar-container > div:nth-child(7n+7){
+	border-right: 1px solid gray;
+	width: 141px;
+}
+
+.calendar-container > div > ul{
+	padding: 0px 5px;
+	margin: 0;
+}
+
+.calendar-container > div:hover{
+    background-color: rgb(242, 252, 255);
+}
+
+.calendar-container > div li{
+    list-style: none;
+}
+
+.calendar-container > div > em{
+    padding-right: 5px;
+    display: block;
+    text-align: right;
+    border-bottom: 1px dashed gray;
+    background-color: lightgreen;
+}
+
+.calendar-container > .calendar-header{
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid gray;
+	border-left: 1px solid gray;
+    display: block;
+	//position: relative;
+}
+
+.occupied{
+    background-color: lightcoral !important;
+}
+
+.today{
+    background-color: rgb(190, 210, 255);
+}
+
+.userPanel{
+    float: right;
+}
+
+.userPanel > a{
+	text-decoration: none;
+	border-bottom: 1px dashed;
+}
+
+
+.userPanel > a:hover{
+	text-decoration: none;
+	border-bottom: 1px solid;
+	cursor: default;
+}
+
+.reservationBtn {
+	padding: 0 6px;
+	margin-top: 5px;
+}
+
+.cancelRepBtn{
+	padding: 0 23px;
+	margin-top: 5px;
+}
+
+
+.month_name_big{
+	font-size: 28px;
+	margin: 0px 10px;
+}
+
+.invisible{
+	display: none !important;
+}
+
+.clickable{
+	text-decoration: none;
+	display: block;
+	border-bottom: 1px dashed;
+	text-align: center;
+	margin-top: 3px;
+	font-size: 1.1em;
+}
+
+.clickable:hover{
+	text-decoration: none;
+	border-bottom: 1px solid;
+}
+
+.arendator{
+	background: whitesmoke;
+	border: 1px solid;
+	padding: 15px;
+	box-shadow: 0px 13px 5px -5px gray;
+	z-index: 10;
+}
+
+.day-header{
+	display: block;
+	margin-top: 3px;
+	text-align: center;
+}
+
+#calendar-nav a.btn{
+	padding: 0 1rem;
+}
+#calendar-nav a.btn > i{
+	line-height: 36px;
+}
+#calendar-nav a.btn > i.left{
+	margin-right: 7px;
+}
+#calendar-nav a.btn > i.right{
+	margin-left: 7px;
+}
+#calendar-nav a.btn.disabled{
+	margin-right: -18px;
+	margin-left: -18px;
+}
+#calendar-user-nav a.btn > i{
+	line-height: 36px;
+}
+#calendar-user-nav a.btn{
+	padding: 0 1rem;
+}

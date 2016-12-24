@@ -1,0 +1,53 @@
+{% extends "/source/admin.html" %}
+
+{% block pageTitle %}
+        <h1>Пользователи</h1>
+        Всего: <b>{{count}}</b>.
+        <a href="/admin/users/add">Добавить</a>
+{% endblock %}
+
+{% block body %}
+
+    {% if users %}
+        <table id="table">
+            <thead>
+            <tr>
+                <th>
+                    ФИО <a title="По возрастанию" href="/admin/users/?orderBy=fio&sort=asc">&uarr;</a>|<a href="/admin/users/?orderBy=fio&sort=desc" title="По убыванию">&darr;</a>
+                </th>
+                <th>
+                    Login <a title="По возрастанию" href="/admin/users/?orderBy=login&sort=asc">&uarr;</a>|<a href="/admin/users/?orderBy=login&sort=desc" title="По убыванию">&darr;</a>
+                </th>
+                <th>
+                    Пароль
+                </th>
+                <th>
+                    email <a title="По возрастанию" href="/admin/users/?orderBy=email&sort=asc">&uarr;</a>|<a href="/admin/users/?orderBy=email&sort=desc" title="По убыванию">&darr;</a>
+                </th>
+                <th>
+                    Управление
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for k,user in users %}
+            <tr>
+                <td><a href="/users/id{{k}}">{{user.FIO}}</a></td>
+                <td style="max-width: 200px; word-wrap: break-word;"><a href="/admin/users/id{{k}}">{{user.login}}</a></td>
+                <td style="max-width: 100px; word-wrap: break-word;">{{user.pass_cashe}}</td>
+                <td>{{user.email}}</td>
+                <td>
+                    <a href="/admin/users/id{{k}}">edit</a>&nbsp;<a href="/admin/users/delete/id{{k}}">delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        Пользователи не найдены
+        
+    {% endif %}    
+    
+{% endblock %}
+
+

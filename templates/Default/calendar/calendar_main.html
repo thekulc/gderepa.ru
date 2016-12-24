@@ -1,0 +1,36 @@
+{% extends app.layout~"main.html" %}
+
+{% block title %}{{page.title|striptags}}{% endblock %}
+{% block headerTitle %}{{page.title|striptags}}{% endblock %}
+
+{% if calendar %}
+	{% set block_js = block_js ~ '<script src="' ~ app.js ~'calendar.js"></script>' %}
+	{% set block_css = block_css ~ '<link href="' ~ app.css ~'calendar.css" rel="stylesheet">' %}
+{% endif %}
+
+{% block css %}{{block_css}}{% endblock %}
+{% block js %}{{block_js}}{% endblock %}
+
+{% block content %}
+	{% if device.isTablet() or device.isMobile() %}
+		{% include app.layout~"users/mobile-userMenu.html" %}
+		<div id="mobile-menu" class="uk-offcanvas">
+			<div class="uk-offcanvas-bar">
+				{% include app.layout~"studios/studio-panel.html" %}
+			</div>
+		</div>
+		{% include app.layout~"calendar/calendar.html" %}
+	{% else %}
+	<div class="uk-grid">
+		<div class="uk-width-1-1 uk-width-medium-1-1 uk-width-small-1-1 uk-width-large-2-10">
+			{% include app.layout~"studios/studio-panel.html" %}
+		</div>
+		<div class="uk-width-1-1 uk-width-medium-1-1 uk-width-small-1-1 uk-width-large-8-10">
+			{% include app.layout~"calendar/calendar.html" %}
+		</div>
+	</div>
+	{% endif %}
+	
+	{% include app.layout~"calendar/event.html" %}
+	{% include app.layout~"calendar/publication.html" %}
+{% endblock %}

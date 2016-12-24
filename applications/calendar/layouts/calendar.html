@@ -1,0 +1,35 @@
+<!-- block calendar -->
+<script src="/applications/calendar/source/js/calendar.js?v16"></script>
+{% if calendar %}
+	<div class="calendar-container">
+		{% for week in calendar %}
+			{% for day in week %}
+			<div class='{% if day.date|date('d-m-Y') == localdate.today|date('d-m-Y') %}blue lighten-5' title='Сегодня' {%else%}'{% endif %} data-date="{{day.date|date('Y-m-d')}}">
+				<em>{{day.date|date('d F, D')}}</em>
+				{% if day.events %}
+				<ul class="timeGrid">
+					{% for event in day.events %}
+						{% if not(event.free) %}
+							<li class='occupied {% if event.owner_id == user.id %}myTime{% endif %}' title="{{event.start.date|date('H:i')}}-{{event.end.date|date('H:i')}} {{event.owner}}" data-time="{{event.date|date('Y-m-d H:i:s')}}" data-owner_id="{{event.owner_id}}" data-event_id="{{event.id}}">
+								<i class="tiny material-icons">query_builder</i><span>{{event.start.date|date('H:i')}}-{{event.end.date|date('H:i')}} {{event.owner}}</span>
+							</li>
+						{% else %}
+							<li class="free" data-time="{{event.start|date('Y-m-d H:i:s')}}">
+								<i class="tiny material-icons">query_builder</i><span>{{event.start|date('H:i')}}-{{event.end|date('H:i')}}</span>
+							</li>
+						{% endif %}
+					{% endfor %}
+				</ul>
+				{% endif %}
+			</div>
+			{% endfor %}
+		{% endfor %}
+		
+		{% for atr in arendators %}
+			<span class="arendator invisible" id="atr_{{atr.user_id}}">{{atr.contacts}}</span>
+		{% endfor %}
+		
+		<span class='clear'></span>
+	</div>
+	{% endif %}
+<!-- end block calendar -->

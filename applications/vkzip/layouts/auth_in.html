@@ -1,0 +1,20 @@
+{% extends "/applications/vkzip/layouts/main.html" %}
+
+{% block js %} {%endblock%}
+
+{% block title %} {{page.title}} {% endblock %}
+{% block description %} {{page.description}} {% endblock %}
+{% block keywords %} {{page.keywords}} {% endblock %}
+
+{% block body %}
+
+<div class="row">
+	<div class="col-md-9">
+		{% include "/applications/vkzip/layouts/blocks/user_audios.html" %}
+		{{body}}
+	</div>
+	<div class="col-md-3">
+		{% include "/applications/vkzip/layouts/blocks/user_card.html" %}
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% if blocks %}
+<select name="blocks[]" multiple="multiple" >
+    {% for block in blocks %}
+    <option value="{{block.id}}" {% if block.id in page.blocks|keys %} selected="selected" {% endif %} >{{block.name}}</option>
+    {% else %}
+    <option disabled="disabled">
+        Блоки не привязаны
+    </option>
+    {% endfor %}
+</select>
+
+{% else %}
+<var>В системе еще нет блоков. <a target="_blank" href="/admin/blocks/add">Добавить</a> </var>
+{% endif %}

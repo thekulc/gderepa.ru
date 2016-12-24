@@ -1,0 +1,53 @@
+{% if audios|length > 0 %}
+<div id="audios">
+<h3>Аудиозаписи <small>{{audios.count.all}}</small></h3>
+
+<div class="row">
+	<div class="col-md-9">
+		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane active" id="all">
+				<ul id="user-audios-list" class="list-group">
+				<li class="list-group-item">
+					<div class="media-body">
+					  <p class="media-heading"><a class="getAudioBtn" data-album_id="all" href="#">Скачать 100 штук</a></p>
+					</div>
+				</li>
+				{% for audio in audios.all %}
+				  <li class="list-group-item">
+					<div class="media-left">
+					  <a href="#" data-url="{{audio.url}}">
+						<span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+					  </a>
+					</div>
+					<div class="media-body">
+					  <p class="media-heading">{{audio.artist}} - {{audio.title}}<span class="pull-right">{{audio.duration|date("i:s")}}</span></p>
+					</div>
+				  </li>
+				{% endfor %}
+				</ul>
+			</div>
+			{% if audios.albums %}
+				{% for album in audios.albums %}
+				<div role="tabpanel" class="tab-pane" id="tabAlbum_{{album.album_id}}">
+					<ul id="user-audios-list-{{album.album_id}}" class="list-group">
+						
+					</ul>
+				</div>
+				{% endfor %}
+			{% endif %}
+		</div>
+	</div>
+	<div class="col-md-3">
+		<ul id="user-audios-nav" class="nav nav-pills nav-stacked" role="tablist">
+			<li role="presentation" class="active">
+				<a href="#all" data-album_id="all" aria-controls="all" role="tab" data-toggle="tab">Все аудиозаписи</a>
+			</li>
+			{% for album in audios.albums %}
+				<li role="presentation"><a href="#tabAlbum_{{album.album_id}}" aria-controls="tabAlbum_{{album.album_id}}" data-album_id="{{album.album_id}}" role="tab" data-toggle="tab">{{album.title}}</a></li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>
+
+</div>
+{% endif %}

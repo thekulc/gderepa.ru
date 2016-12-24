@@ -1,0 +1,48 @@
+<table id="table">
+    <thead>
+    <tr>
+        <th>
+            isAnswered
+        </th>
+        <th>
+            date
+        </th>
+        <th>
+            author
+        </th>
+        <th>
+            email
+        </th>
+        <th>
+            settings
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for k, v in messages %}
+        <tr>
+            <td>
+                {% if v.answer %}Да{% else %}Нет {% endif %}
+            </td>
+            <td>
+                {{ v.date|date('d F, l (d.m.Y)') }}
+            </td>
+            <td>
+                <a href="/admin/message/id{{v.id}}">{{v.FIO}}</a>
+            </td>
+            <td>
+                {{v.email}}
+            </td>
+            <td>
+                <a href="/admin/message/id{{v.id}}">open</a>&nbsp;<a href="/admin/message/delete/id{{v.id}}">delete</a>
+            </td>
+        </tr>
+        {% else %}
+        <tfoot>
+            <tr>
+                <td colspan="4">Сообщений нет</td>
+            </tr>
+        </tfoot>
+        {% endfor %}
+    </tbody>
+</table>

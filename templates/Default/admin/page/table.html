@@ -1,0 +1,52 @@
+<table id="table">
+    <thead>
+        <tr>
+            <th>
+                id
+            </th>
+            <th>
+                title
+            </th>
+            <th>
+                alias
+            </th>
+            <th>
+                menu title
+            </th>
+            <th>
+                menu num
+            </th>
+            <th>settings</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for page in pages %}
+        <tr>
+            <td>
+                {{ page.id }}
+            </td>
+            <td>
+                <a href ="/page/id{{page.id}}">{{ page.title | e }}</a>
+            </td>
+            <td>
+                <a href ="{{page.alias}}">{{ page.alias }}</a>
+            </td>
+            <td>
+                {{ page.menu_title }}
+            </td>
+            <td>
+                {{ page.menu_place }}
+            </td>
+            <td>
+                <a href="/admin/page/id{{page.id}}/">edit</a>&nbsp;<a href="/admin/page/delete/id{{page.id}}">delete</a>
+            </td>
+        </tr>
+        {% else %}
+        <tfoot>
+            <tr>
+                <td colspan="5">Поля не найдены</td>
+            </tr>
+        </tfoot>
+        {% endfor %}
+    </tbody>
+</table>

@@ -1,0 +1,9 @@
+{% if attachments %}
+<select name="attachments">
+    {% for attachment in attachments %}
+    <option value="{{attachment.id}}">{{attachment.title}}</option>
+    {% endfor %}
+</select>
+{% else %}
+
+{% endif %}

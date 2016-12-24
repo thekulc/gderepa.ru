@@ -1,0 +1,8 @@
+<select class="uk-width-1-1 uk-form-large" required="required" placeholder="" type="text" name="vakil_id">
+	{% for vakil in vakils %}
+		<option selected value="{{vakil.id}}">{{vakil.email}}, {{vakil.contacts}}</option>
+	{% else %}
+		<option selected value="{{app.session.user.id}}">Я, {{app.session.user.FIO}}</option>
+		<option selected value="123123">{{app.session.user.FIO}}</option>
+	{% endfor %}
+</select>

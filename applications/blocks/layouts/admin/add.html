@@ -1,0 +1,13 @@
+{% if block %}
+<form id="block" enctype="multipart/form-data" action="/admin/blocks/edit/id{{block.id}}" method="POST">
+{% else %}
+<form id="block" enctype="multipart/form-data" action="/admin/blocks/add" method="POST">
+{% endif %}
+    <label>Название (только английские): <input name="name" type="text" required="required" value="{{block.name}}"></label>
+	<label>Показывать блок? <input name="isPub" type="checkbox" {%if block.isPub == 1 %}checked="checked"{% endif %}></label>
+    <label style="text-align: left;">Содержимое
+        <textarea name="body">{{block.body}}</textarea>
+    </label>
+
+        <input type="submit" form="block" value="Сохранить"><a href="/admin/blocks/">Назад</a>
+</form>

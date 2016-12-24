@@ -1,0 +1,10 @@
+{% extends "/applications/attachment/layouts/admin/index.html" %}
+{% block body %}
+    <form action="/admin/attachment/add/" method="post" enctype="multipart/form-data">
+        <label>image: <input name="filename" type="file"> </label>
+        <label>type: <input name="type" type="text"></label>
+        <label>title: <input type="text" name="title"></label>
+        <label style="text-align: left;">description (<a id='toggleeditor' href='#'>htmleditor</a>):<textarea name='description'>{{attachment.description}}</textarea></label>
+        <p><input type='submit' value="Сохранить"> или <a href='/admin/attachment/'>вернуться к списку</a></p>
+    </form>
+{% endblock %}

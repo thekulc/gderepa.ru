@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}{% endblock %} | vkzip</title>
+        <!--<link rel="stylesheet" href="/applications/vkzip/source/uikit/css/uikit.almost-flat.css" />-->
+		<link rel="stylesheet" href="/libraries/bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+		
+		<link rel="stylesheet" href="/applications/vkzip/source/css/theme.css" />
+		{% block css %}{% endblock %}
+		
+        <!--<script src="/applications/vkzip/source/uikit/js/uikit.js"></script>-->
+		{% block js %}{% endblock %}
+		
+		<meta name="description" content="{% block description %}{% endblock %}">
+		<meta name="keywords" content="{% block keywords %}{% endblock %}">
+    </head>
+    <body>
+		<div class="uk-container-center">
+			{% include "/applications/vkzip/layouts/blocks/navbar.html" %}
+			{% block body %}{% endblock %}
+		</div>
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="/libraries/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+		<script src="/applications/vkzip/source/js/vkzip.js"></script>
+    </body>
+</html>

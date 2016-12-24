@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru" xml:lang="ru">
+    <head>
+        <title>{% block title %} {% endblock %} | Где репа</title>
+		<meta name="description" content="{% block description %}{% endblock %}">
+		<meta name="keywords" content="{% block keywords %}{% endblock %}">
+		
+        <!-- <link rel="stylesheet" href="/libraries/uikit-2.27.2/css/uikit.min.css" /> -->
+		<link rel="stylesheet" href="/libraries/uikit-2.27.2/css/uikit.almost-flat.css" />
+		<!-- <link rel="stylesheet" href="/libraries/uikit-2.27.2/css/uikit.gradient.min.css" /> -->
+		
+        <link rel="stylesheet" href="{{app.css}}main.css">
+		{% block css %}{% endblock %}
+		
+		{% block head_include %}{% endblock %}
+    </head>
+<body>
+<div class="uk-container uk-container-center">
+	
+	<div class="uk-navbar uk-margin-bottom">
+		{% include app.layout~"navbar.html" %}
+	</div>
+	
+	<!--<h1>{% block headerTitle %}{% endblock %}</h1>-->
+	{% if errs %}
+		<aside>
+		{% for err in errs %}
+			<p class="errs">{{err}}</p>
+		{% endfor %}
+		</aside>
+	{% endif %}
+	
+	{% block content %} {% endblock %}
+	
+	<footer class="uk-width-1-1" style="font-size: 0.8em; color: #7b7b7b;">
+		<p>© «Где репа», 2015-2017. Все права на любые материалы, опубликованные на сайте, защищены в соответствии с российским и международным законодательством об авторском праве и смежных правах.<br>Использование любых аудио-, фото- и видеоматериалов, размещенных на сайте, допускается <strong>только с разрешения правообладателя</strong> и <strong>ссылкой на сайт <a href="//gderepa.ru">«Где репа»</a></strong>. При полной или&nbsp;частичной перепечатке текстовых материалов в интернете гиперссылка на «гдерепа.рф» обязательна. Адрес электронной почты для контакта с нами: <a href="mailto:admin@gderepa.ru">admin@gderepa.ru</a>. 0+
+		</p>
+	</footer>
+</div>
+
+{% include app.layout~"studios/modals.html" %}
+
+<script type="text/javascript" src="//vk.com/js/api/share.js?90" charset="windows-1251"></script>
+<script src="/libraries/jquery/jquery-1.9.1.min.js"></script>
+<script src="/libraries/uikit-2.27.2/js/uikit.min.js"></script>
+<script src="{{app.js}}functions.js"></script>
+<script src="{{app.js}}userpanel.js"></script>
+{% block js %} {% endblock %}
+
+</body>
+</html>

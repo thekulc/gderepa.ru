@@ -1,0 +1,20 @@
+{% extends "/source/index_sp.html" %}
+{% block title %} Регистрация {% endblock %}
+{% block js %}
+<script type="text/javascript" src="/source/js/jquery-ui-1.8.16.custom.min.js"></script>
+<script type="text/javascript" src="/source/js/jquery.ui.datepicker-ru.js"></script>
+<script type="text/javascript" src="/applications/users/source/js/users.js"></script>
+{% endblock %}
+{% block css %}<link rel="stylesheet" href="/source/css/redmond/jquery-ui-1.8.16.custom.css" type="text/css">{% endblock %}
+{% block body %}
+<h1>Регистрация</h1><a href="#reg-help" class="open-modal">Помощь</a>
+    <form action="/admin/users/?act=add&dev_mode=off" method="POST">
+        <label>Email:<input name="email" type="text"></label>
+        <label>Пароль:<input name="password" type="password"></label>
+        <label>Повторите пароль:<input type="password"></label>
+        <label>ФИО:<input type="text"></label>
+        <label>Дата рождения:<input readonly name="DOB" class="date" type="text"></label>
+        <label>Телефон:<input name="telephone" type="text"></label>
+        <input type="submit" value="Зарегистрироваться"> <input type="reset" value="Отмена">
+    </form>
+{% endblock %}

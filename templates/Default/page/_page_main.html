@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %} {% endblock %}</title>
+        <!--<link rel="stylesheet" href="/libraries/uikit/css/uikit.min.css" />-->
+		<link rel="stylesheet" href="/libraries/uikit/css/uikit.almost-flat.css" />
+        <link rel="stylesheet" href="{{app.css}}main.css">
+        <script src="/libraries/jquery/jquery-1.9.1.min.js"></script>
+        <script src="/libraries/uikit/js/uikit.min.js"></script>
+    </head>
+    <body>
+		<div class="uk-grid">
+			<div class="wrapper uk-container-center">
+				<header>
+				<nav class="uk-navbar">
+					<a href="/" class="uk-navbar-brand">&laquo;Когда репа&raquo; <sup>&copy; Kulc</sup></a>
+					{% include app.layout~"menu_top.html" %}
+					{% include app.layout~"users/user_panel.html" %}
+				</nav>
+				<h1>{% block headerTitle %}{% endblock %}</h1></header>
+				{% if errs %}
+					<aside>
+					{% for err in errs %}
+						<p class="errs">{{err}}</p>
+					{% endfor %}
+					</aside>
+				{% endif %}
+				<div class="content uk-grid-1-1">
+					{% block content %} {% endblock %}
+				</div>
+				<footer></footer>
+			</div>
+		</div>
+    </body>
+</html>

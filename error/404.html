@@ -1,0 +1,34 @@
+{% set pageTitle = "Страница не найдена" %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{pageTitle}} | Где репа?</title>
+        <!--<link rel="stylesheet" href="/libraries/uikit/css/uikit.min.css" />-->
+		<link rel="stylesheet" href="/libraries/uikit/css/uikit.almost-flat.css" />
+        <link rel="stylesheet" href="{{app.css}}main.css">
+		
+        <script src="/libraries/jquery/jquery-1.9.1.min.js"></script>
+        <script src="/libraries/uikit/js/uikit.min.js"></script>
+        <script src="{{app.js}}functions.js"></script>
+    </head>
+    <body>
+		<div class="uk-container uk-container-center">
+			<nav class="uk-navbar uk-margin-large-bottom">
+					<a href="/" class="uk-navbar-brand">Где репа <sup>&copy; Kulc</sup></a>
+					
+				</nav>
+			<div class="uk-grid">
+				<div class="uk-width-1-1">
+					<h1>{{pageTitle}}</h1>
+					<div class="content">
+						<p>Ошибка 404</p>
+					    <p><a href="/">На главную</a></p>
+					</div>
+
+					
+				</div>
+				<footer class="uk-grid"></footer>
+			</div>
+		</div>
+    </body>
+</html>

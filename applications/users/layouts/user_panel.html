@@ -1,0 +1,8 @@
+{% if globals.user %}
+<div class="user_panel">
+    <p><i>Панель пользователя</i></p>
+    <p><b>{{globals.user.FIO}}</b></p>
+    <p>login: <b>{{globals.user.login}}</b></p>
+    <p><a href="/users/logout/">Выход</a></p>
+</div>
+{% endif %}

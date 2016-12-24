@@ -1,0 +1,14 @@
+{% extends app.layout~"main.html" %}
+
+{% block title %} {{page.title|striptags}} {% endblock %}
+{% block headerTitle %}{{page.title|striptags}}{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="/libraries/uikit/css/components/autocomplete.almost-flat.min.css" />
+<link rel="stylesheet" href="/libraries/uikit/css/components/datepicker.almost-flat.min.css" />
+<script src="/libraries/uikit/js/components/autocomplete.min.js"></script>
+<script src="/libraries/uikit/js/components/timepicker.min.js"></script>
+<div class="">
+	<p>{{page.content}}</p>
+	{% include app.layout~"studios/formTimetable.html" %}
+</div>
+{% endblock %}

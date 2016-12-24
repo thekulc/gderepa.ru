@@ -1,0 +1,36 @@
+<table id="table">
+    <thead>
+    <tr>
+        <th>
+            alias
+        </th>
+        <th>
+            address
+        </th>
+        <th>
+            settings
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for k, v in aliases %}
+        <tr>
+            <td>
+                <a href="{{v.alias}}">{{v.alias}}</a>
+            </td>
+            <td>
+                <a href="{{v.address}}">{{v.address}}</a>
+            </td>
+            <td>
+                <a href="/admin/aliases/id{{v.id}}">edit</a>&nbsp;<a href="/admin/aliases/delete/id{{v.id}}">delete</a>
+            </td>
+        </tr>
+        {% else %}
+        <tfoot>
+            <tr>
+                <td colspan="4">Синонимы не найдены</td>
+            </tr>
+        </tfoot>
+        {% endfor %}
+    </tbody>
+</table>

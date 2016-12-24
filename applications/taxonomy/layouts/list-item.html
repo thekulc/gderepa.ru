@@ -1,0 +1,7 @@
+<li id='term_{{lTerm.id}}'>
+    <a class ="{% if lTerm.active %}active{% endif %}{% if term.id == lTerm.id %} current{% endif %}" href='{% if lTerm.alias %}{{lTerm.alias}}{% else %}/taxonomy/id{{lTerm.id}}{% endif %}' title="{{lTerm.name}}">{{lTerm.name}}<span></span></a>
+{% if lTerm.childs %}
+    {% set terms = lTerm.childs %}
+    {% include '/applications/taxonomy/layouts/list.html' %}
+{% endif %}
+</li>

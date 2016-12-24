@@ -1,0 +1,10 @@
+{% extends app.layout~"main.html" %}
+
+{% block title %} {{page.title|striptags}} {% endblock %}
+{% block headerTitle %} {{page.title|striptags}} {% endblock %}
+{% block content %} {% include app.layout~"studios/formAdd.html" %} {% endblock %}
+
+{% block js %}
+<script src="//api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+<script src="{{app.js}}studios.js"></script>
+{% endblock %}

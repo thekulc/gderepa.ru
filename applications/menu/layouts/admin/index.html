@@ -1,0 +1,18 @@
+{% extends "/source/admin.html" %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{app.menu.css}}menu.css">
+{% endblock %}
+{% block js %}
+    <script type="text/javascript" src="{{app.menu.js}}menu.js"></script>
+{% endblock %}
+
+{% block pageTitle %}
+        <h1>Меню</h1>
+        <a href="/admin/menu/add/">Добавить</a>
+{% endblock %}
+
+{% block body %}
+{{object}}
+{% endblock %}
+
+

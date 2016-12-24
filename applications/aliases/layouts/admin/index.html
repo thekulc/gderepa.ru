@@ -1,0 +1,18 @@
+{% extends "/source/admin.html" %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{app.aliases.css}}aliases.css">
+{% endblock %}
+{% block js %}
+    <script type="text/javascript" src="{{app.aliases.js}}aliases.js"></script>
+{% endblock %}
+
+{% block pageTitle %}
+        <h1>Синонимы</h1>
+        Всего: <b>{{count}}</b> <a href="/admin/aliases/add/">Добавить</a>
+{% endblock %}
+
+{% block body %}
+    {{object}}
+{% endblock %}
+
+

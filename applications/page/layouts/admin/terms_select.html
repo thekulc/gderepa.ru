@@ -1,0 +1,17 @@
+{% if terms %}
+<select name="parent_id">
+    <option value="-1">Без родителя</option>
+    {% for term_item in terms %}
+        {% if term_item.id != term.id %}
+            <option value="{{term_item.id}}" {% if term_item.id == page.parent_id %} selected="selected" {% endif %} >{{term_item.title}}</option>
+        {% endif %}
+    {% else %}
+    <option disabled="disabled">
+        Термины не привязаны
+    </option>
+    {% endfor %}
+</select>
+
+{% else %}
+<span>В системе еще нет терминов. <a href="/admin/taxonomy/add">Добавить</a> </span>
+{% endif %}

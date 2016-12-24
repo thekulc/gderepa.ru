@@ -1,0 +1,10 @@
+{% if object %}
+    <div class="object image" id="mo_{{object.id}}">
+        <center>
+        <a href="{{object.uri}}">
+            <img src="{{object.uri}}" alt="">
+        </a>
+            </center>
+        {% include "/applications/taxonomy/layouts/print_objects/control_panel.html" %}
+    </div>
+{% endif %}

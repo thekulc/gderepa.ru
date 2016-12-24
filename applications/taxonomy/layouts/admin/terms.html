@@ -1,0 +1,24 @@
+{% if terms %}
+<table id="table">
+    <thead>
+        <tr>
+            <td>ID</td>
+            <td>name</td>
+            <td>alias</td>
+            <td>type</td>
+            <td width="250">edit</td>
+        </tr>
+    </thead>
+    {% for term in terms %}
+    <tr>
+        <td>{{term.id}}</td>
+        <td><a title='Смотреть "{{term.name}}"' href="/taxonomy/id{{term.id}}">{{term.name | truncate(50)}}</a></td>
+        <td><a href="{{term.alias}}">{{term.alias}}</a></td>
+        <td>{% if term.type_description %}{{term.type_description}}{% else %} тип не задан {% endif %}</td>
+        <td><a class="chooseObjects" href="/admin/taxonomy/#id{{term.id}}/objects">objects</a> | <a href="/admin/taxonomy/id{{term.id}}">edit</a> | <a href="/admin/taxonomy/delete/id{{term.id}}">delete</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %} 
+<div>Терминиы не найдены</div>
+{% endif %}

@@ -1,0 +1,13 @@
+{% extends "/source/admin.html" %}
+{% block body %}
+<form action="/admin/users/add" class="back_form" method="POST">
+    <label>ФИО: <input onblur="valid(this,1,255);" name="fio" type="text"><span> * </span></label>    
+    <label>Login: <input onblur="checkLogin(this);" name="login" type="text"><span> * </span></label>
+    <label>Пароль <input onblur="valid(this,6,255);" name="password" type="password"><span> * </span></label>        
+    <label>Повторите пароль <input onblur="onPassWright(this);" id="pass" type="password"><span> * </span></label>
+    <label>Email: <input onblur="mailValid(this)" type="email" name="email"><span> * </span></label>
+    <label>Роли: {% include "/applications/users/layouts/admin/roles_select.html" %}
+    </label>
+    <input type="submit" value="Добавить"> <a href="/admin/users/">Назад</a>
+</form>
+{% endblock %}

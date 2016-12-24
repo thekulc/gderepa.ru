@@ -1,0 +1,19 @@
+{% extends "/source/admin.html" %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{app.taxonomy.css}}taxonomy.css">
+{% endblock %}
+{% block js %}
+    <script type="text/javascript" src="{{app.taxonomy.js}}taxonomy.js"></script>
+{% endblock %}
+
+{% block pageTitle %}
+<h1>Таксономия</h1>
+<a href="/admin/taxonomy/add">Добавить</a>
+{% endblock %}
+
+{% block body %}
+
+{{ data }}
+{% endblock %}
+
+

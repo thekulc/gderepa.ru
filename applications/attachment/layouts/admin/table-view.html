@@ -1,0 +1,29 @@
+{% extends "/applications/attachment/layouts/admin/index.html" %}
+{% block body %}
+{% if attachments %}
+<table id="table">
+    <thead>
+        <tr>
+            <td>id</td>
+            <td>filename</td>
+            <td>title</td>
+            <td>type</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for attachment in attachments %}
+        <tr>
+            <td>{{attachment.id}}</td>
+            <td><a href="/admin/attachment/id{{attachment.id}}">{{attachment.filename}}</a></td>
+            <td>{{attachment.title}}</td>
+            <td>{{attachment.type}}</td>
+            <td><a href="/admin/attachment/id{{attachment.id}}">edit</a> | <a href="/admin/attachment/delete/id{{attachment.id}}">delete</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>Файлы в базе не найдены</p>
+{% endif %}
+{% endblock %}

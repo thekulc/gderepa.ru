@@ -1,0 +1,20 @@
+{% extends "/source/admin.html" %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{app.blocks.css}}blocks.css">
+{% endblock %}
+{% block js %}
+    <script type="text/javascript" src="/source/js/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="/source/js/ckfinder/ckfinder.js"></script>
+    <script type="text/javascript" src="{{app.blocks.js}}blocks_admin.js"></script>
+{% endblock %}
+
+{% block pageTitle %}
+        <h1>Блоки</h1> Внимание! Данные этого раздела не рекомендуется изменять пользователям, не особо понимающим сути происходящего!
+        <br/><a href="/admin/blocks/add/">Добавить</a>
+{% endblock %}
+
+{% block body %}
+{{object}}
+{% endblock %}
+
+

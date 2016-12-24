@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <title>{% block title %}{% endblock %} | VKzip by Kulc</title>
+		<meta name="description" content="{% block description %}{% endblock %}">
+		<meta name="keywords" content="{% block keywords %}{% endblock %}">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="/libraries/bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="/applications/vkzip/source/css/theme.css" />
+		{% block css %}{% endblock %}
+		{% block head_include %}{% endblock %}
+    </head>
+    <body>
+		
+		{% block before_container %}{% endblock %}
+		
+		<div class="container">
+			{% include "/applications/vkzip/layouts/blocks/navbar.html" %}
+			{% block body %}{% endblock %}
+		</div>
+		
+		{% block after_container %}{% endblock %}
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="/libraries/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+		<script src="/libraries/bootstrap-checkbox-1.4.0/js/bootstrap-checkbox.min.js"></script>
+		<script src="/applications/vkzip/source/js/vkzip.js"></script>
+		{% block js %}{% endblock %}
+    </body>
+</html>

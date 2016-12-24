@@ -1,0 +1,14 @@
+<form action="/admin/page/add" method="POST">
+    <label>Название: <input name="title" type="text" required="required"></label>
+    <label>Название для меню: <input name="menu_title" type="text"></label>
+    <label>Синоним: <input name="alias" type="text"></label>
+    <label>Изображение: <input name="icon" type="file"></label>
+    <label>Родитель: {% include "/applications/page/layouts/admin/terms_select.html" %} </label>
+    <label>Данные в head: <input name="inhead" type="text"></label>
+    <label>Позиция в меню (не показывать: -1): <input name="menu_place" type="text" value="0"></label>
+    <label>Блоки: {% include "/applications/blocks/layouts/admin/blocks_select.html" %} </label>
+    <label style="text-align: left;">Содержимое:
+        <textarea id="editor1" name="body"></textarea>
+    </label>
+    <input type="submit" value="Добавить"><a href="/admin/page/">Назад</a>
+</form>

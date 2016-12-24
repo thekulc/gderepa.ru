@@ -1,0 +1,16 @@
+<div class="uk-grid uk-margin-bottom">	
+	<div class="uk-width-7-10 navLinks">
+	{% for preDate in preLocal_dates %}
+		<a class="uk-button-link uk-text-large" href="?date={{preDate.link}}">{{preDate.monthName}}</a> 
+	{% endfor %}
+		<a class="uk-button-link uk-text-large" href="?date={{localdate.prevDate.link}}" title="{{localdate.prevDate.monthName}}">{{localdate.prevDate.monthName}}</a> 
+		<a style="font-size: 1.8em;" class="uk-button-link uk-link-muted uk-text-large" href="/calendar/?date={{localdate.choosed.link}}" title="{{localdate.choosed.monthName}}">{{localdate.choosed.monthName}}</a>
+	{% for postDate in postLocal_dates %}
+		<a class="uk-button-link uk-text-large" href="?date={{postDate.link}}">{{postDate.monthName}}</a> 
+	{% endfor %}
+	</div>
+	<div class="uk-width-3-10 uk-text-right">
+		<a class="uk-text-large" href="?">Сейчас {{localdate.today.monthName}} {{localdate.today.year}}</a>
+	</div>
+
+</div>

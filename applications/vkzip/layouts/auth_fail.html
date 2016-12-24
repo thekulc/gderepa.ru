@@ -1,0 +1,30 @@
+{% extends "/applications/vkzip/layouts/main.html" %}
+
+{% block js %}
+	<script>
+		window.close();
+	</script>
+
+{% endblock %}
+
+{% block title %} {{page.title}} {% endblock %}
+{% block description %} {{page.description}} {% endblock %}
+{% block keywords %} {{page.keywords}} {% endblock %}
+
+{% block body %}
+	<div class="alert alert-danger" role="alert">
+		Запрос был отклонен или код не был получен системой
+	</div>
+	<div class="row">
+		{{body}}
+	</div>
+	
+{% endblock %}
+
+{% block after_container %}
+	<nav class="navbar navbar-default navbar-fixed-bottom">
+		<div class="container">
+			<button type="button" onclick="window.close()"; class="btn btn-primary navbar-btn pull-right">Закрыть</button>
+		</div>
+	</nav>
+{% endblock %}

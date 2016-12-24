@@ -1,0 +1,21 @@
+{% if page.id %}
+<form action="/admin/page/edit/id{{page.id}}" method="POST" enctype="multipart/form-data">
+    <label>id: <input readonly="readonly" type="text" value="{{page.id}}"></label>
+    <label>title: <input name="title" required="required" type="text" value="{{page.title|e}}"></label>
+    <label>alias: <input name="alias" type="text" value="{{page.alias}}"></label>
+    {% if page.icon %}
+    <label><input type="checkbox" name="icon_remove">Удалить <img style="" width="50" alt="" src="/uploads/files/images/{{page.icon}}"></label>
+    {% else %}
+        <label>icon: <input name="icon" type="file"></label>
+    {% endif %}
+    <label>Родитель: {% include "/applications/page/layouts/admin/terms_select.html" %} </label>
+    <label>data to head: <input type="text" style="height: 3em; vertical-align: top" name="inhead" value="{{page.inhead}}"></label>
+    <label>title menu: <input name="menu_title" type="text" value="{{page.menu_title}}"></label>
+    <label>Позиция в меню (не показывать: -1): <input name="menu_place" type="text" value="{{page.menu_place}}"></label>
+    <label>Блоки: {% include "/applications/blocks/layouts/admin/blocks_select.html" %} </label>
+    <label style="text-align: left;">body: <textarea id="editor1" name="body">{{page.body}}</textarea></label>
+    <input type="submit" value="Сохранить"><a class="back" href="/admin/page/">Назад</a>
+</form>
+{% else %}
+
+{% endif %}

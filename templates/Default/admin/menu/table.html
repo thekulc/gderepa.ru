@@ -1,0 +1,47 @@
+<table id="table">
+    <thead>
+        <tr>
+            <th>
+		title
+            </th>
+            <th>
+                address
+            </th>
+            <th>
+                position
+            </th>
+            <th>
+                alias
+            </th>
+            <th>settings</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for menuItem in menu %}
+        <tr>
+            <td>
+                <a href="/admin/menu/id{{menuItem.id}}">{{ menuItem.title }}</a>
+            </td>
+            <td>
+                <a href ="{{menuItem.address}}">{{ menuItem.address }}</a>
+            </td>
+            <td>
+                {{ menuItem.position }}
+            </td>
+            <td>
+                {% if menuItem.alias %}{{ menuItem.alias }}{% else %} нет {% endif %}
+            </td>
+            <td>
+                <a href="/admin/menu/id{{menuItem.id}}/">edit</a>&nbsp;
+                <a href="/admin/menu/delete/id{{menuItem.id}}">delete</a>
+            </td>
+        </tr>
+        {% else %}
+        <tfoot>
+            <tr>
+                <td colspan="5">Меню не настроено не найдены. <a href="/admin/menu/add">Создать пункт меню</a></td>
+            </tr>
+        </tfoot>
+        {% endfor %}
+    </tbody>
+</table>

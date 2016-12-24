@@ -1,0 +1,23 @@
+{% extends app.layout~"/main.html" %}
+
+{% block js %}
+	<script>
+		window.close();
+	</script>
+
+{% endblock %}
+
+{% block title %} {{page.title}} {% endblock %}
+{% block description %} {{page.description}} {% endblock %}
+{% block keywords %} {{page.keywords}} {% endblock %}
+
+{% block content %}
+	<div class="uk-alert uk-alert-danger" role="alert">
+		Запрос был отклонен или код не был получен системой
+	</div>
+	<div class="uk-clearfix">
+	<button onclick="window.close()"; class="uk-button uk-button-primary uk-float-right">Закрыть</button>
+	</div>
+	{{body}}
+	
+{% endblock %}

@@ -1,0 +1,15 @@
+{% if term %}
+{% set branch = term.branch %}
+
+<div class="breadcrumbs">
+    <a href="/">Главная</a> &rarr; <a href="/taxonomy">Мультимедиа материалы</a>
+    {% for term in branch %}
+        &rarr; <a href="{{term.alias}}">{{ term.name }}</a>
+    {% endfor %}
+    &rarr; <span>{{term.name}}</span>
+</div>
+{% endif %}
+
+
+
+

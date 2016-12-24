@@ -1,0 +1,22 @@
+{% extends "/source/admin.html" %}
+{% block css %}{{app.page.css}}
+    <link rel="stylesheet" type="text/css" href="{{app.css}}page.css">
+{% endblock %}
+{% block js %}
+    <script type="text/javascript" src="/source/js/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="/source/js/ckfinder/ckfinder.js"></script>
+    <script type="text/javascript" src="/source/js/ckeditor/adapters/jquery.js"></script>
+    <script type="text/javascript" src="/applications/page/source/js/page_admin.js"></script>
+{% endblock %}
+
+{% block pageTitle %}
+        <h1>Страницы</h1>
+        <a href="/admin/page/add">Добавить</a>
+{% endblock %}
+
+{% block body %}
+
+{{data}}
+{% endblock %}
+
+

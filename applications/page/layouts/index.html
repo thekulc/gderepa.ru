@@ -1,0 +1,31 @@
+{% extends "/source/index.html" %}
+{% block css %}
+    
+{% endblock %}
+{% block js %}
+    
+{% endblock %}
+
+{% block inhead %}
+ {{page.inhead}}
+{% endblock %} 
+
+
+{% block title %}
+    {{page.title|striptags}}
+{% endblock %}
+
+{% block body %}
+<h1>{{page.title}}</h1>
+<div>
+    
+    {{page.body}}
+    
+    {% for k,v in page.blocks %}
+        {{v.body}}
+    {% endfor %}
+    
+</div>
+    
+{% endblock %}
+

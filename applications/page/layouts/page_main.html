@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<title>{{page.title}} | Агрегатор</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link href="/source/css/style.css" rel="stylesheet">
+        <link href="/source/css/menu.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/applications/taxonomy/source/css/taxonomy.css">
+        {% block css %} {% endblock %}
+        {% block inhead %} {% endblock %}
+        <!--<script src="/source/js/jquery-1.9.1.min.js"></script>-->
+        <script src="/applications/page/source/js/jq126.js"></script>
+        <!--<script src="/applications/page/source/js/includeFrame.js"></script>-->
+        <script src="/source/js/functions.js"></script>
+        
+        {% block js %} {% endblock %}
+</head>
+
+<body> 
+<div class="wrapper">
+
+	<header class="header">
+		<!--<strong>Header:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tortor. Praesent dictum, libero ut tempus dictum, neque eros elementum mauris, quis mollis arcu velit ac diam. Etiam neque. Quisque nec turpis. Aliquam arcu nulla, dictum et, lacinia a, mollis in, ante. Sed eu felis in elit tempor venenatis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut ultricies porttitor purus. Proin non tellus at ligula fringilla tristique. Fusce vehicula quam. Curabitur vel tortor vitae pede imperdiet ultrices. Sed tortor.-->
+	</header><!-- .header-->
+
+	<div class="middle">
+
+		<div class="container">
+			<main class="content">
+                            <h1>{{page.title}}</h1>
+                            {{page.body}}
+			</main><!-- .content -->
+		</div><!-- .container-->
+
+		<aside style="display: none;" class="left-sidebar">
+                        {% block leftsidebar %} {% endblock %}
+		</aside><!-- .left-sidebar -->
+
+	</div><!-- .middle-->
+
+</div><!-- .wrapper -->
+
+<footer class="footer">
+	<!--<strong>Footer:</strong> Mus elit Morbi mus enim lacus at quis Nam eget morbi. Et semper urna urna non at cursus dolor vestibulum neque enim. Tellus interdum at laoreet laoreet lacinia lacinia sed Quisque justo quis. Hendrerit scelerisque lorem elit orci tempor tincidunt enim Phasellus dignissim tincidunt. Nunc vel et Sed nisl Vestibulum odio montes Aliquam volutpat pellentesque. Ut pede sagittis et quis nunc gravida porttitor ligula.-->
+</footer><!-- .footer -->
+
+</body>
+</html>

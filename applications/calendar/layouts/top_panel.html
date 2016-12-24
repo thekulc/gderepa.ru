@@ -1,0 +1,31 @@
+{% if user %}
+<ul id="dropdown1" class="dropdown-content">
+	<li><a href="mailto:thekulc@gmail.com"><i class="material-icons left">email</i>to Kulc</a></li>
+	<li class="divider"></li>
+	<li><a id="logoutBtn" href="/users/logout"><i class="material-icons left">lock_outline</i>Выйти</a></li>
+</ul>
+{% endif %}
+<nav style="width: 988px; margin: 0 auto;">
+    <div class="nav-wrapper red lighten-2">
+		<ul class="calendar-nav">
+			<li><a class="btn waves-effect waves-light teal lighten-4 black-text" title="Расписание репетиционной студии на {{localdate.today|date('F Y')}}" href="/calendar/"><i class="material-icons left">today</i> {{localdate.today|date('F Y')}}</a></li>
+		</ul>
+		
+		
+		<ul class="calendar-nav brand-logo center">
+			<li><a class="btn teal lighten-4 black-text" href="/calendar/?date={{localdate.prevDate}}" title="{{localdate.prevDate|date('F')}}"><i class="material-icons left">fast_rewind</i> {{localdate.prevDate|date('F')}}</a></li>
+			<li style="font-size:2rem">{{localdate.choosed|date('F')}}</li>
+			<li><a class="btn teal lighten-4 black-text" href="/calendar/?date={{localdate.nextDate}}" title="{{localdate.nextDate|date('F')}}">{{localdate.nextDate|date('F')}} <i class="material-icons right">fast_forward</i></a></li>
+		</ul>
+		<ul id="calendar-user-nav" class="right">
+			
+			<li {% if pub %}class="active"{% endif %}><a title="Обновления" href="/calendar/publications"><i class="material-icons">info_outline</i></a></li>
+			
+			{% if user %}
+				<li><a id="user_button" data-user_id="{{user.id}}" data-user_login="{{user.login}}" class="dropdown-button truncate" href="#!" data-activates="dropdown1" data-constrainwidth="true"><i class="material-icons left">person_pin</i>Привет, <b>{{user.login}}</b></a></li>
+			{% else %}
+				<li><a href="#modal1" class="modal-trigger"><i class="material-icons left">perm_identity</i>Войти</a></li>
+			{% endif %}
+		</ul>
+    </div>
+</nav>

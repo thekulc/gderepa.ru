@@ -1,0 +1,58 @@
+{% extends app.layout~"main.html" %}
+
+{% block title %}{{page.title|striptags}}{% endblock %}
+{% block headerTitle %}{{page.title|striptags}}{% endblock %}
+
+{% block css %}
+<link href="{{app.css}}calendar.css" rel="stylesheet">
+{% endblock %}
+{% block js %}
+<script src="{{app.js}}calendar.js"></script>
+
+<script src="//api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+<script src="{{app.js}}studios.js"></script>
+{% endblock %}
+
+{% block content %}
+	{% if device.isTablet() or device.isMobile() %}
+		{% include app.layout~"users/mobile-userMenu.html" %}
+		<div id="mobile-menu" class="uk-offcanvas">
+			<div class="uk-offcanvas-bar">
+				{% include app.layout~"studios/studio-panel.html" %}
+			</div>
+		</div>
+		{% if menu.active == "studio" %}
+				{% include app.layout~"studios/studio.html" %}
+			{% endif %}
+			{% if menu.active == "week" %}
+				{% include app.layout~"studios/week.html" %}
+			{% endif %}
+			{% if menu.active == "month" %}
+				{% include app.layout~"studios/month.html" %}
+			{% endif %}
+			{% if menu.active == "gear" %}
+				{% include app.layout~"studios/gear.html" %}
+			{% endif %}
+	{% else %}
+	<div class="uk-grid">
+		<div class="uk-width-1-1 uk-width-medium-1-1 uk-width-small-1-1 uk-width-large-2-10">
+			{% include app.layout~"studios/studio-panel.html" %}
+		</div>
+		<div class="uk-width-1-1 uk-width-medium-1-1 uk-width-small-1-1 uk-width-large-8-10">
+			{% if menu.active == "studio" %}
+				{% include app.layout~"studios/studio.html" %}
+			{% endif %}
+			{% if menu.active == "week" %}
+				{% include app.layout~"studios/week.html" %}
+			{% endif %}
+			{% if menu.active == "month" %}
+				{% include app.layout~"studios/month.html" %}
+			{% endif %}
+			{% if menu.active == "gear" %}
+				{% include app.layout~"studios/gear.html" %}
+			{% endif %}
+		</div>
+	</div>
+	{% endif %}
+
+{% endblock %}

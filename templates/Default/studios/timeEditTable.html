@@ -1,0 +1,25 @@
+<table class="uk-table" data-daysName="{{days}}">
+	<thead>
+		<tr>
+			<th>Начало</th>
+			<th>Продолжительность</th>
+			<th>Стоимость</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for times in timetable %}
+		
+		{% else %}
+		<tr class="uk-table-middle templatePeriod">
+			<td><input class="uk-form-width-small" data-uk-timepicker="{format:'24h'}" type="text" name="{{days}}[start_time][]" value="08:00" required></td>
+			<td><input class="uk-form-width-small" data-uk-timepicker="{format:'24h'}" type="text" name="{{days}}[duration][]" value="02:00" required></td>
+			<td><input type="text" name="{{days}}[cost][]"> руб.</td>
+			<td style="text-align: right;"><a title='Удалить период' onclick="removePeriod(this);return false;" class="uk-button uk-button-danger removePeriodButton" href="#"><i class="uk-icon-remove"></i></a></td>
+		</tr>
+		{% endfor %}
+	</tbody>
+	<tfoot>
+		<tr><td colspan='4'><a class="addPeriodButton" href="#">Добавить период</a></td></tr>
+	</tfoot>
+</table>

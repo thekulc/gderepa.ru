@@ -1,0 +1,29 @@
+<div class="calendar-container">
+{% if calendar %}
+	{% include globals.layoutPath~"calendar/navLinks.html" %}
+	
+		{% for week in calendar %}
+		<div class="uk-flex uk-flex-space-around week">
+			{% for day in week %}
+			<div {% if day.date|date('d-m-Y') == localdate.today.date|date('d-m-Y') %}class="day-container today" title="Сегодня" {%else%}class="day-container"{% endif %} data-date="{{ day.date|date('Y-m-d') }}">
+				
+				{% if day.events %}
+				<div class="uk-panel uk-panel-header{% if localdate.choosed.link != day.date|date('Y-m') %} notThisMonth{% endif %}">
+					<h3 class="uk-panel-title uk-text-center">
+						{% if localdate.choosed.link != day.date|date('Y-m') %}
+							{{ lang._rus[day.date|date('m')] }}
+						{% endif %}
+						{{ day.date|date('d') }}
+					</h3>
+					{% include globals.layoutPath~"calendar/dayEventList.html" %}
+				</div>
+				{% endif %}
+			</div>
+			{% endfor %}
+		</div>
+		{% endfor %}
+{% else %}
+	<div class="uk-alert uk-alert-danger" role="alert">Данные не получены</div>
+{% endif %}
+
+</div>

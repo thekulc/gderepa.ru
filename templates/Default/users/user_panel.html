@@ -1,0 +1,22 @@
+<ul class="uk-navbar-nav">
+{% if app.session.vk_user.domain %}
+	{% if device.isTablet() or device.isMobile() %}
+	<li>
+		<a data-uk-offcanvas="{mode:'none', target:'#mobile-userMenu'}" href="/user/{{app.session.vk_user.user_id}}"><img class="uk-border-rounded uk-margin-small-right" style="max-height:2em" src="{{app.session.vk_user.photo_50}}">  {{app.session.vk_user.first_name}} {{app.session.vk_user.last_name}} <i class="uk-icon-navicon"></i></a>
+	</li>
+	{% else %}
+	<li class="uk-parent" data-uk-dropdown="{mode:'click'}">
+		<a><img class="uk-border-rounded uk-margin-small-right" style="max-height:2em" src="{{app.session.vk_user.photo_50}}">  {{app.session.vk_user.first_name}} {{app.session.vk_user.last_name}} <i class="uk-icon-caret-down"></i></a>
+		<div class="uk-dropdown uk-dropdown-navbar uk-dropdown-flip">
+			<ul class="uk-nav uk-nav-navbar">
+				{% include app.layout~"users/user_menu.html" %}
+			</ul>
+		</div>
+	</li>
+	{% endif %}
+{% else %}
+<li>
+	<a id="btnLogin" href="/calendar/auth">Вход</a>
+</li>
+{% endif %}
+</ul>

@@ -1,0 +1,19 @@
+{% extends "/applications/vkzip/layouts/main.html" %}
+
+{% block js %} <script>if(window.opener) window.opener.location.reload();window.close();</script> {%endblock%}
+
+{% block title %} {{page.title}} {% endblock %}
+{% block description %} {{page.description}} {% endblock %}
+{% block keywords %} {{page.keywords}} {% endblock %}
+
+{% block body %}
+
+
+<div class="jumbotron">
+  <h2>Вы отклонили запрос или код не был получен системой</h2>
+  <p><a class="btn btn-primary" onclick="window.close()"; role="button">Закрыть</a> <a style="float: right;" href="mailto:am@kulc.pro" class="btn btn-link">am@kulc.pro</a></p>
+</div>
+<div class="row">
+	{{body}}
+</div>
+{% endblock %}

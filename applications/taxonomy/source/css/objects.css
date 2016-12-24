@@ -1,0 +1,93 @@
+.object{
+    min-width: 128px;
+    background: #f1f1e3;
+    margin: 15px 0 0 5px;
+    border-bottom: 1px solid gray;
+    position: relative;
+    overflow: hidden;
+}
+
+.object.term{
+    
+}
+
+.object.term > img{
+    max-width: 40px;
+    max-height: 40px;
+    float: left;
+    margin-right: 10px;
+}
+
+.object.term > div{
+    margin-top: 5px;
+}
+
+.object.image{
+    float: left;
+    display: inline-block;
+}
+
+.object.image > center > a{
+    margin: 2px 2px 0px 2px;
+    display: inline-block;
+}
+
+.object.image > center > a > img{
+    max-width: 100%;
+    max-height: 156px;
+}
+
+.mObject-list{
+    position: relative;
+}
+
+.mObject-list .panel-control .rating{
+    padding: 2px 0 0 0;
+    display: inline-block;
+    line-height: 1em;
+}
+
+.mObject-list .panel-control .rating > a,
+.mObject-list .panel-control .rating.to > .rate
+{
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    text-decoration: none;
+    background: url("/applications/taxonomy/source/images/icon-emptystar.png") no-repeat;
+}
+
+.mObject-list .panel-control .rating > a.rate, 
+.mObject-list .panel-control .rating.to > a.to
+{
+    background: url("/applications/taxonomy/source/images/icon-fullstar.png") no-repeat;
+}
+
+.panel-control .control{
+    float: right;
+    margin: 0 5px 0 0;
+}
+
+.panel-control > span {
+    margin: 0 0 0 5px;
+    cursor: default;
+}
+
+.panel-control > span > img{
+    cursor: pointer;
+}
+
+.rating > img{
+    width: 12px;
+}
+
+.control > label{
+    font-size: 12px;
+}
+
+.panel-control a.add{
+    background-image: url('../images/icon-packarchive.png');
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+}

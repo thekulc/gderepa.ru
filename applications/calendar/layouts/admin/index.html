@@ -1,0 +1,24 @@
+{% extends "/source/admin.html" %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{app.calendar.css}}calendar.css">
+{% endblock %}
+{% block js %}
+    <script type="text/javascript" src="{{app.calendar.js}}calendar_admin.js"></script>
+{% endblock %}
+{% block pageTitle %}
+<h1>Календарь</h1>
+{% endblock %}
+
+{% block body %}
+
+{% if event %}
+    {% include '/applications/calendar/layouts/admin/form.html' %}
+{% elseif calendar %}
+    {% include '/applications/calendar/layouts/admin/calendar.html' %}
+{% elseif object %}
+{{object}}
+{% else %}
+    События не найдены
+{% endif %}
+
+{% endblock %}

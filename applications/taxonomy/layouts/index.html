@@ -1,0 +1,37 @@
+{% extends "/source/index.html" %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{app.taxonomy.css}}objects.css">
+    <link rel="stylesheet" type="text/css" href="/source/css/highslide.css">
+{% endblock %}
+{% block js %}
+    <script type="text/javascript" src="/source/js/highslide-with-gallery.js"></script>
+    <script type="text/javascript" src={{app.taxonomy.js}}taxonomy.js></script>
+    <script type="text/javascript" src={{app.taxonomy.js}}rating.js></script>
+{% endblock %}
+
+{% block title %} {% if term %} {{term.name}} :: {% endif %} Разделы {% endblock %}
+{% block pageTitle %} Мультимедиа материалы {% endblock %}
+
+{% block body %}
+{% include '/applications/taxonomy/layouts/branch_parent.html' %}
+{% if term %}
+<h2>{{term.name}}</h2>
+<div class="term-description">
+    {{term.description}}
+</div>
+<hr>
+    {% set mObjects = term.mObjects %}
+    {% include '/applications/taxonomy/layouts/mObject_list.html' %}
+
+{% elseif message  %}
+    
+        {{message}}
+    
+{% endif %}
+
+{% endblock %}
+{% block leftsidebar %}
+<div class="menu" style='margin-left: 15px;'>
+    {% include '/source/global-taxonomy-list.html' %}
+    </div>
+{% endblock %}

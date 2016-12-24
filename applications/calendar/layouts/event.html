@@ -1,0 +1,113 @@
+<!-- block event -->
+{% if event %}
+	<div class="event container">
+		<div class="card">
+			<div class="card-content">
+				<span class="card-title">{{event.title}}</span>
+				
+				<ul class="event-info collection">
+					<li class="collection-item">
+						<p><i class="material-icons left">query_builder</i> Время: <span class="secondary-content">{{event.date|date('H:i')}}</span></p>
+					</li>
+					<li class="collection-item">
+						<p><i class="material-icons left">today</i> Дата: <span class="secondary-content">{{event.date|date('l, d F Y')}}</span></p>
+					</li>
+					<li class="collection-item">
+						<div id="datepicker"></div>
+					</li>
+					{% if event.contacts %}<li class="collection-item"><i class="material-icons left">perm_identity</i> Контакты: <span style="float: none;" class="secondary-content">{{event.contacts}}</span></li>{% endif %}
+				</ul>
+			</div>
+			<div class="card-action">
+				<a id="vk_share_btn" class="btn teal lighten-4 grey-text text-darken-4 waves-effect waves-purple" href="http://vk.com/share.php?url={{event.url}}">Поделиться</a> 
+				<a class="btn-flat lime lighten-3 grey-text text-darken-3 waves-effect waves-green" href="javascript:history.go(-1);">Назад</a>
+			</div>
+		</div>
+	</div>
+	
+	<link href="/applications/calendar/source/js/air-datepicker/css/datepicker.css?v1" rel="stylesheet" type="text/css">
+	<script src="/applications/calendar/source/js/air-datepicker/js/datepicker.js"></script>
+	
+	<script>
+		var url_params = {url: location.href};
+		var btn_params = {type: 'custom', text: 'Поделиться'}
+		//btn_params = {type: 'custom', text: '<img src="http://vk.com/images/vk32.png" title="Поделиться в VK" />'};
+		$btn = $(VK.Share.button(url_params, btn_params));
+		$btn.css({"padding-right": "10px", "line-height": "100%"}).addClass("btn teal lighten-4 grey-text text-darken-4 waves-effect waves-purple").html("Поделиться").attr("style", "");
+		$("#vk_share_btn").replaceWith($btn);
+		var start_time = "{{event.date|date('d M Y H:i')}}";
+		var d = new Date();
+		d.setTime(Date.parse(start_time));
+		var lTime = ('0'+d.getHours()).slice(-2) +":"+ ('0'+d.getMinutes()).slice(-2);
+		
+		var time = d.getHours() + ":" + d.getMinutes();
+		
+		var picker = $('#datepicker').datepicker({
+				'startDate':d,
+				'minDate':d,
+				'maxDate':d,
+				navTitles: {
+					days: 'dd MM, yyyy в ' + lTime
+				},
+				onRenderCell: function (lDate, cellType) {
+					
+					var curDateStr = lDate.getFullYear() + '-' + lDate.getDate() + '-' + lDate.getDay();
+					var eventStartStr = d.getFullYear() + '-' + d.getDate() + '-' + d.getDay();
+					if (curDateStr == eventStartStr){
+						return {
+							html: d.getDate() + '<br>' + lTime
+						}
+					}
+					
+					// Добавляем вспомогательный элемент, если число содержится в `eventDates`
+					/*
+					if (cellType == 'day' && eventDates.indexOf(currentDate) != -1) {
+						return {
+							html: currentDate + '<span class="dp-note"></span>'
+						}
+					}
+					*/
+				}
+
+			})
+			.data('datepicker');
+		picker.selectDate(d);
+		$("#datepicker .datepicker--time").addClass("secondary-content");
+		
+		
+		
+	</script>
+	<style>
+		#datepicker{
+			margin-top: 10px;
+		}
+		.datepicker{
+			width: 100%;
+		}
+		.datepicker--time{
+			float: none;
+		}
+		.datepicker--time-current{
+			font-size: 1.5em;
+		}
+		.datepicker .datepicker--time-sliders{
+			display: none;
+		}
+		.event .event-info{
+			font-size: 1.3em;
+		}
+		.event-info li .secondary-content{
+			float: none;
+		}
+		.datepicker--nav{
+			display:none;
+		}
+		.datepicker--cell.datepicker--cell-day.-selected-{
+			text-align: center;
+		}
+		.datepicker--cell.datepicker--cell-day{
+			height: 40px;
+		}
+	</style>
+{% endif %}
+<!-- end block event -->

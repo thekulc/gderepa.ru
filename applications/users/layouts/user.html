@@ -1,0 +1,28 @@
+{% extends "/source/index.html" %}
+{% block title %}{{catTitle}} {% endblock %}
+{% block js %}
+{% endblock %}
+{% block css %}
+{% endblock %}
+
+{% block body %}
+    {% if user %}
+    <form method="get">
+        <label style="display: block;" for="email">Email:</label>
+        <input onblur="checkLogin(this);" id="logs" name="email" type="text" value="{{user.login}}"><span> * </span>
+        <label style="display: block;" for="password">Пароль</label>
+        <input onblur="valid(this,6,255);" id="pwd" name="password" type="password"><span> * </span>
+        <label style="display: block;" for="pass">Повторите пароль</label>
+        <input onblur="onPassWright(this);" id="pass" type="password"><span> * </span>
+        <label style="display: block;" for="FIO">ФИО:</label>
+        <input onblur="valid(this,3,255)" name="FIO" type="text"><span> * </span>
+        <label style="display: block;" for="DOB">Дата рождения:</label>
+        <input readonly name="DOB" class="date" type="text"><span></span>
+        <label style="display: block;" for="telephone">Телефон:</label>
+        <input onblur="valid(this,3,255)" name="telephone" type="text"><span></span><br/>
+    </form>
+    {% else %}
+    Пользователь не найден
+    {% endif %}
+{% endblock %}
+

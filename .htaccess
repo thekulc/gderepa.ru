@@ -1,0 +1,22 @@
+Options -Indexes
+RewriteEngine on
+
+RewriteCond %{HTTP_HOST} ^xn--80afdea4df\.xn--p1ai$ [NC]
+RewriteRule ^(.*)$ https://gderepa.ru/$1 [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^www.xn--80afdea4df\.xn--p1ai$ [NC]
+RewriteRule ^(.*)$ https://gderepa.ru/$1 [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^www\.gderepa\.ru$ [NC]
+RewriteRule ^(.*)$ https://gderepa.ru/$1 [R=301,L]
+
+RewriteBase /
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteRule ^.*$ index.php [L]
+
+php_value display_errors 1
+php_flag display_errors On
+
+php_value session.gc_maxlifetime 28800
+php_value session.cookie_lifetime 28800

@@ -1,0 +1,82 @@
+@font-face{
+    font-family: Segoe_ui; 
+    src: local("segoe ui light"),
+         url('/source/fonts/segoe_ui_light.ttf') format('truetype');
+}
+
+@font-face{
+    font-family: Ubuntu; 
+    src: local("ubuntu"),
+         url('/source/fonts/Ubuntu.ttf') format('truetype');
+}
+
+* {
+	margin: 0;
+	padding: 0;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
+	display: block;
+}
+body {
+	font: 16px/22px Segoe_ui, Arial, sans-serif;
+	width: 100%;
+}
+.wrapper {
+	width: 1000px;
+	margin: 0 auto;
+}
+.clear{
+    clear: both !important;
+    display: block !important;
+    float: none !important;
+    border: none !important;
+    margin-top: -1px;
+}
+
+.errs{
+    padding: 10px;
+    background-color: red;
+    margin: 0;
+}
+
+/* Header
+-----------------------------------------------------------------------------*/
+.header {
+	height: 150px;
+	background: #FFE680;
+}
+
+
+/* Middle
+-----------------------------------------------------------------------------*/
+.content {
+}
+
+.content h1{
+    margin: 10px 0;
+}
+
+h1 .copy{
+    font-size: 13px;
+    float: right;
+    display: inline-block;
+    margin: -6px 13px 0px 0px;
+}
+
+h1 .copy a{
+    text-decoration: none;
+	color: blue;
+}
+
+h1 .copy a:hover{
+	text-decoration: underline;
+}
+
+
+
+/* Footer
+-----------------------------------------------------------------------------*/
+.footer {
+	height: 100px;
+	background: #BFF08E;
+}

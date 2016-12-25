@@ -3,7 +3,6 @@
 uploads/*
 logs/
 source/
-/applications/vkzip/
 robots.txt
 applications/calendar/controllers/calendar.php~
 applications/calendar/layouts/calendar.html~

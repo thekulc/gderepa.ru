@@ -5,6 +5,7 @@ logs/
 source/
 /applications/vkzip/
 robots.txt
+/config.php
 applications/calendar/controllers/calendar.php~
 applications/calendar/layouts/calendar.html~
 applications/calendar/layouts/event.html~

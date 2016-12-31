@@ -1,4 +1,4 @@
-<?
+<?php
 namespace calendar;
 
 class mdl_calendar extends \Model {
@@ -15,19 +15,19 @@ class mdl_calendar extends \Model {
 		}
 		return $res;
 	}
-	
+
 	function authUserByCookie($hash){
-		$vk_user = $this->selectArray("vk_users", "md5(access_token)='$hash'")[0];
-		$user['vk_user'] = json_decode($vk_user['user_json'],true);
+		$vk_user = $this->selectArray("vk_users", "md5(access_token)='$hash'");
+		$user['vk_user'] = json_decode($vk_user[0]['user_json'],true);
 		$user['user'] = $this->selectArray("users", "vk_user_id='". $user['vk_user']['user_id'] ."'")[0];
 		return $user;
 	}
 	
 	function getUserByVKUser($VKUser, $createIfNull = false){
-		$user;
+        $user = array();
 		if ($createIfNull){
 			$user = $this->getUserFromVKUser($VKUser);
-			$this->insert("users", array(0=> $user), "IGNORE");
+			$this->insert("users", array( 0 => $user), "IGNORE");
 			$user = $this->getUserByVKUser($VKUser, false)[0];
 		}
 		else{

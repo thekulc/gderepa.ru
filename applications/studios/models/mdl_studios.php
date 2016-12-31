@@ -4,7 +4,7 @@ namespace studios;
 class mdl_studios extends \Model{
 	
 	function getStudioByIdAndDomain($domain, $vakilRolesArray){
-		$studio;
+		$studio = array();
 		if (intval($domain) <= 0){
 			$studio = $this->getStudioByDomain($domain, $vakilRolesArray);
 		}
@@ -125,7 +125,7 @@ class mdl_studios extends \Model{
 				//Проверить, есть ли в базе такие данные. 
 				//Те, которых нет, - внести, которые есть, но отличаются - обновить, остальные удалить
 
-				$str = "INSERT INTO timetables (start_time, duration_time, cost, studio_id, `date`, dayofweek) VALUES ";
+				$str = "INSERT INTO timetables (start_time, duration_time, cost, studio_id, `date`, `dayofweek`) VALUES ";
 				$str .= implode(",", $tArr);
 				//$str .= " ON DUPLICATE ";
 			}

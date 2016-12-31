@@ -10,7 +10,7 @@ if ($mysqli->connect_errno) die ("Соединение c базой не уст�
 */
 
 /*
-require_once (ROOT . "core/ModelSafeClass.php");
+require_once (ROOT . "core/ClassSafeMySQL.php");
 $opts['user'] = USER;
 $opts['pass'] = PASSWORD;
 $opts['db'] = DATABASE;

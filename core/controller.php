@@ -1,4 +1,4 @@
-<?
+<?php
 require_once(ROOT."core/layout.php");
 
 class Controller {
@@ -50,6 +50,7 @@ class Controller {
 
     public function __toString() {
         pr(get_object_vars($this));
+        return get_object_vars($this);
     }
 
     function set_layout_path($path){

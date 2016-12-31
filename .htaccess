@@ -17,6 +17,8 @@ RewriteRule ^.*$ index.php [L]
 
 php_value display_errors 1
 php_flag display_errors On
+php_value short_open_tag 1
+
 
 php_value session.gc_maxlifetime 28800
 php_value session.cookie_lifetime 28800

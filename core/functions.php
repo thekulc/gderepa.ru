@@ -1,4 +1,4 @@
-<?
+<?php
 
 function __autoload($class){    
     if(!defined('DEV_MODE') || !DEV_MODE) Controller::error_page(404);

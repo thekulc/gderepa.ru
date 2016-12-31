@@ -1,4 +1,4 @@
-<?
+<?php
 namespace calendar;
 
 class calendar extends \Controller {  
@@ -93,11 +93,11 @@ class calendar extends \Controller {
 		$res['choosed']['link'] = $choosed->format('Y-m');
 		$res['choosed']['monthName'] = $this->_rus[$choosed->format('m')];
 		
-		$choosed->add( \DateInterval::createFromDateString('- 1 month') );
+		$choosed->add( \DateInterval::createFromDateString('- 32 day') );
 		$res['prevDate']['link'] = $choosed->format('Y-m');
 		$res['prevDate']['monthName'] = $this->_rus[$choosed->format('m')];
 		
-		$choosed->add( \DateInterval::createFromDateString('+ 2 month') );
+		$choosed->add( \DateInterval::createFromDateString('+ 63 day') );
 		$res['nextDate']['link'] = $choosed->format('Y-m');
 		$res['nextDate']['monthName'] = $this->_rus[$choosed->format('m')];
 		

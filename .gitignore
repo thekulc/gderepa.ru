@@ -1,10 +1,11 @@
-.gitignore
-.idea/
-uploads/*
+uploads/
 logs/
 source/
 /applications/vkzip/
+config.php
 robots.txt
+.idea/
+.gitignore
 applications/calendar/controllers/calendar.php~
 applications/calendar/layouts/calendar.html~
 applications/calendar/layouts/event.html~
@@ -17,4 +18,3 @@ applications/calendar/source~/
 templates/Default/css/calendar.css~
 templates/Default/navbar.html~
 google1c6e4582701c8041.html
-!/core/config.php

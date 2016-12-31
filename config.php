@@ -14,7 +14,7 @@ $config['layout']			= 'Default';
 //$config['socialAuth']['redirect_uri']	= "http://rs/users/auth";
 
 //database
-$config['host']				= 'localhost';
+$config['host']				= 'mysql';
 $config['database']			= 'gderepa';
 $config['user']				= 'gderepausr';
 $config['password']			= 'AdGpPN2txDxFe7Ch';

@@ -11,7 +11,7 @@ class auth extends \Controller {
 		if (isset($_GET['code'])){
 			$user_code = $_GET['code'];
 			$vk_user;
-			
+
 			$settings = $this->getParams();
 			
 			$url = 'https://oauth.vk.com/access_token?' .

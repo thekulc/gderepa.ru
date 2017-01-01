@@ -9,13 +9,7 @@ $mysqli = new mysqli(HOST, USER, PASSWORD);
 if ($mysqli->connect_errno) die ("Соединение c базой не установлено!");
 */
 
-/*
-require_once (ROOT . "core/ClassSafeMySQL.php");
-$opts['user'] = USER;
-$opts['pass'] = PASSWORD;
-$opts['db'] = DATABASE;
-$opts['charset'] = CHARSET;
-$opts['host'] = HOST;
-$_db = new SafeMySQL($opts);*/
+
+require_once (ROOT . "core/classes/ClassSafeMySQL.php");
 
 ?>

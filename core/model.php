@@ -1,8 +1,14 @@
 <?php
-class Model{
+class Model extends \SafeMySQL{
 	
 	function __construct (){
-		
+        $opts['user'] =     USER;
+        $opts['pass'] =     PASSWORD;
+        $opts['db'] =       DATABASE;
+        $opts['charset'] =  CHARSET;
+        $opts['host'] =     HOST;
+        //$_db = new SafeMySQL($opts);
+		parent::__construct($opts);
 	}
 
 	function selectQuery($query, $idKey, &$err){

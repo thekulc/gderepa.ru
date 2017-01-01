@@ -10,6 +10,6 @@ if ($mysqli->connect_errno) die ("Соединение c базой не уст�
 */
 
 
-require_once (ROOT . "core/classes/ClassSafeMySQL.php");
+
 
 ?>

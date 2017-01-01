@@ -33,10 +33,11 @@ class auth extends \Controller {
 					$vk_user,
 					$this->VKSendRequest("users.get", $reqUser)['response'][0]
 				);
-				
+
 				$_SESSION['user'] = $this->model->getUserByVKUser( $_SESSION['vk_user'], true );
-				
+
 				$this->model->addVKUser($_SESSION['vk_user']);
+                pr($_SESSION);
 				setcookie("data", md5($vk_user['access_token']));
 			}
 			else{

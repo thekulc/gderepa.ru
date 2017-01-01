@@ -16,49 +16,50 @@ class mdl_studios extends \Model{
 	}
 	
 	function getStudioByDomain($domain, $vakilRolesArray){
-		$studio = $this->selectArray("studios", "`domain` = '" . $domain . "'")[0];
+	    $where['domain'] = $domain;
+		$studio = $this->selectArray("studios", $where)[0];
 		$studio['vakils'] = $this->getVakilsByStudioId($studio['id'], $vakilRolesArray);
 		return $studio;
 	}
 	
 	function newStudio($studio, &$err){
 		$newStudio = null;
-		$query = "INSERT INTO `studios` SET " . $this->prepareStringByArray($studio, array('vakil_id'));
-		mysql_query($query);
-		if (mysql_errno() > 0){
-			$err = mysql_error();
-		}
-		else{
-			$newStudio = $this->getStudioById(mysql_insert_id());
+        $vakil_id = $studio['vakil_id'];
+		unset($studio['vakil_id']);
+        $sql = "INSERT INTO `studios` SET ?u";
+
+        $this->query($sql, $studio);
+        $id = $this->insertId();
+		if ($id){
+			$newStudio = $this->getStudioById($id);
 			if ($newStudio)
-				$this->setUserRole($studio['vakil_id'], $newStudio['id'], 4, $err);
+				$this->setUserRole($vakil_id, $id, 4, $err);
 			
 		}
 		return $newStudio;
 	}
 
 	function getStudioById($id){
-		$res = $this->selectArray('studios', 'id='.$id);
+	    $where['id'] = $id;
+		$res = $this->selectArray('studios', $where);
 		return $res[0];
 	}
 
 	function setUserRole($user_id, $studio_id, $role_id, &$err){
 		$res = false;
 		if ($user_id != "" && $studio_id && $role_id != ''){
-			$query = "INSERT INTO `user_studio` SET user_id='{$user_id}', studio_id='{$studio_id}', role_id='{$role_id}'";
-			mysql_query($query);
-			if (mysql_errno()>0)
-				$err = mysql_error();
-			else
-				$res = true;
+			$insert["user_id"] = $user_id;
+			$insert["studio_id"] = $studio_id;
+			$insert["role_id"] = $role_id;
+            $sql = "INSERT IGNORE INTO `user_studio` SET ?u";
+            $res = $this->query($sql, $insert);
 		}
 		return $res;
 	}
 
 	function getStudiosByUserId($user_id, $vakilRolesArray = array(), &$err){
 		$res = null;
-		$query = "SELECT * from studios WHERE studios.id IN (select studio_id from user_studio where user_id = '{$user_id}')";
-		
+		$query = "SELECT *, (SELECT ifnull ( studios.domain, concat(\"id\",studios.id) ) ) as alias from studios WHERE studios.id IN (select studio_id from user_studio where user_id = '{$user_id}')";
 		$studios = $this->selectQueryArray($query, true, $err);
 		if(count($vakilRolesArray) > 0){
 			foreach ($studios as $studio) {
@@ -125,7 +126,7 @@ class mdl_studios extends \Model{
 				//Проверить, есть ли в базе такие данные. 
 				//Те, которых нет, - внести, которые есть, но отличаются - обновить, остальные удалить
 
-				$str = "INSERT INTO timetables (start_time, duration_time, cost, studio_id, `date`, `dayofweek`) VALUES ";
+				$str = "INSERT INTO timetables (`start_time`, `duration_time`, `cost`, `studio_id`, `date`, `dayofweek`) VALUES ";
 				$str .= implode(",", $tArr);
 				//$str .= " ON DUPLICATE ";
 			}

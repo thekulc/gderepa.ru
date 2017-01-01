@@ -25,11 +25,11 @@ class add extends \Controller{
 
 	function create(&$err){
 		$studio = array();
-		$studio['name'] = filter_input(INPUT_POST, 'name');
-		$studio['description'] = filter_input(INPUT_POST, 'description');
-		$studio['mapCoords'] = filter_input(INPUT_POST, 'mapCoords');
-		$studio['address'] = filter_input(INPUT_POST, 'address');
-		$studio['vakil_id'] = filter_input(INPUT_POST, 'vakil_id');
+		$studio['name'] = $_POST['name'];
+		$studio['description'] = $_POST['description'];
+		$studio['mapCoords'] = $_POST['mapCoords'];
+		$studio['address'] = $_POST['address'];
+		$studio['vakil_id'] = $_POST['vakil_id'];
 		return $this->model->newStudio($studio, $err);
 	}
 

@@ -17,9 +17,13 @@ class mdl_calendar extends \Model {
 	}
 
 	function authUserByCookie($hash){
-		$vk_user = $this->selectArray("vk_users", "md5(access_token)='$hash'");
+        ///Comment: Update на новую версию базы не отлажен
+
+		//$vk_user = $this->selectArray("vk_users", "md5(access_token)='$hash'");
+        $vk_user = $this->getAll("SELECT * FROM `vk_users` WHERE md5(`access_token`)=?s", $hash);
 		$user['vk_user'] = json_decode($vk_user[0]['user_json'],true);
-		$user['user'] = $this->selectArray("users", "vk_user_id='". $user['vk_user']['user_id'] ."'")[0];
+        $where['vk_user_id'] = $user['vk_user']['user_id'];
+		$user['user'] = $this->selectArray("users", $where)[0];
 		return $user;
 	}
 	
@@ -27,27 +31,27 @@ class mdl_calendar extends \Model {
         $user = array();
 		if ($createIfNull){
 			$user = $this->getUserFromVKUser($VKUser);
-			$this->insert("users", array( 0 => $user), "IGNORE");
+            $sql = "INSERT IGNORE INTO `users` SET ?u";
+            $this->query($sql, $user);
 			$user = $this->getUserByVKUser($VKUser, false)[0];
 		}
 		else{
-			$user = $this->selectArray("users", "`vk_user_id`='". $VKUser['user_id'] ."'");
+            $where['vk_user_id'] = $VKUser['user_id'];
+			$user = $this->selectArray("users", $where);
 		}
+
 		return $user;
 	}
-    
-    function insert($table, $arrKeyValue, $sqlPre = "", $sqlAfter=""){
-        //pr($arrKeyValue);die();
-        $sql = "INSERT ". $sqlPre ." INTO `".$table."` SET " . $this->prepareInsertStringByArray($arrKeyValue) . " " .$sqlAfter;
-		
-		//if ($table == "vk_users"){
-		//pr($sql);die();
-		//}
-		
-        if (!mysql_query($sql))
-            return mysql_error ();
-        else 
-            return true;
+
+    function addVKUser($vk_user){
+        $insert['user_id'] = $vk_user['user_id'];
+        $insert['access_token'] = $vk_user['access_token'];
+        $insert['user_json'] = json_encode($vk_user);
+        $update['access_token'] = $insert['access_token'];
+        $update['user_json'] = $insert['user_json'];
+
+        $sql = "INSERT INTO ?n SET ?u ON DUPLICATE KEY UPDATE `lastRequest`=NOW(), ?u";
+        return $this->query($sql, "vk_users", $insert, $update);
     }
 	
 	function getUserFromVKUser($arrVKUser){
@@ -58,13 +62,6 @@ class mdl_calendar extends \Model {
 		$user['get_message'] = 1;
 		$user['vk_user_id'] = $arrVKUser['user_id'];
 		return $user;
-	}
-	
-	function addVKUser($vk_user){
-		$arrKeyValue[$vk_user['user_id']]['user_id'] = $vk_user['user_id'];
-		$arrKeyValue[$vk_user['user_id']]['access_token'] = $vk_user['access_token'];
-		$arrKeyValue[$vk_user['user_id']]['user_json'] = json_encode($vk_user);
-		return $this->insert("vk_users", $arrKeyValue, "", "ON DUPLICATE KEY update `lastRequest` = NOW(), `access_token`='". $vk_user['access_token'] ."', `user_json`='". $arrKeyValue[$vk_user['user_id']]['user_json'] ."'");
 	}
 
     function getRusMonthName(){

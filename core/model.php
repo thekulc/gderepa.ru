@@ -1,5 +1,10 @@
 <?php
-class Model extends \SafeMySQL{
+
+require_once (ROOT . "core/classes/ClassSafeMySQL.php");
+
+class Model extends \SafeMySQL {
+
+    public $db;
 	
 	function __construct (){
         $opts['user'] =     USER;
@@ -7,8 +12,7 @@ class Model extends \SafeMySQL{
         $opts['db'] =       DATABASE;
         $opts['charset'] =  CHARSET;
         $opts['host'] =     HOST;
-        $_db = new SafeMySQL($opts);
-		//parent::__construct($opts);
+		parent::__construct($opts);
 	}
 
 	function selectQuery($query, $idKey, &$err){
@@ -48,20 +52,23 @@ class Model extends \SafeMySQL{
         return $res;
     }
 
-    function selectArray($tableName = null, $where = null, $what = NULL, $order = null, &$err = NULL){
+    function selectArray($tableName = null, $where = array(1 => true), $what = "*", $order = null, &$err = NULL){
         $res = array();
         if ($tableName){
-            if ($what)
-                $sql = "SELECT ".$what." FROM " . $tableName;
-            else 
-                $sql = "SELECT * FROM " . $tableName;
-            if ($where)
-                $sql .= " WHERE ".$where;
-            
-            if($order)
-                $sql .= " ORDER BY " . $order;
-			//pr($sql);
-            $res = $this->getFetchedArrayA($sql, false, $err);
+            $sql = "SELECT ?p FROM ?n";
+            if ($where) {
+                $sql .= " WHERE ?n = ?s";
+                if($order) {
+                    $sql .= " ORDER BY ?p";
+                    $res = $this->getAll($sql,$what, $tableName, $where, $order);
+                }
+                else{
+                    $res = $this->getAll($sql, $what, $tableName, array_keys($where)[0], $where[array_keys($where)[0]] ) ;
+                }
+            }
+            else{
+                $res = $this->getAll($sql,$what, $tableName);
+            }
         }
         else $err = "Имя таблицы не задано";
         return $res;
@@ -123,7 +130,7 @@ class Model extends \SafeMySQL{
         return $res;
     }
 
-    function prepareInsertStringByArray($arrayObjects, $separateKeyValue = " = ", $separateObjects = ", "){
+    public function prepareInsertStringByArray($arrayObjects, $separateKeyValue = " = ", $separateObjects = ", "){
         $resultStr = "";
 		if (count ( $arrayObjects ) == 1)
 			$resultStr .= $this->prepareStringByArray(array_shift($arrayObjects), array(), $separateKeyValue, $separateObjects) . ', ';
@@ -135,7 +142,7 @@ class Model extends \SafeMySQL{
         return substr($resultStr, 0, strlen($resultStr)-2);
     }
 
-    function prepareStringByArray($obj, $exclude = array(), $separateKeyValue = " = ", $separateObjects = ", "){
+    function prepare5StringByArray($obj, $exclude = array(), $separateKeyValue = " = ", $separateObjects = ", "){
         $res = "";
         $tmp = (array) $obj;
         foreach ($tmp as $key => $value) {

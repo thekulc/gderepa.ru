@@ -9,7 +9,8 @@ class studios extends \Controller {
     {
 		$layout = "";
 		if ($this->id){
-			
+
+			/** @var $this->model \studios\mdl_studios */
 			$this->studio = $this->model->getStudioByIdAndDomain($this->id, array(6));
 			$this->studio['contacts'] = nl2br($this->studio['contacts']);
 			

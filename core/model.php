@@ -7,8 +7,8 @@ class Model extends \SafeMySQL{
         $opts['db'] =       DATABASE;
         $opts['charset'] =  CHARSET;
         $opts['host'] =     HOST;
-        //$_db = new SafeMySQL($opts);
-		parent::__construct($opts);
+        $_db = new SafeMySQL($opts);
+		//parent::__construct($opts);
 	}
 
 	function selectQuery($query, $idKey, &$err){

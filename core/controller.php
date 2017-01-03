@@ -6,6 +6,7 @@ class Controller {
     protected $layout; 
     protected $user;
     protected $application;
+    /** @var $model Model */
     protected $model;
 	private $allow = array("All");
 	private $disallow = array("execute");
@@ -14,7 +15,6 @@ class Controller {
     {
         if($id) $this->id = $id;
         if ($more) $this->more = $more;
-
         $layoutPath = "/templates".'/'.LAYOUT;
         $this->set_layout_path($layoutPath);
         

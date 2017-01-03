@@ -1,9 +1,10 @@
 <?php
 namespace studios;
 
-class mdl_studios extends \Model{
-	
-	function getStudioByIdAndDomain($domain, $vakilRolesArray){
+class mdl_calendar extends \Model{
+    var $_rus;
+
+    function getStudioByIdAndDomain($domain, $vakilRolesArray){
 		$studio = array();
 		if (intval($domain) <= 0){
 			$studio = $this->getStudioByDomain($domain, $vakilRolesArray);
@@ -173,5 +174,61 @@ class mdl_studios extends \Model{
 		}
 		return $str;
 	}
+
+	function getEventsByPeriod($firstDay, $lastDay, $studio_id){
+        $sql = "SELECT ev.*, 
+              (SELECT `FIO` FROM `users` WHERE id = `owner_id` LIMIT 1) as owner
+            FROM `events` ev
+            WHERE (
+              DATE (ev.date) BETWEEN ?s AND ?s
+            ) and studio_id = ?i
+            ORDER BY ev.`date` ASC
+        ";
+        return $this->getAll($sql, $firstDay, $lastDay, $studio_id);
+    }
+
+    function getStudioTimetables($studio_id){
+	    $format = "H:i:s";
+        $sql = "SELECT * FROM timetables WHERE studio_id=?i ORDER BY `dayofweek` ASC, `date` ASC";
+        $result = $this->query($sql, $studio_id);
+        while ($timetable = $this->fetch($result)){
+            $end = new \DateTime($timetable['end_time']);
+            $timetable['end_time'] = $end->format($format);
+            if (!is_null($timetable['date']))
+                $timetables['dates'][$timetable['date']] = $timetable;
+            elseif (!is_null($timetable['dayofweek']))
+                $timetables['dayofweeks'][$timetable['dayofweek']] = $timetable;
+            else
+                $timetables['allDays'] = $timetable;
+        }
+        return $timetables;
+    }
+
+    function getMonthEvents($date, $studio_id){
+        if (count(explode("-",$date)) == 2)
+            $dtStart = $date . '-01 00:00:00';
+        else
+            $dtStart = $date . ' 00:00:00';
+        $sql = "SELECT *, (SELECT `FIO` FROM `users` WHERE id = `owner_id` LIMIT 1) as owner FROM `events` WHERE events.`date` BETWEEN date_add(?s, interval -1 month) AND date_add(?s, interval +2 month) AND studio_id=?i ORDER BY events.`date` DESC";
+
+        return $this->getAll($sql, $dtStart, $dtStart, $studio_id);
+    }
+
+    function getRusMonthName(){
+        $this->_rus = array(
+            '01'=>'Январь',
+            '02'=>'Февраль',
+            '03'=>'Март',
+            '04'=>'Апрель',
+            '05'=>'Май',
+            '06'=>'Июнь',
+            '07'=>'Июль',
+            '08'=>'Август',
+            '09'=>'Сентябрь',
+            '10'=>'Октябрь',
+            '11'=>'Ноябрь',
+            '12'=>'Декабрь');
+        return $this->_rus;
+    }
 
 }

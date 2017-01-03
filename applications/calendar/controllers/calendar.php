@@ -21,7 +21,7 @@ class calendar extends \Controller {
 		else{/*
 			if (!$_SESSION['user'] ){
 				if($_COOKIE['data']){
-					$userData = $this->model->authUserByCookie($_COOKIE['data']);
+					$userData = $this->initModel->authUserByCookie($_COOKIE['data']);
 					$_SESSION['user'] = $userData['user'];
 					$_SESSION['vk_user'] = $userData['vk_user'];
 				}
@@ -93,11 +93,11 @@ class calendar extends \Controller {
 		$res['choosed']['link'] = $choosed->format('Y-m');
 		$res['choosed']['monthName'] = $this->_rus[$choosed->format('m')];
 		
-		$choosed->add( \DateInterval::createFromDateString('- 32 day') );
+		$choosed->add( \DateInterval::createFromDateString('- 1 month') );
 		$res['prevDate']['link'] = $choosed->format('Y-m');
 		$res['prevDate']['monthName'] = $this->_rus[$choosed->format('m')];
 		
-		$choosed->add( \DateInterval::createFromDateString('+ 63 day') );
+		$choosed->add( \DateInterval::createFromDateString('+ 2 month') );
 		$res['nextDate']['link'] = $choosed->format('Y-m');
 		$res['nextDate']['monthName'] = $this->_rus[$choosed->format('m')];
 		
@@ -188,7 +188,7 @@ class calendar extends \Controller {
 	function getEventByDate($events, $day) {
 		$dayEvents = array();
 		foreach ($events as $event) {
-			$eDate = date_create($event->date);
+			$eDate = date_create($event['date']);
 			if ($day == $eDate->format(self::format)){
 				$dayEvents[$eDate->format("H:i")] = $event;
 			}

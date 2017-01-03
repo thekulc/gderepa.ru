@@ -15,15 +15,6 @@ class Model extends \SafeMySQL {
 		parent::__construct($opts);
 	}
 
-	function selectQuery($query, $idKey, &$err){
-		$res = array();
-		if ($query){
-			$res = $this->getFetchedArray($query, $idKey, $err);
-        }
-		else $err = "Имя таблицы не задано";
-        return $res;
-	}
-
     function selectQueryArray($query, $idKey, &$err){
         $res = array();
         if ($query){
@@ -52,11 +43,11 @@ class Model extends \SafeMySQL {
         return $res;
     }
 
-    function selectArray($tableName = null, $where = array(1 => true), $what = "*", $order = null, &$err = NULL){
+    function selectArray($tableName = null, $where = array(), $what = "*", $order = null, &$err = NULL){
         $res = array();
         if ($tableName){
             $sql = "SELECT ?p FROM ?n";
-            if ($where) {
+            if (count($where) > 0) {
                 $sql .= " WHERE ?n = ?s";
                 if($order) {
                     $sql .= " ORDER BY ?p";
@@ -67,7 +58,7 @@ class Model extends \SafeMySQL {
                 }
             }
             else{
-                $res = $this->getAll($sql,$what, $tableName);
+                $res = $this->getAll($sql, $what, $tableName);
             }
         }
         else $err = "Имя таблицы не задано";

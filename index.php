@@ -14,6 +14,7 @@ else
 require_once('core/functions.php');
 require_once('core/config.php');
 require_once('core/database.php');
+require_once('core/model.php');
 require_once('core/router.php');
 
 ?>

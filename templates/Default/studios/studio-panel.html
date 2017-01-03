@@ -1,22 +1,22 @@
 <div class="uk-panel studio-panel">
 	<div class="uk-panel-title uk-grid uk-flex-middle"> 
 		<div class="uk-width-medium-3-10">
-			<a href="/studios/{{studio.domain}}" class="photo_50"><img class="uk-border-rounded" src="{{studio.photo_50}}"></a> 
+			<a href="/studios/{{studio.alias}}" class="photo_50"><img class="uk-border-rounded" src="{{studio.photo_50}}"></a>
 		</div>
 		<div class="uk-width-medium-7-10">
-			<a href="/studios/{{studio.domain}}" class="uk-flex-middle">{{studio.name}}</a>
+			<a href="/studios/{{studio.alias}}" class="uk-flex-middle">{{studio.name}}</a>
 		</div>
 	</div>
 	<ul class="uk-nav uk-nav-side uk-nav-parent-icon uk-margin-top" data-uk-nav="{multiple:true}">
 		<li class="uk-nav-header">Расписание</li>
-		<li{% if menu.active == "week" %} class="uk-active"{% endif %}><a href="/studios/{{studio.domain}}/week">Ближайшее время</a></li>
-		<li{% if menu.active == "month" %} class="uk-active"{% endif %}><a href="/studios/{{studio.domain}}/month">Месяц</a></li>
+		<li{% if menu.active == "week" %} class="uk-active"{% endif %}><a href="/studios/{{studio.alias}}/week">Ближайшее время</a></li>
+		<li{% if menu.active == "month" %} class="uk-active"{% endif %}><a href="/studios/{{studio.alias}}/month">Месяц</a></li>
 		<li class="uk-nav-header">О студии</li>
-		<li{% if menu.active == "studio" %} class="uk-active"{% endif %}><a href="/studios/{{studio.domain}}">Главная</a></li>
-		<li{% if menu.active == "gear" %} class="uk-active"{% endif %}><a href="/studios/{{studio.domain}}/gear">Оборудование</a></li>
-		<li{% if menu.active == "photos" %} class="uk-active"{% endif %}><a href="/studios/{{studio.domain}}/photos">Фотографии</a></li>
-		<li{% if menu.active == "contacts" %} class="uk-active"{% endif %}><a href="/studios/{{studio.domain}}/contacts">Контакты</a></li>
-		<!--<li><a href class="studio-writeBtn"><i class="uk-icon-pencil"></i> Написать</a></li>-->
+		<li{% if menu.active == "studio" %} class="uk-active"{% endif %}><a href="/studios/{{studio.alias}}">Главная</a></li>
+		<li{% if menu.active == "gear" %} class="uk-active"{% endif %}><a href="/studios/{{studio.alias}}/gear">Оборудование</a></li>
+		<li{% if menu.active == "photos" %} class="uk-active"{% endif %}><a href="/studios/{{studio.alias}}/photos">Фотографии</a></li>
+		<li{% if menu.active == "contacts" %} class="uk-active"{% endif %}><a href="/studios/{{studio.alias}}/contacts">Контакты</a></li>
+		<!--<li><a href class="studio-writeBtn"><i class="uk-icon-pencil"></i> Написать</a></li>
 		<li class="uk-nav-header">Контакты</li>
 		<li>
 			<dl class="uk-description-list-line" id="studio-card-mobile">
@@ -29,6 +29,6 @@
 			<div id="studioPanelYaMap" data-coords="{{studio.mapCoords}}" data-studio-name="{{studio.name}}" style="height: 180px;"></div>
 			</dd>
 			</dl>
-		</li>
+		</li>-->
 	</ul>
 </div>

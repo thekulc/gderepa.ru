@@ -4,7 +4,7 @@
 		<a class="uk-button-link uk-text-large" href="?date={{preDate.link}}">{{preDate.monthName}}</a>
 		{% endfor %}
 		<a class="uk-button-link uk-text-large" href="?date={{localdate.prevDate.link}}" title="{{localdate.prevDate.monthName}}">{{localdate.prevDate.monthName}}</a>
-		<a style="font-size: 1.8em;" class="uk-button-link uk-link-muted uk-text-large" href="/calendar/?date={{localdate.choosed.link}}" title="{{localdate.choosed.monthName}}">{{localdate.choosed.monthName}}</a>
+		<a style="font-size: 1.8em;" class="uk-button-link uk-link-muted uk-text-large" href="?date={{localdate.choosed.link}}" title="{{localdate.choosed.monthName}}">{{localdate.choosed.monthName}}</a>
 		{% for postDate in postLocal_dates %}
 		<a class="uk-button-link uk-text-large" href="?date={{postDate.link}}">{{postDate.monthName}}</a>
 		{% endfor %}

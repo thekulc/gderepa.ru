@@ -1,0 +1,28 @@
+<ul class="uk-list timeGrid">
+	{% for event in day.events %}
+		{% if event.id %}
+		<li class='occupied' data-event_id="{{event.id}}">
+            {% if event.owner_id == app.session.user.id %}
+			<a class="uk-button uk-button-default uk-text-danger" data-owner_id="{{event.owner_id}}" data-start_time="{{event.start_time|date('Y-m-d H:i:s')}}">
+                <i class="uk-icon-user"></i> {{event.start_time.date|date('H:i')}}-{{event.end_time.date|date('H:i')}}
+            </a>
+            {% else %}
+            <a class="uk-button uk-button-default uk-text-warning" data-owner_id="{{event.owner_id}}" data-start_time="{{event.start_time|date('Y-m-d H:i:s')}}">
+                <i class="uk-icon-user-times"></i> {{event.start_time.date|date('H:i')}}-{{event.end_time.date|date('H:i')}}
+            </a>
+
+            {% endif %}
+		</li>
+		{% else %}
+		<li class="free">
+			<a class="uk-button uk-button-default uk-text-success" data-start_time="{{event.start_time|date('Y-m-d H:i:s')}}">
+				<i class="uk-icon-clock-o"></i> {{event.start_time|date('H:i')}}-{{event.end_time|date('H:i')}}
+			</a>
+		</li>
+		{% endif %}
+	{% else %}
+		<li>
+			Произошла ошибка. Расписание на день не получено
+		</li>
+	{% endfor %}
+</ul>

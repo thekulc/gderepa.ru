@@ -1,4 +1,4 @@
-var ajax_url = "/calendar/ajax";
+var ajax_url = "/studios/ajax";
 var $modal;
 var user_id;
 var user_login;
@@ -87,52 +87,90 @@ $(document).ready(function(){
 	*/
 	$modals = [];
 	$modal = UIkit.modal(".uk-modal");
-	
+
 	$(".day-container .timeGrid .uk-button").on("click", function(){
 		var startTime = $(this).attr("data-start_time");
-		var tId = md5(startTime);
-		if ($modals[tId]==1){
-			var modal;
-			modal = UIkit.modal("#" + tId);
-			modal.show();
-		}
-		else{
-			getEventByTime(startTime, tId);
-			
-			$modals[tId] = 1;
-		}
+
+        getEventByTime(startTime);
 	});
 });
 
-function getEventByTime(strTime, tId){
+function getEventByTime(strTime){
 	var req = {
 		request: "getEventByTime",
-		str_time: strTime
+		str_time: strTime,
+        studio_id: $(".calendar-container").attr('data-studio_id')
 	};
 	$.ajax({
 		url: ajax_url,
 		data: req,
 		success: function(response){
-			pr(response);
-			if (response.event) {
-				var modal = $($modal.element[0]).clone();
-				$(modal).attr("id", tId);
-				$(".event-date", modal).html(response.event.date);
-				$(".event-start-end")
-				$(".event-duration")
-				$(".event-member-count")
-				$(".event-cost")
-				$("body").append(modal);
-				modal = UIkit.modal("#" + tId );
-				modal.show();
+			//pr(response);
+            var event = response.event;
+            var tId = md5(strTime);
+            var modal;
+
+            if ($modals[tId]==1){
+                modal = UIkit.modal("#" + tId );
+            }
+            else{
+                $modals[tId] = 1;
+                modal = $($modal.element[0]).clone();
+                $(modal).attr("id", tId);
+                $("body").append(modal);
+            }
+
+            var localeFormat = {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+                weekday: 'long'
+            };
+            var start = parseDate(event.start_time.date);
+            var end = parseDate(event.end_time.date);
+            var fromTo = strPadLeft(start.getHours()) + ":" + strPadLeft(start.getMinutes()) + " - " + end.getHours() + ":" + strPadLeft(end.getMinutes());
+pr(event);
+            if(event.owner_id){
+                $(".event-owner-info .owner-fio", modal).attr("href", "/users/id" + event.owner_id).html (event.owner);
+                if (event.avatar)
+                    $(".event-owner-info img", modal).attr ("src", event.avatar);
+                $(".event-owner-info").show();
+            }
+            else {
+                $(".event-owner-info").hide();
 			}
-			else{
-				pr(response.error);
-			}
+
+
+            $(".event-date", modal).html(start.toLocaleDateString("ru", localeFormat));
+            $(".event-start-end", modal).html (fromTo);
+            $(".event-duration", modal).html (event.duration_time.h + "ч. " + event.duration_time.m + "мин.");
+            $(".event-member-count", modal).html ();
+            $(".event-cost", modal).html ();
+
+            modal = UIkit.modal("#" + tId );
+            modal.show();
 		},
+		error: function (data) {
+			pr(data);
+        },
 		dataType: "json"
 	});
 	
+}
+
+function strPadLeft(str, pad, count){
+    str = String(str);
+    if (str.length > 0){
+        if (!pad){
+            pad = "0";
+        }
+        if (!count)
+            count = 2;
+        while(str.length < count){
+            str=pad+str;
+        }
+    }
+    return str;
 }
 
 function getVKButton (event_id){

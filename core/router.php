@@ -1,5 +1,5 @@
 <?php
-require_once(ROOT."core/controller.php"); 
+require_once(ROOT."core/controller.php");
 if(isset($_GET['debug']) AND isset($_GET['info']) ) debug(phpinfo());
 $url4parse = $_SERVER['REQUEST_URI'];
 

@@ -22,9 +22,10 @@ class Controller {
         $this->set_global('layout_path', $layout_path);
 
         $this->set_application($app);
-		
-		$this->model = $this->model($admin_mode);
-		
+
+        $modelName = 'mdl_'.$app;
+		$this->model = $this->get_model($modelName, $app, $admin_mode);
+
         $GLOBALS['app']['layout'] = $layoutPath."/";
         $GLOBALS['app']['css'] = $layoutPath."/"."css"."/";
         $GLOBALS['app']['js'] = $layoutPath."/"."js"."/";
@@ -90,33 +91,23 @@ class Controller {
         else return debug("Контроллер {$controller} в модуле {$application} не найден");
     }
 
-    private function model($admin_mode=false){
-        $application = $this->get_application();
-        
-        if (!$controller)
-            $modelName = 'mdl_'.$application;
-        else
-            $modelName = 'mdl_'.$controller;
-        
+    function get_model($modelName, $application, $admin_mode){
         $path = ROOT."applications".DS.$application.DS;
 
         if($admin_mode) $path .= "models".DS."admin".DS.$modelName.".php";
         else $path.= "models".DS.$modelName.".php";
-        
+
         if(file_exists($path) && is_file($path))
         {
-            require_once('model.php');
-            require_once($path);
+            include_once($path);
             $class = $application."\\".$modelName;
             if ($admin_mode) $class = "admin\\".$class;
-
             return new $class($application);
-        } 
+        }
         else {
-            //return debug("Модель в модуле {$application} не найдена",false);
+            debug("Модель {$modelName} в модуле {$application} не найдена", false);
             return null;
-        };
-
+        }
     }
 
     function layout_show($layout,$values=null)

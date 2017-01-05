@@ -3,7 +3,7 @@ header('Content-Type: text/html; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 if(!session_id()) session_start();
 
-$zone = @$_SESSION['user']['timezone'] ? $_SESSION['user']['timezone'] : "Europe/Moscow";
+$zone = @$_SESSION['user']['timezone'] ? $_SESSION['user']['timezone'] : "Europe/Samara";
 date_default_timezone_set($zone);
 
 if((defined('DEV_MODE') && DEV_MODE==1) OR isset($_GET['debug'])) 

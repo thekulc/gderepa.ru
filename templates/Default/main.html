@@ -43,6 +43,11 @@
 <script type="text/javascript" src="//vk.com/js/api/share.js?90" charset="windows-1251"></script>
 <script src="/libraries/jquery/jquery-1.9.1.min.js"></script>
 <script src="/libraries/uikit-2.27.2/js/uikit.min.js"></script>
+<script>
+    var app = {
+        session: {{app.session|json_encode()}}
+    };
+</script>
 <script src="{{app.js}}functions.js"></script>
 <script src="{{app.js}}userpanel.js"></script>
 {% block js %} {% endblock %}

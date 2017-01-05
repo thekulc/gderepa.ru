@@ -7,7 +7,13 @@ body{
 }
 
 .menu-panel .uk-button{
-	padding: 10px 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.menu-panel .uk-button:hover
+/*, .day-container .uk-button:hover*/
+{
+	text-decoration: none;
 }
 
 .menu-panel .uk-button > img{

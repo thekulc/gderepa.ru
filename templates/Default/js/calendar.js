@@ -87,13 +87,93 @@ $(document).ready(function(){
 	*/
 	$modals = [];
 	$modal = UIkit.modal(".uk-modal");
+    eventButtonInit();
 
-	$(".day-container .timeGrid .uk-button").on("click", function(){
-		var startTime = $(this).attr("data-start_time");
-
-        getEventByTime(startTime);
-	});
+	$("#btn-more-dates").on("click", function (e){
+        $(this).attr("data-offset", parseInt($(this).attr("data-offset")) + 1);
+        callerBtn = this;
+        getWeekByOffset($(this).attr("data-offset"), callerBtn );
+	    e.preventDefault();
+	    return false;
+    });
 });
+
+function eventButtonInit() {
+    $(".day-container .timeGrid .uk-button").off("click");
+    $(".day-container .timeGrid .uk-button").on("click", function(){
+        getEventByTime($(this).attr("data-start_time"));
+    });
+}
+
+function getWeekByOffset(offset, callerBtn) {
+    var req = {
+        request: "getWeekByOffset",
+        "offset": offset,
+        studio_id: $(".calendar-container").attr('data-studio_id')
+    };
+    $.ajax({
+        url: ajax_url,
+        data: req,
+        dataType: "json",
+        beforeSend: function(){ $("i", callerBtn).toggleClass("uk-icon-spin") },
+        complete: function(){ $("i", callerBtn).toggleClass("uk-icon-spin") },
+        success: function(response){
+            if (typeof response.week == "object") {
+                var cWeek = $("<div />").attr("class", $(".calendar-container .week").attr("class"));
+                week = response.week[parseInt(offset)+1];
+                for (var lday in week){
+                    cWeek.append(getDayContainer(week[lday]));
+                };
+                $(callerBtn).before(cWeek);
+                eventButtonInit();
+            }
+        },
+        error: function (e) {
+            //pr(e);
+        }
+    });
+    //pr(offset);
+}
+
+function getDayContainer(day){
+    //day = Array(day);
+    $dayCntnr = $("<div />").attr("class", "day-container");
+    lDate = parseDate(day.date.date);
+    $dayCntnr
+        .attr("data-date", lDate.getFullYear() +"-"+ strPadLeft(lDate.getMonth() + 1) +"-"+ lDate.getDate())
+        .append($("<div />").attr("class", "uk-panel")
+        .append($("<p />").attr("class", "uk-text-center").html(lDate.toLocaleString("ru",{day: 'numeric', month: 'long'})))
+        .append($("<ul />").attr("class", "uk-list timeGrid") ))
+    ;
+    for (prop in day.events){
+        var event = day.events[prop];
+        var start = parseDate(event.start_time.date);
+        var end = parseDate(event.end_time.date);
+        var fromTo = strPadLeft(start.getHours()) + ":" + strPadLeft(start.getMinutes()) + "-" + end.getHours() + ":" + strPadLeft(end.getMinutes());
+
+        var $btn = $("<a />")
+            .attr("class", "uk-button")
+            .attr("data-start_time", event.start_time.date)
+            .append($("<i />"));
+        ;
+        if (app.session.user && event.owner_id == app.session.user.id) {
+            $btn.addClass("uk-text-primary").attr("data-owner_id", event.owner_id);
+            $("i", $btn).addClass("uk-icon-user");
+        }
+        else if (event.owner_id){
+            $btn.addClass("uk-text-warning").attr("data-owner_id", event.owner_id);
+            $("i", $btn).addClass("uk-icon-user-times");
+        }
+        else {
+            $btn.addClass("uk-text-success").attr("data-owner_id", event.owner_id);
+            $("i", $btn).addClass("uk-icon-clock-o");
+        }
+        $("i", $btn).after(" " + fromTo);
+        $("ul", $dayCntnr).append($("<li />").attr("class","free").append($btn));
+    };
+    return $dayCntnr;
+}
+
 
 function getEventByTime(strTime){
 	var req = {
@@ -104,8 +184,8 @@ function getEventByTime(strTime){
 	$.ajax({
 		url: ajax_url,
 		data: req,
+        dataType: "json",
 		success: function(response){
-			//pr(response);
             var event = response.event;
             var tId = md5(strTime);
             var modal;
@@ -129,7 +209,7 @@ function getEventByTime(strTime){
             var start = parseDate(event.start_time.date);
             var end = parseDate(event.end_time.date);
             var fromTo = strPadLeft(start.getHours()) + ":" + strPadLeft(start.getMinutes()) + " - " + end.getHours() + ":" + strPadLeft(end.getMinutes());
-pr(event);
+
             if(event.owner_id){
                 $(".event-owner-info .owner-fio", modal).attr("href", "/users/id" + event.owner_id).html (event.owner);
                 if (event.avatar)
@@ -139,7 +219,6 @@ pr(event);
             else {
                 $(".event-owner-info").hide();
 			}
-
 
             $(".event-date", modal).html(start.toLocaleDateString("ru", localeFormat));
             $(".event-start-end", modal).html (fromTo);
@@ -152,8 +231,7 @@ pr(event);
 		},
 		error: function (data) {
 			pr(data);
-        },
-		dataType: "json"
+        }
 	});
 	
 }

@@ -38,9 +38,8 @@ class mdl_studios extends \Model{
 	}
 
 	function getStudioById($id){
-	    $where['id'] = $id;
-		$res = $this->selectArray('studios', $where);
-		return $res[0];
+        $query = "SELECT *, (SELECT ifnull ( `studios`.`domain`, concat(\"id\",`studios`.`id`) ) ) as 'alias' from `studios` WHERE `studios`.`id`=?i";
+		return $this->getRow($query, $id);
 	}
 
 	function setUserRole($user_id, $studio_id, $role_id, &$err){
@@ -58,6 +57,7 @@ class mdl_studios extends \Model{
 	function getStudiosByUserId($user_id, $vakilRolesArray = array(), &$err){
 		$res = null;
 		$query = "SELECT *, (SELECT ifnull ( `studios`.`domain`, concat(\"id\",`studios`.`id`) ) ) as 'alias' from `studios` WHERE `studios`.`id` IN (select `studio_id` from `user_studio` where `user_id` = ?i)";
+
 		$studios = $this->getAll($query, $user_id);
 
 		if(count($vakilRolesArray) > 0){

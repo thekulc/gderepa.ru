@@ -3,6 +3,7 @@ namespace studios;
 
 class mdl_calendar extends \Model{
     var $_rus;
+    var $_weekDays;
 
     function getStudioByIdAndDomain($domain, $vakilRolesArray){
 		$studio = array();
@@ -216,19 +217,32 @@ class mdl_calendar extends \Model{
 
     function getRusMonthName(){
         $this->_rus = array(
-            '01'=>'Январь',
-            '02'=>'Февраль',
-            '03'=>'Март',
-            '04'=>'Апрель',
-            '05'=>'Май',
-            '06'=>'Июнь',
-            '07'=>'Июль',
-            '08'=>'Август',
-            '09'=>'Сентябрь',
-            '10'=>'Октябрь',
-            '11'=>'Ноябрь',
-            '12'=>'Декабрь');
+            '01'=>'Января',
+            '02'=>'Февраля',
+            '03'=>'Марта',
+            '04'=>'Апреля',
+            '05'=>'Мая',
+            '06'=>'Июня',
+            '07'=>'Июля',
+            '08'=>'Августа',
+            '09'=>'Сентября',
+            '10'=>'Октября',
+            '11'=>'Ноября',
+            '12'=>'Декабря');
         return $this->_rus;
+    }
+
+    function getRusWeekdayName(){
+        $this->_weekDays = array(
+            1=>'Понедельник',
+            2=>'Вторник',
+            3=>'Среда',
+            4=>'Четверг',
+            5=>'Пятница',
+            6=>'Суббота',
+            7=>'Воскресенье'
+        );
+        return $this->_weekDays;
     }
 
 }

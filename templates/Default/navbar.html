@@ -23,13 +23,20 @@
 		{% if device.isTablet() or device.isMobile() %}
 		<div class="uk-width-1-2">
 			<div class="uk-float-right">
-				<a class="uk-button uk-button-link uk-button-large" data-uk-offcanvas="{mode:'none', target:'#mobile-userMenu'}" href="/user/{{app.session.vk_user.user_id}}"><img class="uk-border-rounded uk-margin-small-right" src="{{app.session.vk_user.photo_50}}">  {{app.session.vk_user.first_name}} {{app.session.vk_user.last_name}} <i class="uk-icon-navicon"></i></a>
+				<a class="uk-button uk-button-link uk-button-large" data-uk-offcanvas="{mode:'none', target:'#mobile-userMenu'}" href="/user/{{app.session.vk_user.user_id}}">
+                    <img class="uk-border-rounded uk-margin-small-right" src="{{app.session.vk_user.photo_50}}">
+                    {{app.session.vk_user.first_name}} {{app.session.vk_user.last_name}}
+                    <i class="uk-icon-navicon"></i>
+                </a>
 			</div>
 		</div>
 		{% else %}
 		<div class="uk-width-3-10">
-			<div class="uk-position-relative uk-navbar-flip" data-uk-dropdown="{mode:'click',pos:'bottom-right'}" >
-				<a class="uk-button uk-button-link uk-button-large"><img class="uk-border-rounded uk-margin-small-right" style="max-height:2em" src="{{app.session.vk_user.photo_50}}"> {{app.session.vk_user.first_name}} {{app.session.vk_user.last_name}} <i class="uk-icon-caret-down"></i></a>
+			<div class="uk-position-relative uk-navbar-flip" data-uk-dropdown="{mode:'hover',pos:'bottom-right'}" >
+				<a class="uk-button uk-button-link uk-button-large">
+					{{app.session.vk_user.first_name}} {{app.session.vk_user.last_name}}
+					<img class="uk-border-rounded uk-margin-small-right" src="{{app.session.vk_user.photo_50}}">
+				</a>
 				<div class="uk-dropdown">
 					<ul class="uk-nav uk-nav-navbar">
 						{% include app.layout~"users/user_menu.html" %}

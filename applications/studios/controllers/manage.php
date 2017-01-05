@@ -6,6 +6,7 @@ class manage extends \Controller{
 		
 		if (!empty($this->id) AND explode("\\", get_class())[1] != $this->id){
 			$data['studio'] = $this->model->getStudioByIdAndDomain($this->id);
+			pr($data['studio']);
 			
 			$data['page']['breadcrumb'][0]['href'] = "/studios";
 			$data['page']['breadcrumb'][0]['title'] = "Студии";

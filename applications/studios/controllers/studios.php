@@ -13,7 +13,6 @@ class studios extends \Controller {
 		if ($this->id){
 			$this->studio = $this->model->getStudioByIdAndDomain($this->id, array(6));
 			$this->studio['contacts'] = nl2br($this->studio['contacts']);
-
 			$method = $this->getMethodName( "method" . ucfirst ($this->more[0]) );
 
 			if ( $method ){
@@ -41,7 +40,6 @@ class studios extends \Controller {
 	function methodWeek($request){
         $offset = intval($request['offset']);
         $this->mdlCalendar = $this->get_model("mdl_calendar", "studios");
-
 		$data['menu']['active'] = "week";
 		$data['page']['title'] = "Расписание на ближайшие дни";
 		$data['page']['breadcrumb'][0]['href'] = "/studios";
@@ -49,40 +47,47 @@ class studios extends \Controller {
 		$data['page']['breadcrumb'][1]['href'] = "/studios/" . $this->studio['domain'];
 		$data['page']['breadcrumb'][1]['title'] = $this->studio['name'];
 		$data['page']['layout'] = "studios/studios_main.html";
-        $data['lang']['_rus'] = $this->mdlCalendar->getRusMonthName();
-        //TODO Прокинуть текущую дату и навигацию
-		$data['localdate'] = new \DateTime(date());
-        $data['calendar'] = $this->getWeek($offset, 1);
 
+		$data['lang']['_rus']['monthes'] = $this->mdlCalendar->getRusMonthName();
+		$data['lang']['_rus']['weekDays'] = $this->mdlCalendar->getRusWeekdayName();
+
+		$data['localdate'] = new \DateTime();
+
+        $data['calendar'] = $this->getWeek($offset, 2, $this->studio['id']);
+        $data['offset'] = $offset + 1;
 		return $data;
 	}
 
-	function getWeek($offset = 0, $count = 1, $events = true){
+	function getWeek($offset = 0, $count = 1, $studio_id, $events = true){
+	    if (!isset($this->mdlCalendar))
+            $this->mdlCalendar = $this->get_model("mdl_calendar", "studios");
+
 	    $today = new \DateTime();
         $format = "Y-m-d";
-        if (is_int($offset) AND $offset <> 0)
-            $today->modify(+ intval($offset) . " week");
+        if ($offset <> 0)
+            $today->add(\DateInterval::createFromDateString(+ intval($offset) . " week"));
 
-	    $choosedWeek = intval($offset) + intval($today->format("W"));
+	    $choosedWeek = intval($today->format("W"));
 
         $firstDay = clone $today;
         $firstDay->add(\DateInterval::createFromDateString(- $today->format("N") + 1 . " day"));
-        $firstDayFormat = $firstDay->format($format);
 
         $lastDay = clone $firstDay;
         $lastDay->add(\DateInterval::createFromDateString("+ $count week"));
 
         if ($events)
-            $events = $this->getEventsByPeriod($firstDay->format($format), $lastDay->format($format), $this->studio['id']);
+            $events = $this->getEventsByPeriod($firstDay->format($format), $lastDay->format($format), $studio_id);
 
         $interval = \DateInterval::createFromDateString("1 day");
 	    $week = array();
-        $timetables = $this->mdlCalendar->getStudioTimetables($this->studio['id']);
-	    for($weeks = 0; $weeks < $count; $weeks++) {
-            for ($i = 1; $i <= 7; $i++) {
-                $week[$choosedWeek + $weeks][$firstDay->format($format)]['date'] = $firstDay->format($format);
-                $week[$choosedWeek + $weeks][$firstDay->format($format)]['events'] = $this->getTimeTableByDate($firstDay, $events[$firstDay->format($format)], $timetables);
-                $firstDay = $firstDay->add($interval);
+        $timetables = $this->mdlCalendar->getStudioTimetables($studio_id);
+        if ($timetables) {
+            for ($weeks = 0; $weeks < $count; $weeks++) {
+                for ($i = 1; $i <= 7; $i++) {
+                    $week[$choosedWeek + $weeks][$firstDay->format($format)]['events'] = $this->getTimeTableByDate($firstDay, $events[$firstDay->format($format)], $timetables);
+                    $week[$choosedWeek + $weeks][$firstDay->format($format)]['date'] = current($week[$choosedWeek + $weeks][$firstDay->format($format)]['events'])['start_time'];
+                    $firstDay = $firstDay->add($interval);
+                }
             }
         }
         return $week;
@@ -98,14 +103,13 @@ class studios extends \Controller {
         $duration = new \DateInterval("P0000-00-00T" . $timetable['duration_time']);
         $period = $end->diff($start);
         $itemCount = $period->h / $duration->h;
-
         for ($i = 0; $i < $itemCount; $i++){
             $dayStartTime = $iteratorTime->format("H:i");
             if ($events[$dayStartTime]) {
-                $table[$iteratorTime->format($formatDay)] = $events[$dayStartTime];
+                $table[$dayStartTime] = $events[$dayStartTime];
             }
             else{
-                $table[$iteratorTime->format($formatDay)] = $this->getFreeTimeEvent($iteratorTime, $timetable);
+                $table[$dayStartTime] = $this->getFreeTimeEvent($iteratorTime, $timetable);
             }
             $iteratorTime->add($duration);
         }

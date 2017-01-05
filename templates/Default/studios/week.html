@@ -3,22 +3,15 @@
 	{% include globals.layoutPath~"calendar/navLinks.html" %}
 
 	{% for week in calendar %}
+    {% if loop.first %}
+        {% set showWeekDay = true %}
+    {% else %}
+        {% set showWeekDay = false %}
+    {% endif %}
+    {% include globals.layoutPath~"studios/week_loop.html" %}
 
-	<div class="uk-flex uk-flex-space-around week">
-
-		{% for day in week %}
-		<div class="day-container" data-date="{{ day.date|date('Y-m-d') }}">
-			<div class="uk-panel uk-panel-header{% if localdate.choosed.link != day.date|date('Y-m') %} notThisMonth{% endif %}">
-				<h3 class="uk-panel-title uk-text-center">
-					{{lang._rus[day.date|date('m')]}} {{ day.date|date('d') }}
-				</h3>
-				{% include globals.layoutPath~"studios/dayEventList.html" %}
-			</div>
-
-		</div>
-		{% endfor %}
-	</div>
 {% endfor %}
+        <a id="btn-more-dates" data-offset="{{offset}}" class="uk-button uk-width-1-1 uk-button-link uk-button-large"><i class="uk-icon uk-icon-refresh"></i> Показать еще неделю</a>
 {% else %}
 	<div class="uk-alert uk-alert-danger" role="alert">Данные не получены</div>
 {% endif %}

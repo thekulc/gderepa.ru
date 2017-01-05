@@ -1,13 +1,15 @@
 <ul class="uk-list timeGrid">
 	{% for event in day.events %}
+        {% if event.start_time <= localdate %} {%set isPast="uk-button-link"%} {%else%} {%set isPast=null%} {% endif %}
+
 		{% if event.id %}
 		<li class='occupied' data-event_id="{{event.id}}">
             {% if event.owner_id == app.session.user.id %}
-			<a class="uk-button uk-button-default uk-text-danger" data-owner_id="{{event.owner_id}}" data-start_time="{{event.start_time|date('Y-m-d H:i:s')}}">
+			<a class="uk-button uk-text-primary {{isPast}}" data-owner_id="{{event.owner_id}}" data-start_time="{{event.start_time|date('Y-m-d H:i:s')}}">
                 <i class="uk-icon-user"></i> {{event.start_time.date|date('H:i')}}-{{event.end_time.date|date('H:i')}}
             </a>
             {% else %}
-            <a class="uk-button uk-button-default uk-text-warning" data-owner_id="{{event.owner_id}}" data-start_time="{{event.start_time|date('Y-m-d H:i:s')}}">
+            <a class="uk-button{% if isPast %} {{isPast}} uk-text-muted{%else%} uk-text-warning{%endif%}" data-owner_id="{{event.owner_id}}" data-start_time="{{event.start_time|date('Y-m-d H:i:s')}}">
                 <i class="uk-icon-user-times"></i> {{event.start_time.date|date('H:i')}}-{{event.end_time.date|date('H:i')}}
             </a>
 
@@ -15,7 +17,7 @@
 		</li>
 		{% else %}
 		<li class="free">
-			<a class="uk-button uk-button-default uk-text-success" data-start_time="{{event.start_time|date('Y-m-d H:i:s')}}">
+			<a class="uk-button{% if isPast %} {{isPast}} uk-text-muted{%else%} uk-text-success{%endif%}" data-start_time="{{event.start_time|date('Y-m-d H:i:s')}}">
 				<i class="uk-icon-clock-o"></i> {{event.start_time|date('H:i')}}-{{event.end_time|date('H:i')}}
 			</a>
 		</li>

@@ -11,11 +11,22 @@ class ajax extends \Controller {
 		
 		switch ($_GET["request"]) {
 			case "getEventByTime": $response['event'] = $this->getEventByTime( $_GET["str_time"], $_GET["studio_id"] ); break;
+			case "getWeekByOffset": $response['week'] = $this->getWeekByOffset( $_REQUEST ); break;
+
 			//default:;
 		}
 		echo json_encode($response);
 
 	}
+
+	function getWeekByOffset($requset){
+        $studio_id = $requset['studio_id'];
+        $offset = $requset['offset'];
+        /** @var $week \studios\studios */
+        $week = self::get_controller("studios")->getWeek($offset, 1, $studio_id);
+
+        return $week;
+    }
 
 	function getEventByTime($str_time, $studio_id){
 		$event = $this->model->getRow("SELECT ev.*, u.FIO as owner, u.avatar FROM events ev LEFT JOIN users u on ev.owner_id = u.id WHERE `date` = ?s", $str_time);

@@ -13,12 +13,8 @@
 
     <div class="day-container" data-date="{{ day.date|date('Y-m-d') }}">
         <div class="uk-panel{%if isToday %} uk-panel-box-primary{%endif%}">
-            {% if showWeekDay %}
-            <div class="uk-panel-title uk-text-center">
-                {{lang._rus.weekDays[day.date|date("N")]}}
-            </div>
-            {% endif %}
-            <p class="uk-text-center{{isToday}}{{isPast}}">{{ day.date|date('j') }} {{lang._rus.monthes[day.date|date('m')]}}</p>
+
+            <p class="uk-text-center{{isToday}}{{isPast}}">{{ day.date|date('j') }} {{lang._rus.monthes['rodit'][day.date|date('m')]}}</p>
             {% include globals.layoutPath~"studios/dayEventList.html" %}
         </div>
 

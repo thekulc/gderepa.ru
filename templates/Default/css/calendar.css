@@ -10,7 +10,7 @@
 	/*width: 980px;*/
 	cursor: default;
 	position: relative;
-	/*background: white;*/
+	background: #FFFFFF;
 }
 
 .calendar-container .day-container{
@@ -35,12 +35,6 @@
 	padding-top: 1em;
 }
 
-.calendar-container .navLinks a{
-	padding-right: 1.5em;
-}
-.calendar-container .navLinks a:last-child{
-	padding-right: 0;
-}
 
 
 /*
@@ -260,3 +254,26 @@
 	border-radius: 2px;
 	padding: 0
 }
+
+.calendar-nav{
+    background-color: #FFFFFF;
+    margin-bottom: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.weekdays{
+}
+
+[data-uk-sticky].uk-active.weekdays{
+}
+
+.weekdays .uk-panel-title{
+	width: 100%;
+    margin-bottom: 0;
+}
+
+.navLinks a{
+    padding: 10px 15px;
+}
+

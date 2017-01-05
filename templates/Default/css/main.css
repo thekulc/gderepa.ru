@@ -20,6 +20,10 @@ body{
 	max-height:2em;
 }
 
+.studio-panel {
+    padding-top: 15px;
+}
+
 .studio-panel .uk-nav-header{
 	padding-left: 0px;
 }

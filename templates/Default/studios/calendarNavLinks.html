@@ -1,0 +1,24 @@
+<div class="calendar-nav" data-uk-sticky>
+        <ul class="navLinks uk-tab uk-margin-bottom">
+            <li class="{%if calendarNav.choosed|date('Y-m')==calendarNav.today|date('Y-m')%}{%if ( menu.active == 'week') %}uk-active{%endif%}{%endif%}">
+                <a href="/studios/{{studio.alias}}/week">Ближайшие дни</a>
+            </li>
+            {% for preDate in calendarNav.prev %}
+            <li class="{%if ( calendarNav.choosed|date('Y-m')==preDate|date('Y-m') ) %}{%if ( menu.active != 'week') %}uk-active{%endif%}{%endif%}">
+            <a href="/studios/{{studio.alias}}/month?date={{preDate|date('Y-m')}}">{{lang._rus.monthes['imenit'][preDate|date('m')]}} {%if preDate|date('Y')!=calendarNav.today|date('Y')%} {{preDate|date('Y')}}{%endif%}</a>
+            </li>
+            {% endfor %}
+            {% for postDate in calendarNav.next %}
+            <li class="{%if calendarNav.choosed|date('Y-m')==postDate|date('Y-m')%}uk-active{%endif%}">
+            <a href="/studios/{{studio.alias}}/month?date={{postDate|date('Y-m')}}">{{lang._rus.monthes['imenit'][postDate|date('m')] }}{%if postDate|date('Y')!=calendarNav.today|date('Y')%} {{postDate|date('Y')}}{%endif%}</a>
+            </li>
+            {% endfor %}
+        </ul>
+
+    <div class="weekdays uk-text-center uk-flex uk-flex-space-around">
+        {% for d in lang._rus.weekDays %}
+        <div class="uk-panel-title">{{d}}</div>
+        {% endfor %}
+    </div>
+</div>
+

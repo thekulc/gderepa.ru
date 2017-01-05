@@ -4,6 +4,7 @@ namespace studios;
 class studios extends \Controller {  
 
 	var $studio;
+    var $_rus;
 	/** @var  $mdlCalendar \studios\mdl_calendar */
     var $mdlCalendar;
 
@@ -16,7 +17,10 @@ class studios extends \Controller {
 			$method = $this->getMethodName( "method" . ucfirst ($this->more[0]) );
 
 			if ( $method ){
+
 				$data = $this->{$method}($_REQUEST);
+                $data['lang']['_rus']['monthes'] = $this->mdlCalendar->getRusMonthName();
+                $data['lang']['_rus']['weekDays'] = $this->mdlCalendar->getRusWeekdayName();
 			}
 			else{
 				$data['menu']['active'] = "studio";
@@ -48,11 +52,8 @@ class studios extends \Controller {
 		$data['page']['breadcrumb'][1]['title'] = $this->studio['name'];
 		$data['page']['layout'] = "studios/studios_main.html";
 
-		$data['lang']['_rus']['monthes'] = $this->mdlCalendar->getRusMonthName();
-		$data['lang']['_rus']['weekDays'] = $this->mdlCalendar->getRusWeekdayName();
-
 		$data['localdate'] = new \DateTime();
-
+        $data['calendarNav'] = $this->getCalendarNav($data['localdate'], 8, 1, date_create_from_format("Y-m-d", $data['localdate']->format("Y")."-01-01"));
         $data['calendar'] = $this->getWeek($offset, 2, $this->studio['id']);
         $data['offset'] = $offset + 1;
 		return $data;
@@ -158,62 +159,89 @@ class studios extends \Controller {
         $res = array();
         $res[0]["monthName"];
         $res[0]["link"];
-        $objDate = date_create_from_format("Y-m", $aDate);
-        if ($objDate){
+        if ($aDate){
+            $aDate = clone $aDate;
             if (count($this->_rus)<=0)
                 $this->_rus = $this->mdlCalendar->getRusMonthName();
 
             for ($i = 0; $i < $count; $i++){
-                $objDate->add( \DateInterval::createFromDateString("+ 1 month") );
-                $res[$i]["monthName"] = $this->_rus[$objDate->format('m')];
-                $res[$i]["link"] = $objDate->format('Y-m');
+                $aDate->add( \DateInterval::createFromDateString("+ 1 month") );
+                $res[$i]["monthName"] = $this->_rus[$aDate->format('m')];
+                $res[$i]["link"] = $aDate->format('Y-m');
             }
         }
+        return $res;
+    }
+
+    function getCalendarNav($date, $postCount = 1, $prevCount = 0, $start){
+        $res = array();
+        if (empty($this->_rus))
+            $this->_rus = $this->mdlCalendar->getRusMonthName();
+
+        $res['today'] = new \DateTime();
+        $res['choosed'] = clone $date;
+
+        if (empty($start))
+            $start = clone $res['today'];
+
+        $prev = clone $start;
+        for ($i = 0; $i < $prevCount; $i++){
+            $res['prev'][] = clone $prev->add( \DateInterval::createFromDateString('- '. $i . ' month') );
+        }
+
+        $next = clone $start;
+        for ($i = 1; $i <= $postCount; $i++){
+            $res['next'][] = clone $next->add( \DateInterval::createFromDateString('+ 1 month') );
+        }
+
         return $res;
     }
 
     function getPrevNavDates($lDate){
         $res = array();
-        $_rus = $this->mdlCalendar->getRusMonthName();
+        if (empty($this->_rus))
+            $this->_rus = $this->mdlCalendar->getRusMonthName();
 
         $res['today']['date'] = date();
         $res['today']['day'] = (int)date('d');
-        $res['today']['monthName'] = $_rus [date('m')];
+        $res['today']['monthName'] = $this->_rus [date('m')];
         $res['today']['year'] = date('Y');
         $res['today']['link']['day'] = date('Y-m');
-        $choosed = date_create_from_format("Y-m", $lDate);
+
+        //$choosed = date_create_from_format("Y-m", $lDate);
+        $choosed = clone $lDate;
         $res['choosed']['link'] = $choosed->format('Y-m');
-        $res['choosed']['monthName'] = $_rus [$choosed->format('m')];
+        $res['choosed']['monthName'] = $this->_rus [$choosed->format('m')];
 
         $choosed->add( \DateInterval::createFromDateString('- 1 month') );
         $res['prevDate']['link'] = $choosed->format('Y-m');
-        $res['prevDate']['monthName'] = $_rus [$choosed->format('m')];
+        $res['prevDate']['monthName'] = $this->_rus [$choosed->format('m')];
 
         $choosed->add( \DateInterval::createFromDateString('+ 2 month') );
         $res['nextDate']['link'] = $choosed->format('Y-m');
-        $res['nextDate']['monthName'] = $_rus [$choosed->format('m')];
+        $res['nextDate']['monthName'] = $this->_rus [$choosed->format('m')];
 
         return $res;
     }
 
     function methodMonth($request){
+        /** @var  $date \DateTime */
         $date = $request['date'];
-        $res;
+        $res = array();
         if ($date){
-            $dt = date_create_from_format('Y-m', $date);
-            if ($dt){
-                $lDate = $date;
-            }
+            $lDate = date_create_from_format("Y-m", $date);
         }
         else{
-            $lDate = Date("Y-m");
+            $lDate = new \DateTime();
         }
 
         if ($lDate){
             $this->mdlCalendar = $this->get_model("mdl_calendar", "studios");
-            $res['calendar'] = $this->getMonth($lDate);
-            $res['localdate'] = $this->getPrevNavDates($lDate);
-            $res['postLocal_dates'] = $this->getNextMonthesNav($lDate, 1);
+            $res['calendar'] = $this->getMonth($lDate->format("Y-m"));
+//            $res['localdate'] = $this->getPrevNavDates($lDate);
+//            $res['postLocal_dates'] = $this->getNextMonthesNav($lDate, 1);
+//            $res['calendarNav'] = $this->getCalendarNav($lDate, 7, 1);
+            $res['calendarNav'] = $this->getCalendarNav($lDate, 8, 1, date_create_from_format("Y-m-d", $lDate->format("Y")."-01-01"));
         }
 
         $res['menu']['active'] = "month";

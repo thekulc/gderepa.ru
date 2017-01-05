@@ -1,7 +1,7 @@
 <div class="calendar-nav" data-uk-sticky>
         <ul class="navLinks uk-tab uk-margin-bottom">
-            <li class="{%if calendarNav.choosed|date('Y-m')==calendarNav.today|date('Y-m')%}{%if ( menu.active == 'week') %}uk-active{%endif%}{%endif%}">
-                <a href="/studios/{{studio.alias}}/week">Ближайшие дни</a>
+            <li class="{%if calendarNav.choosed|date('Y-m')==calendarNav.today|date('Y-m')%}{%if ( menu.active == 'timetable') %}uk-active{%endif%}{%endif%}">
+                <a href="/studios/{{studio.alias}}/week">Ближайшие дни, <span class="uk-text-lowercase">{{lang._rus.monthes['imenit'][calendarNav.today|date('m')]}}</span></a>
             </li>
             {% for preDate in calendarNav.prev %}
             <li class="{%if ( calendarNav.choosed|date('Y-m')==preDate|date('Y-m') ) %}{%if ( menu.active != 'week') %}uk-active{%endif%}{%endif%}">

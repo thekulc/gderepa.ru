@@ -96,7 +96,14 @@ $(document).ready(function(){
 	    e.preventDefault();
 	    return false;
     });
+    initScrollUpdate($("#btn-more-dates"));
 });
+
+function initScrollUpdate($obj) {
+	$obj.on('inview.uk.scrollspy', function(){
+        $obj.trigger("click");
+    });
+}
 
 function eventButtonInit() {
     $(".day-container .timeGrid .uk-button").off("click");
@@ -124,12 +131,12 @@ function getWeekByOffset(offset, callerBtn) {
                 for (var lday in week){
                     cWeek.append(getDayContainer(week[lday]));
                 };
-                $(callerBtn).before(cWeek);
+                $(".calendar-container").append(cWeek);
                 eventButtonInit();
             }
         },
         error: function (e) {
-            //pr(e);
+            pr(e);
         }
     });
     //pr(offset);

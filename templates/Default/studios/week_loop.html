@@ -3,12 +3,15 @@
 {% for day in week %}
 
     {% if day.date|date('Y-m-d') == localdate|date('Y-m-d') %}
-                {%set isToday=" uk-text-primary"%}
-    {%else%}    {%set isToday=null %}
+        {%set isToday=" uk-text-primary"%}
+    {%else%}
+        {%set isToday=null %}
     {% endif %}
-    {% if day.date <= localdate %}
-                {%set isPast=" uk-text-muted"%}
-    {%else%}    {%set isPast=null%}
+
+    {% if day.date <= calendarNav.today %}
+        {%set isPast=" uk-text-muted"%}
+    {%else%}
+        {%set isPast=null%}
     {% endif %}
 
     <div class="day-container" data-date="{{ day.date|date('Y-m-d') }}">

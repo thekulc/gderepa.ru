@@ -24,11 +24,8 @@
 		{% if menu.active == "studio" %}
 				{% include app.layout~"studios/studio.html" %}
 			{% endif %}
-			{% if menu.active == "week" %}
+			{% if menu.active == "timetable" %}
 				{% include app.layout~"studios/week.html" %}
-			{% endif %}
-			{% if menu.active == "month" %}
-				{% include app.layout~"studios/month.html" %}
 			{% endif %}
 			{% if menu.active == "gear" %}
 				{% include app.layout~"studios/gear.html" %}
@@ -42,12 +39,11 @@
 			{% if menu.active == "studio" %}
 				{% include app.layout~"studios/studio.html" %}
 			{% endif %}
-			{% if menu.active == "week" %}
-				{% include app.layout~"studios/week.html" %}
+
+			{% if menu.active == "timetable" %}
+                {% include app.layout~"studios/week.html" %}
 			{% endif %}
-			{% if menu.active == "month" %}
-				{% include app.layout~"studios/month.html" %}
-			{% endif %}
+
 			{% if menu.active == "gear" %}
 				{% include app.layout~"studios/gear.html" %}
 			{% endif %}

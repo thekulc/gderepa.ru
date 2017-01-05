@@ -1,15 +1,12 @@
-<div class="calendar-container" data-studio_id="{{studio.id}}">
-	{% if calendar %}
-	 {% include globals.layoutPath~"studios/calendarNavLinks.html" %}
-
-	{% for week in calendar %}
-
-        {% include globals.layoutPath~"studios/week_loop.html" %}
-
-    {% endfor %}
-        <a id="btn-more-dates" data-offset="{{offset}}" class="uk-button uk-width-1-1 uk-button-link uk-button-large"><i class="uk-icon uk-icon-refresh"></i> Показать еще неделю</a>
+{% if calendar %}
+    <div class="calendar-container" data-studio_id="{{studio.id}}">
+        {% include globals.layoutPath~"studios/calendarNavLinks.html" %}
+        {% for week in calendar %}
+            {% include globals.layoutPath~"studios/week_loop.html" %}
+        {% endfor %}
+    </div>
+<a id="btn-more-dates" data-uk-scrollspy="{repeat: true}" data-offset="{{calendarOffset}}" class="uk-button uk-width-1-1 uk-button-link uk-button-large">
+    <i class="uk-icon uk-icon-refresh"></i> Показать еще неделю</a>
 {% else %}
-	<div class="uk-alert uk-alert-danger" role="alert">Данные не получены</div>
+<div class="uk-alert uk-alert-danger" role="alert">Данные не получены</div>
 {% endif %}
-
-</div>

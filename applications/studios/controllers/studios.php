@@ -17,10 +17,18 @@ class studios extends \Controller {
 			$method = $this->getMethodName( "method" . ucfirst ($this->more[0]) );
 
 			if ( $method ){
+                $this->mdlCalendar = $this->get_model("mdl_calendar", "studios");
+                $this->_rus = $this->mdlCalendar->getRusMonthName();
 
 				$data = $this->{$method}($_REQUEST);
-                $data['lang']['_rus']['monthes'] = $this->mdlCalendar->getRusMonthName();
+                $data['menu']['active'] = "timetable";
+                $data['lang']['_rus']['monthes'] = $this->_rus;
                 $data['lang']['_rus']['weekDays'] = $this->mdlCalendar->getRusWeekdayName();
+                $data['page']['breadcrumb'][0]['href'] = "/studios";
+                $data['page']['breadcrumb'][0]['title'] = "Студии";
+                $data['page']['breadcrumb'][1]['href'] = "/studios/" . $this->studio['domain'];
+                $data['page']['breadcrumb'][1]['title'] = $this->studio['name'];
+                $data['page']['layout'] = "studios/studios_main.html";
 			}
 			else{
 				$data['menu']['active'] = "studio";
@@ -40,22 +48,35 @@ class studios extends \Controller {
 		
         return $this->layout_show($data['page']['layout'], $data);
     }
+
+    function methodMonth($request){
+        $data = array();
+        $data['page']['title'] = "Расписание на месяц";
+
+        if ($request['date'])
+            $lDate = date_create_from_format("Y-m", $request['date']);
+        else
+            $lDate = new \DateTime();
+
+        if ($lDate){
+            $data['calendar'] = $this->getMonth($lDate, $offset);
+            $data['calendarOffset'] = $offset + 1;
+            $dt = date_create_from_format("Y-m-d", $lDate->format("Y-m") . "-01" );
+            $data['calendarNav'] = $this->getCalendarNav($dt, 8);
+        }
+
+        return $data;
+    }
 	
 	function methodWeek($request){
         $offset = intval($request['offset']);
-        $this->mdlCalendar = $this->get_model("mdl_calendar", "studios");
-		$data['menu']['active'] = "week";
-		$data['page']['title'] = "Расписание на ближайшие дни";
-		$data['page']['breadcrumb'][0]['href'] = "/studios";
-		$data['page']['breadcrumb'][0]['title'] = "Студии";
-		$data['page']['breadcrumb'][1]['href'] = "/studios/" . $this->studio['domain'];
-		$data['page']['breadcrumb'][1]['title'] = $this->studio['name'];
-		$data['page']['layout'] = "studios/studios_main.html";
 
-		$data['localdate'] = new \DateTime();
-        $data['calendarNav'] = $this->getCalendarNav($data['localdate'], 8, 1, date_create_from_format("Y-m-d", $data['localdate']->format("Y")."-01-01"));
+
+		$data['page']['title'] = "Расписание на ближайшие дни";
+
+        $data['calendarNav'] = $this->getCalendarNav(new \DateTime(), 8);
         $data['calendar'] = $this->getWeek($offset, 2, $this->studio['id']);
-        $data['offset'] = $offset + 1;
+        $data['calendarOffset'] = $offset + 1;
 		return $data;
 	}
 
@@ -71,7 +92,9 @@ class studios extends \Controller {
 	    $choosedWeek = intval($today->format("W"));
 
         $firstDay = clone $today;
-        $firstDay->add(\DateInterval::createFromDateString(- $today->format("N") + 1 . " day"));
+
+        if ($firstDay->format("N") <> 0)
+            $firstDay->add(\DateInterval::createFromDateString(- $firstDay->format("N") + 1 . " day"));
 
         $lastDay = clone $firstDay;
         $lastDay->add(\DateInterval::createFromDateString("+ $count week"));
@@ -93,6 +116,36 @@ class studios extends \Controller {
         }
         return $week;
     }
+
+    /** @param $date \DateTime */
+    function getMonth($date, &$offset, $events = true) {
+	    $lDate = clone $date;
+	    $today = new \DateTime();
+        $first = clone $lDate->add(\DateInterval::createFromDateString(- $lDate->format("d") + 1 . " day"));
+
+        if ($date->format('m') == "01")
+            $offset = 0;
+        else
+	        $offset = intval($first->format("W")) - intval($today->format("W"));
+        return $this->getWeek($offset, 2, $this->studio['id'], $events = true);
+    }
+
+    /** @param $date \DateTime
+     * @return int Count week
+     */
+    function weeks_in_month ( $date ){
+        $startDate = $date;
+        $loopDate = $startDate;
+        $week = 1;
+        for ($i = $startDate->format('d'); $i <= $date->format("t"); $i++) {
+            if ( $loopDate->format('w') % 7 == 0 ) {
+                $week++;
+            }
+            $loopDate->modify('+1 day');
+        }
+
+    return $week;
+}
 
     function getTimeTableByDate(\DateTime $date, $events, $timetables){
         $formatDay = "H:i";
@@ -177,12 +230,11 @@ class studios extends \Controller {
         $res = array();
         if (empty($this->_rus))
             $this->_rus = $this->mdlCalendar->getRusMonthName();
-
-        $res['today'] = new \DateTime();
-        $res['choosed'] = clone $date;
-
         if (empty($start))
-            $start = clone $res['today'];
+            $start = new \DateTime();
+
+        $res['today'] = clone $start;
+        $res['choosed'] = clone $date;
 
         $prev = clone $start;
         for ($i = 0; $i < $prevCount; $i++){
@@ -222,70 +274,6 @@ class studios extends \Controller {
         $res['nextDate']['monthName'] = $this->_rus [$choosed->format('m')];
 
         return $res;
-    }
-
-    function methodMonth($request){
-        /** @var  $date \DateTime */
-        $date = $request['date'];
-        $res = array();
-        if ($date){
-            $lDate = date_create_from_format("Y-m", $date);
-        }
-        else{
-            $lDate = new \DateTime();
-        }
-
-        if ($lDate){
-            $this->mdlCalendar = $this->get_model("mdl_calendar", "studios");
-            $res['calendar'] = $this->getMonth($lDate->format("Y-m"));
-//            $res['localdate'] = $this->getPrevNavDates($lDate);
-//            $res['postLocal_dates'] = $this->getNextMonthesNav($lDate, 1);
-//            $res['calendarNav'] = $this->getCalendarNav($lDate, 7, 1);
-            $res['calendarNav'] = $this->getCalendarNav($lDate, 8, 1, date_create_from_format("Y-m-d", $lDate->format("Y")."-01-01"));
-        }
-
-        $res['menu']['active'] = "month";
-        $res['page']['title'] = "Расписание на месяц";
-        $res['page']['breadcrumb'][0]['href'] = "/studios";
-        $res['page']['breadcrumb'][0]['title'] = "Студии";
-        $res['page']['breadcrumb'][1]['href'] = "/studios/" . $this->studio['domain'];
-        $res['page']['breadcrumb'][1]['title'] = $this->studio['name'];
-        $res['page']['layout'] = "studios/studios_main.html";
-        return $res;
-    }
-
-	function getMonth($date, $events = true) {
-        $day = new \DateTime($date);
-        $i = 0;
-        $week = 0;
-        $format = "d-m-Y";
-        $days = array();
-        $interval = \DateInterval::createFromDateString('1 day');
-        $weekDay = $day->format('N');
-        if ($weekDay > 1) {
-            $day = $day->sub(\DateInterval::createFromDateString($weekDay - 1 . ' days'));
-            for ($i = 0; $i < $weekDay; $i++) {
-                $days[$week][$i] = $day->format($format);
-                $day->add($interval);
-            }
-        }
-        do {
-            if ($i++ > 0 && ($weekDay = $day->format('N')) == 1) {
-                $week++;
-            }
-            $days[$week][$weekDay - 1] = $day->format($format);
-            $day = $day->add($interval);
-        } while ($week < 4);
-
-        if (($lastWeek = count($days) - 1) > 1 && ($lastWeekDaysCount = count($days[$lastWeek])) < 7) {
-
-            for ($i = $lastWeekDaysCount; $i < 7; $i++) {
-                $days[$lastWeek][$i] = $day->format($format);
-                $day->add($interval);
-            }
-        }
-        //pr($days);
-        return $this->getMonthArrayByDays($days, $date, $events);
     }
 
     private function getMonthArrayByDays($days, $date, $events = true){

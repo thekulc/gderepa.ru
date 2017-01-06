@@ -5,9 +5,11 @@
 		<meta name="description" content="{% block description %}{% endblock %}">
 		<meta name="keywords" content="{% block keywords %}{% endblock %}">
 		
-         <link rel="stylesheet" href="/libraries/uikit-2.27.2/css/uikit.min.css" />
+        <link rel="stylesheet" href="/libraries/uikit-2.27.2/css/uikit.min.css" />
 		<!--<link rel="stylesheet" href="/libraries/uikit-2.27.2/css/uikit.almost-flat.css" />-->
-		<link rel="stylesheet" href="/libraries/uikit-2.27.2/css/components/sticky.almost-flat.css" />
+		<link rel="stylesheet" href="/libraries/uikit-2.27.2/css/components/sticky.almost-flat.min.css" />
+		<link rel="stylesheet" href="/libraries/uikit-2.27.2/css/components/slider.almost-flat.min.css" />
+		<link rel="stylesheet" href="/libraries/uikit-2.27.2/css/components/slidenav.almost-flat.min.css" />
 		<!-- <link rel="stylesheet" href="/libraries/uikit-2.27.2/css/uikit.gradient.min.css" /> -->
 		
         <link rel="stylesheet" href="{{app.css}}main.css">
@@ -44,7 +46,8 @@
 <script type="text/javascript" src="//vk.com/js/api/share.js?90" charset="windows-1251"></script>
 <script src="/libraries/jquery/jquery-1.9.1.min.js"></script>
 <script src="/libraries/uikit-2.27.2/js/uikit.min.js"></script>
-<script src="/libraries/uikit-2.27.2/js/components/sticky.js"></script>
+<script src="/libraries/uikit-2.27.2/js/components/sticky.min.js"></script>
+<script src="/libraries/uikit-2.27.2/js/components/slider.min.js"></script>
 <script>
     var app = {
         session: {{app.session|json_encode()}}

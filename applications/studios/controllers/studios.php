@@ -56,36 +56,28 @@ class studios extends \Controller {
         return $this->layout_show($data['page']['layout'], $data);
     }
 
-    function methodMonth($request){
+    function methodTimetable($request){
         $data = array();
-        $data['page']['title'] = "Расписание на месяц";
 
         if ($request['date'])
             $lDate = date_create_from_format("Y-m", $request['date']);
         else
             $lDate = new \DateTime();
+        $_today = new \DateTime();
+        if ($lDate->format("Y-m") != $_today->format("Y-m"))
+            $data['page']['title'] = "Расписание на месяц";
+        else
+            $data['page']['title'] = "Расписание на ближайшие дни";
 
         if ($lDate){
             $data['calendar'] = $this->getMonth($lDate, $offset);
             $data['calendarOffset'] = $offset + 1;
             $dt = date_create_from_format("Y-m-d", $lDate->format("Y-m") . "-01" );
-            $data['calendarNav'] = $this->getCalendarNav($dt, 8);
+            $data['calendarNav'] = $this->getCalendarNav($dt, 11, 1);
         }
 
         return $data;
     }
-	
-	function methodWeek($request){
-        $offset = intval($request['offset']);
-
-
-		$data['page']['title'] = "Расписание на ближайшие дни";
-
-        $data['calendarNav'] = $this->getCalendarNav(new \DateTime(), 8);
-        $data['calendar'] = $this->getWeek($offset, 2, $this->studio['id']);
-        $data['calendarOffset'] = $offset + 1;
-		return $data;
-	}
 
 	function getWeek($offset = 0, $count = 1, $studio_id, $events = true){
 	    if (!isset($this->mdlCalendar))

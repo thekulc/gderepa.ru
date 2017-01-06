@@ -16,9 +16,11 @@ class add extends \Controller{
 			}
 		}
 		else{
-			$data['page']['title'] = "Добавление студии";
 			$data['page']['breadcrumb'][0]['href'] = "/studios";
 			$data['page']['breadcrumb'][0]['title'] = "Студии";
+            $data['page']['breadcrumb'][1]['href'] = "/studios/manage";
+            $data['page']['breadcrumb'][1]['title'] = "Управление студиями";
+			$data['page']['title'] = "Добавление студии";
 			$this->layout_show('studios/add.html', $data);
 		}
 	}

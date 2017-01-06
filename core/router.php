@@ -44,9 +44,13 @@ if ($route[0]) {
 		else{
 			$id = $route[2];
 		}
-		
+
 		if(intval($id) > 0){
-			if (checkController($application, $application)) {
+		    if (checkController($application, $route[1])) {
+		        $controller = $route[1];
+		        unset($route[1]);
+            }
+            elseif (checkController($application, $application)) {
 				$controller = $application;
 				array_shift($route);
 			}

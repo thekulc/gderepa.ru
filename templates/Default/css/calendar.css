@@ -274,7 +274,8 @@
     font-size: inherit;
 }
 
-.navLinks a{
-    padding: 10px 15px;
+.navLinks.uk-tab a{
+    padding-left: 10px;
+    padding-right: 10px;
 }
 

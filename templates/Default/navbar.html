@@ -1,65 +1,67 @@
-<div class="uk-grid menu-panel">
+<nav class="uk-navbar menu-panel">
 {% if device.isTablet() or device.isMobile() %}
 	<div class="uk-width-1-2">
 	<a class="uk-button uk-button-link uk-button-large" data-uk-offcanvas="{mode:'none', target:'#mobile-menu'}" href="/calendar">
 	<img class="uk-border-rounded uk-margin-small-right" src="https://pp.vk.me/c628321/v628321934/cfbf/-u1Ex22dYIA.jpg"> Абориген <i class="uk-icon-navicon"></i></a>
 	</div>
 {% else %}
-	<div class="uk-width-7-10">
-		<a class="uk-button uk-button-link uk-button-large uk-navbar-brand" href="/">Где репа</a>
+		<a class="uk-navbar-brand" href="/"><i class="uk-icon-bullhorn"></i> Где репа</a>
 		
-		<ul class="uk-breadcrumb">
+		<ul class="uk-navbar-nav">
 			
 			{% for item in page.breadcrumb %}
-				<li><a href="{{item.href}}">{{item.title}}</a></li>
+				<li><a href="{{item.href}}">{{item.title}} <i class="uk-icon-chevron-right uk-margin-left"></i></a></li>
 			{% endfor %}
-			<li class="uk-active"><span>{{page.title}}</span></li>
 		</ul>
-	</div>
+		<div class="uk-navbar-content uk-text-bold">{{page.title}} <i class="uk-icon-chevron-down uk-margin-left"></i></div>
 {% endif %}
 
-	
+
 	{% if app.session.vk_user.domain %}
 		{% if device.isTablet() or device.isMobile() %}
-		<div class="uk-width-1-2">
-			<div class="uk-float-right">
-				<a class="uk-button uk-button-link uk-button-large" data-uk-offcanvas="{mode:'none', target:'#mobile-userMenu'}" href="/user/{{app.session.vk_user.user_id}}">
-                    <img class="uk-border-rounded uk-margin-small-right" src="{{app.session.vk_user.photo_50}}">
-                    {{app.session.vk_user.first_name}} {{app.session.vk_user.last_name}}
-                    <i class="uk-icon-navicon"></i>
-                </a>
-			</div>
+		<div class="uk-navbar-flip">
+			<ul class="uk-navbar-nav">
+                <li>
+                    <a class="uk-button uk-button-link uk-button-large" data-uk-offcanvas="{mode:'none', target:'#mobile-userMenu'}" href="/user/{{app.session.vk_user.user_id}}">
+                        <img class="uk-border-rounded uk-margin-small-right" src="{{app.session.vk_user.photo_50}}">
+                        {{app.session.vk_user.first_name}} {{app.session.vk_user.last_name}}
+                        <i class="uk-icon-navicon"></i>
+                    </a>
+                </li>
+			</ul>
 		</div>
 		{% else %}
-		<div class="uk-width-3-10">
-			<div class="uk-position-relative uk-navbar-flip" data-uk-dropdown="{mode:'hover',pos:'bottom-right'}" >
-				<a class="uk-button uk-button-link uk-button-large">
-					{{app.session.vk_user.first_name}} {{app.session.vk_user.last_name}}
-					<img class="uk-border-rounded uk-margin-small-right" src="{{app.session.vk_user.photo_50}}">
-				</a>
-				<div class="uk-dropdown">
-					<ul class="uk-nav uk-nav-navbar">
-						{% include app.layout~"users/user_menu.html" %}
-					</ul>
-				</div>
-			</div>
+		<div class="uk-navbar-flip">
+			<ul class="uk-navbar-nav">
+				<li class="uk-parent" data-uk-dropdown="{mode:'hover',pos:'bottom-right'}">
+					<a>
+						{{app.session.vk_user.first_name}} {{app.session.vk_user.last_name}}
+						<img class="uk-border-rounded uk-margin-small-right" src="{{app.session.vk_user.photo_50}}" style="max-height: 2em;">
+					</a>
+					<div class="uk-dropdown uk-dropdown-navbar">
+						<ul class="uk-nav uk-nav-navbar">
+							{% include app.layout~"users/user_menu.html" %}
+						</ul>
+					</div>
+				</li>
+			</ul>
 		</div>
 		{% endif %}
 	{% else %}
 		{% if device.isTablet() or device.isMobile() %}
-		<div class="uk-width-1-2">
 			<div class="uk-float-right">
 				<a class="uk-button uk-button-link uk-button-large" id="btnLogin" href="/calendar/auth">Вход</a>
 			</div>
-		</div>
 		{% else %}
-		<div class="uk-width-3-10">
-			<div class="uk-float-right">
-				<a class="uk-button uk-button-link uk-button-large" id="btnLogin" href="/calendar/auth">Вход</a>
+                <div class="uk-navbar-flip">
+                    <ul class="uk-navbar-nav">
+                        <li>
+                            <a id="btnLogin" href="/calendar/auth">Вход</a>
+                        </li>
+                    </ul>
 			</div>
-		</div>
 		{% endif %}
 	{% endif %}
-	
-</div>
+
+</nav>
 	

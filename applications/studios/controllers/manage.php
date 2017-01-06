@@ -6,7 +6,6 @@ class manage extends \Controller{
 		
 		if (!empty($this->id) AND explode("\\", get_class())[1] != $this->id){
 			$data['studio'] = $this->model->getStudioByIdAndDomain($this->id);
-			pr($data['studio']);
 			
 			$data['page']['breadcrumb'][0]['href'] = "/studios";
 			$data['page']['breadcrumb'][0]['title'] = "Студии";
@@ -16,13 +15,12 @@ class manage extends \Controller{
 			$layout = 'studios/manageOne.html';
 		}
 		else{
-			$data['page']['title'] = "Управление студиями";
 			$data['page']['breadcrumb'][0]['href'] = "/studios";
 			$data['page']['breadcrumb'][0]['title'] = "Студии";
+			$data['page']['title'] = "Управление студиями";
 			$data['studios'] = $this->model->getStudiosByUserId($_SESSION['user']['id'], array(4,6), $err);
 			$layout = 'studios/manageList.html';
 		}
-		
 		
 		$this->layout_show($layout, $data);
 	}

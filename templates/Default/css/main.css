@@ -39,7 +39,7 @@ body{
 {
 	font-size: inherit;
 }
-
+/*
 .uk-navbar .uk-navbar-brand{
 	color: inherit;
 }
@@ -60,7 +60,7 @@ body{
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
-
+*/
 #studios-table .uk-list{
 	margin-bottom: 0;
 }

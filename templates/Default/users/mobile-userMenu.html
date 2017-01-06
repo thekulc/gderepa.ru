@@ -2,13 +2,8 @@
 <div id="mobile-userMenu" class="uk-offcanvas">
 	<div class="uk-offcanvas-bar uk-offcanvas-bar-flip">
 		<div class="uk-panel user-panel">
-			<div class="uk-panel-title uk-grid uk-flex-middle"> 
-				<div class="uk-width-medium-2-10">
-					<a href="/users/id{{app.session.user.id}}" class="photo_50"><img class="uk-border-rounded" src="{{app.session.vk_user.photo_50}}"></a> 
-				</div>
-				<div class="uk-width-medium-8-10">
-					<a class="uk-flex-middle" href="/users/id{{app.session.user.id}}">{{app.session.user.FIO}}</a>
-				</div>
+			<div class="uk-panel-title">
+					<a href="/users/id{{app.session.user.id}}">{{app.session.user.FIO}}</a>
 			</div>
 			<ul class="uk-nav uk-nav-parent-icon uk-margin-top" data-uk-nav="{multiple:true}">
 				{% include app.layout~"users/user_menu.html" %}

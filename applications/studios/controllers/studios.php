@@ -10,6 +10,13 @@ class studios extends \Controller {
 
     function default_method()
     {
+        if (isset($_GET['logout'])){
+            unset($_SESSION['vk_user']);
+            unset($_SESSION['user']);
+            setcookie('data', "",time()-3600,"/","/");
+            $this->redirect('/studios');
+        }
+
         $data['page']['layout'] = "studios/studios_main.html";
 		if ($this->id){
 			$this->studio = $this->model->getStudioByIdAndDomain($this->id, array(6));

@@ -271,6 +271,7 @@
 .weekdays .uk-panel-title{
 	width: 100%;
     margin-bottom: 0;
+    font-size: inherit;
 }
 
 .navLinks a{

@@ -101,12 +101,17 @@ $(document).ready(function(){
 
 function initScrollUpdate($obj) {
 	$obj.on('inview.uk.scrollspy', function(){
-        $obj.trigger("click");
+	    if(parseInt($obj.attr("data-update_count")) < 3) {
+            $obj.attr("data-update_count", parseInt($obj.attr("data-update_count")) + 1);
+            $obj.trigger("click");
+        }
+        else {
+	        $obj.hide();
+        }
     });
 }
 
 function eventButtonInit() {
-    $(".day-container .timeGrid .uk-button").off("click");
     $(".day-container .timeGrid .uk-button").on("click", function(){
         getEventByTime($(this).attr("data-start_time"));
     });

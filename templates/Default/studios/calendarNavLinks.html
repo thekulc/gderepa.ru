@@ -1,8 +1,8 @@
 <div class="calendar-nav uk-hidden-mini" data-uk-sticky>
     <ul class="navLinks uk-tab uk-margin-bottom">
         {% for preDate in calendarNav.prev %}
-        <li class="{%if ( calendarNav.choosed|date('Y-m')==preDate|date('Y-m') ) %}{%if ( menu.active != 'week') %}uk-active{%endif%}{%endif%}">
-            <a href="?date={{preDate|date('Y-m')}}">{{lang._rus.monthes['imenit'][preDate|date('m')]}} {%if preDate|date('Y')!=calendarNav.today|date('Y')%} {{preDate|date('Y')}}{%endif%}</a>
+        <li class="{%if ( calendarNav.choosed|date('Y-m')==preDate|date('Y-m') ) %}{%if ( page.byWeek != true) %}uk-active{%endif%}{%endif%}">
+            <a href="?date={{preDate|date('Y-m')}}">{{lang._rus.monthes['imenit'][preDate|date('m')]}}{%if preDate|date('Y')!=calendarNav.today|date('Y')%} {{preDate|date('Y')}}{%endif%}</a>
         </li>
         {% endfor %}
         {% for postDate in calendarNav.next %}

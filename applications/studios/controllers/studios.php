@@ -28,7 +28,7 @@ class studios extends \Controller {
                 $this->_rus = $this->mdlCalendar->getRusMonthName();
 
 				$data = $this->{$method}($_REQUEST);
-                $data['menu']['active'] = "timetable";
+
                 $data['lang']['_rus']['monthes'] = $this->_rus;
                 $data['lang']['_rus']['weekDays'] = $this->mdlCalendar->getRusWeekdayName();
                 $data['page']['breadcrumb'][0]['href'] = "/studios";
@@ -59,19 +59,29 @@ class studios extends \Controller {
     function methodTimetable($request){
         $data = array();
 
-        if ($request['date'])
-            $lDate = date_create_from_format("Y-m", $request['date']);
-        else
-            $lDate = new \DateTime();
-        $_today = new \DateTime();
-        if ($lDate->format("Y-m") != $_today->format("Y-m"))
+        if ($request['date']) {
             $data['page']['title'] = "Расписание на месяц";
-        else
-            $data['page']['title'] = "Расписание на ближайшие дни";
-
-        if ($lDate){
+            $data['menu']['active'] = "timetable";
+            $lDate = date_create_from_format("Y-m", $request['date']);
             $data['calendar'] = $this->getMonth($lDate, $offset);
             $data['calendarOffset'] = $offset + 1;
+        }
+        else {
+            $data['page']['title'] = "Расписание на ближайшие дни";
+            $data['menu']['active'] = "timetable";
+            $data['page']['byWeek'] = true;
+            $lDate = new \DateTime();
+            $data['calendar'] = $this->getWeek(0,2, $this->studio['id'], true);
+            $data['calendarOffset'] = 0;
+        }
+
+//        $_today = new \DateTime();
+//        if ($lDate->format("Y-m") != $_today->format("Y-m"))
+
+//        else
+
+
+        if ($data){
             $dt = date_create_from_format("Y-m-d", $lDate->format("Y-m") . "-01" );
             $data['calendarNav'] = $this->getCalendarNav($dt, 11, 1);
         }
@@ -89,6 +99,7 @@ class studios extends \Controller {
             $today->add(\DateInterval::createFromDateString(+ intval($offset) . " week"));
 
 	    $choosedWeek = intval($today->format("W"));
+	    $choosedWeek = $offset;
 
         $firstDay = clone $today;
 
@@ -117,16 +128,29 @@ class studios extends \Controller {
     }
 
     /** @param $date \DateTime */
-    function getMonth($date, &$offset, $events = true) {
-	    $lDate = clone $date;
+    function getMonth( $date, &$offset, $weekCount = 2, $events = true ) {
 	    $today = new \DateTime();
-        $first = clone $lDate->add(\DateInterval::createFromDateString(- $lDate->format("d") + 1 . " day"));
 
-        if ($date->format('m') == "01")
-            $offset = 0;
-        else
-	        $offset = intval($first->format("W")) - intval($today->format("W"));
-        return $this->getWeek($offset, 2, $this->studio['id'], $events = true);
+        $lDate = date_create_from_format("Y-m-d", $date->format("Y-m"."-01"));
+
+        $offset = intval($lDate->format("W")) - intval($today->format("W"));
+
+        return $this->getWeek($offset, $weekCount, $this->studio['id'], $events);
+    }
+
+    function daysInWeek($weekNum, $year)
+    {
+        $result = array();
+        //$datetime = new \DateTime('00:00:00');
+        $datetime = date_create_from_format("Y h:i:s", $year . ' 00:00:00');
+        $datetime->setISODate((int)$datetime->format('o'), intval($weekNum), 1);
+        $interval = new \DateInterval('P1D');
+        $week = new \DatePeriod($datetime, $interval, 6);
+
+        foreach($week as $day){
+            $result[] = $day;
+        }
+        return $result;
     }
 
     /** @param $date \DateTime

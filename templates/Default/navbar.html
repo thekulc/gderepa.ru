@@ -1,8 +1,10 @@
-<nav class="uk-navbar menu-panel">
+<nav class="menu-panel uk-navbar uk-margin-bottom">
+	<div class="uk-container uk-container-center">
 {% if device.isTablet() or device.isMobile() %}
 	<div class="uk-width-1-2">
-	<a class="uk-button uk-button-link uk-button-large" data-uk-offcanvas="{mode:'none', target:'#mobile-menu'}" href="/calendar">
-	<img class="uk-border-rounded uk-margin-small-right" src="https://pp.vk.me/c628321/v628321934/cfbf/-u1Ex22dYIA.jpg"> Абориген <i class="uk-icon-navicon"></i></a>
+        <a class="uk-button uk-button-link uk-button-large" data-uk-offcanvas="{mode:'none', target:'#mobile-menu'}" href="/calendar">
+            <img class="uk-border-rounded uk-margin-small-right" src="https://pp.vk.me/c628321/v628321934/cfbf/-u1Ex22dYIA.jpg"> Абориген <i class="uk-icon-navicon"></i>
+        </a>
 	</div>
 {% else %}
 		<a class="uk-navbar-brand" href="/"><i class="uk-icon-bullhorn"></i> Где репа</a>
@@ -13,7 +15,7 @@
 				<li><a href="{{item.href}}">{{item.title}} <i class="uk-icon-chevron-right uk-margin-left"></i></a></li>
 			{% endfor %}
 		</ul>
-		<div class="uk-navbar-content uk-text-bold">{{page.title}} <i class="uk-icon-chevron-down uk-margin-left"></i></div>
+		<div class="uk-navbar-content">{{page.title}}</div>
 {% endif %}
 
 
@@ -34,10 +36,10 @@
 		<div class="uk-navbar-flip">
 			<ul class="uk-navbar-nav">
 				<li class="uk-parent" data-uk-dropdown="{mode:'hover',pos:'bottom-right'}">
-					<a>
-						{{app.session.vk_user.first_name}} {{app.session.vk_user.last_name}}
-						<img class="uk-border-rounded uk-margin-small-right" src="{{app.session.vk_user.photo_50}}" style="max-height: 2em;">
-					</a>
+					<button class="uk-button uk-button-link">
+                        {{app.session.vk_user.first_name}} {{app.session.vk_user.last_name}}
+                        <img class="uk-border-rounded uk-margin-small-right" src="{{app.session.vk_user.photo_50}}" style="max-height: 2em;">
+					</button>
 					<div class="uk-dropdown uk-dropdown-navbar">
 						<ul class="uk-nav uk-nav-navbar">
 							{% include app.layout~"users/user_menu.html" %}
@@ -56,12 +58,11 @@
                 <div class="uk-navbar-flip">
                     <ul class="uk-navbar-nav">
                         <li>
-                            <a id="btnLogin" href="/calendar/auth">Вход</a>
+                            <a id="btnLogin" href="/calendar/auth"><i class="uk-icon-sign-in"></i> Вход</a>
                         </li>
                     </ul>
 			</div>
 		{% endif %}
 	{% endif %}
-
+    </div>
 </nav>
-	

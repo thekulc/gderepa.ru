@@ -6,10 +6,15 @@
 		<meta name="keywords" content="{% block keywords %}{% endblock %}">
 		
         <link rel="stylesheet" href="/libraries/uikit-2.27.2/css/uikit.min.css" />
+		<link rel="stylesheet" href="/libraries/uikit-2.27.2/css/components/sticky.min.css" />
+		<link rel="stylesheet" href="/libraries/uikit-2.27.2/css/components/slider.min.css" />
+		<link rel="stylesheet" href="/libraries/uikit-2.27.2/css/components/slidenav.min.css" />
+
 		<!--<link rel="stylesheet" href="/libraries/uikit-2.27.2/css/uikit.almost-flat.css" />-->
-		<link rel="stylesheet" href="/libraries/uikit-2.27.2/css/components/sticky.almost-flat.min.css" />
-		<link rel="stylesheet" href="/libraries/uikit-2.27.2/css/components/slider.almost-flat.min.css" />
-		<link rel="stylesheet" href="/libraries/uikit-2.27.2/css/components/slidenav.almost-flat.min.css" />
+		<!--<link rel="stylesheet" href="/libraries/uikit-2.27.2/css/components/sticky.almost-flat.min.css" />-->
+		<!--<link rel="stylesheet" href="/libraries/uikit-2.27.2/css/components/slider.almost-flat.min.css" />-->
+		<!--<link rel="stylesheet" href="/libraries/uikit-2.27.2/css/components/slidenav.almost-flat.min.css" />-->
+
 		<!-- <link rel="stylesheet" href="/libraries/uikit-2.27.2/css/uikit.gradient.min.css" /> -->
 		
         <link rel="stylesheet" href="{{app.css}}main.css">
@@ -18,11 +23,11 @@
 		{% block head_include %}{% endblock %}
     </head>
 <body>
+{% include app.layout~"navbar.html" %}
 <div class="uk-container uk-container-center">
-	
-	<div class="uk-navbar uk-margin-bottom">
-		{% include app.layout~"navbar.html" %}
-	</div>
+
+
+
 	
 	<!--<h1>{% block headerTitle %}{% endblock %}</h1>-->
 	{% if errs %}

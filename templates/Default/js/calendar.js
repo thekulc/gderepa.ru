@@ -89,10 +89,14 @@ $(document).ready(function(){
 	$modal = UIkit.modal(".uk-modal");
     eventButtonInit();
 
-	$("#btn-more-dates").on("click", function (e){
-        $(this).attr("data-offset", parseInt($(this).attr("data-offset")) + 1);
-        callerBtn = this;
-        getWeekByOffset($(this).attr("data-offset"), callerBtn );
+    $callerBtn = $("#btn-more-dates");
+	$callerBtn.on("click", function (e){
+        var callerBtn = $(this);
+
+        callerBtn.attr("data-update_count", parseInt($(this).attr("data-update_count")) + 1);
+
+        getWeekByOffset( callerBtn );
+
 	    e.preventDefault();
 	    return false;
     });
@@ -101,13 +105,7 @@ $(document).ready(function(){
 
 function initScrollUpdate($obj) {
 	$obj.on('inview.uk.scrollspy', function(){
-	    if(parseInt($obj.attr("data-update_count")) < 3) {
-            $obj.attr("data-update_count", parseInt($obj.attr("data-update_count")) + 1);
-            $obj.trigger("click");
-        }
-        else {
-	        $obj.hide();
-        }
+        $obj.trigger("click");
     });
 }
 
@@ -117,7 +115,8 @@ function eventButtonInit() {
     });
 }
 
-function getWeekByOffset(offset, callerBtn) {
+function getWeekByOffset(callerBtn) {
+    offset = parseInt(callerBtn.attr("data-offset")) + 1;
     var req = {
         request: "getWeekByOffset",
         "offset": offset,
@@ -131,12 +130,17 @@ function getWeekByOffset(offset, callerBtn) {
         complete: function(){ $("i", callerBtn).toggleClass("uk-icon-spin") },
         success: function(response){
             if (typeof response.week == "object") {
+                callerBtn.attr("data-update_count", parseInt(callerBtn.attr("data-update_count")) + 1 );
+
                 var cWeek = $("<div />").attr("class", $(".calendar-container .week").attr("class"));
-                week = response.week[parseInt(offset)+1];
+                var week = response.week[offset];
+                pr(offset);
+                pr(response);
                 for (var lday in week){
                     cWeek.append(getDayContainer(week[lday]));
                 };
                 $(".calendar-container").append(cWeek);
+                callerBtn.attr("data-offset", offset);
                 eventButtonInit();
             }
         },
@@ -149,8 +153,8 @@ function getWeekByOffset(offset, callerBtn) {
 
 function getDayContainer(day){
     //day = Array(day);
-    $dayCntnr = $("<div />").attr("class", "day-container");
-    lDate = parseDate(day.date.date);
+    var $dayCntnr = $("<div />").attr("class", "day-container");
+    var lDate = parseDate(day.date.date);
     $dayCntnr
         .attr("data-date", lDate.getFullYear() +"-"+ strPadLeft(lDate.getMonth() + 1) +"-"+ lDate.getDate())
         .append($("<div />").attr("class", "uk-panel")

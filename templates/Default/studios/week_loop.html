@@ -2,10 +2,10 @@
 
 {% for day in week %}
 
-    {% if day.date|date('Y-m-d') == localdate|date('Y-m-d') %}
+    {% if day.date|date('Y-m-d') == calendarNav.today|date('Y-m-d') %}
         {%set isToday=" uk-text-primary"%}
     {%else%}
-        {%set isToday=null %}
+        {%set isToday="" %}
     {% endif %}
 
     {% if day.date <= calendarNav.today %}
